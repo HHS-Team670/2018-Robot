@@ -33,11 +33,12 @@ public class RoboConstants {
 	public static final double DIAMETERinInchesElevator = 6;
 
 	//Elevator Heights
-	public static final double elevatorPulseForDown = 0;
+	public static final double elevatorPulseForDown = 0; //SET THESE
 	public static final double elevatorPulseForExchange= 0;
 	public static final double elevatorPulseForSwitch = 0;
-	public static final double elevatorPulseForScale = 0;
-	public static final double elevatorAutonSpeed = 0.05;
+	public static final double elevatorPulseForHighScale = 0;
+	public static final double elevatorPulseForMidScale = 0;
+	public static final double elevatorAutonSpeed = 0.05; //Probably make this higher after testing
 
 	public static final int maxElevatorTicks = 0; //SET THIS
 	public static final int minElevatorTicks = 0; //SET THIS

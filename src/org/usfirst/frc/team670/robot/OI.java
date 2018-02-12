@@ -51,8 +51,9 @@ public class OI {
 	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
 	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
 
-	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
-
+	private Button elevatorHighScale = new JoystickButton(arcadeStick, 4);
+	private Button elevatorMidScale = new JoystickButton(arcadeStick, 7);
+	
 	private Button cancelCommand = new JoystickButton(arcadeStick, 5);
 	private Button printElevator = new JoystickButton(arcadeStick, 6);
 
@@ -70,7 +71,8 @@ public class OI {
 		stopIntake.whenPressed(new Intake(0,0));
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
 		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
-		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.SCALE));
+		elevatorHighScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
+		elevatorMidScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
 		cancelCommand.whenPressed(new CancelCommand());
 
 		// Driver Controls

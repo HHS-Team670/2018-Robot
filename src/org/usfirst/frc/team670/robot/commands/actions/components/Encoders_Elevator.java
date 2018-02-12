@@ -24,10 +24,12 @@ public class Encoders_Elevator extends Command{
 			targetPulseHeight = RoboConstants.elevatorPulseForExchange;
 		else if(state.equals(ElevatorState.SWITCH))
 			targetPulseHeight = RoboConstants.elevatorPulseForSwitch;
-		else if(state.equals(ElevatorState.SCALE))
-			targetPulseHeight = RoboConstants.elevatorPulseForScale;
-		else if(state.equals(ElevatorState.SCALE))
+		else if(state.equals(ElevatorState.HIGHSCALE))
+			targetPulseHeight = RoboConstants.elevatorPulseForHighScale;
+		else if(state.equals(ElevatorState.DOWN))
 			targetPulseHeight = RoboConstants.elevatorPulseForDown;
+		else if(state.equals(ElevatorState.MIDSCALE))
+			targetPulseHeight = RoboConstants.elevatorPulseForMidScale;
 		else
 			targetPulseHeight = RoboConstants.elevatorPulseForExchange;
 		

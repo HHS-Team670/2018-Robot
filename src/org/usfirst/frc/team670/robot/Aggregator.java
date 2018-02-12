@@ -2,6 +2,7 @@ package org.usfirst.frc.team670.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -20,9 +21,11 @@ public class Aggregator extends Thread{
 	private AHRS navXMicro;
 	private NetworkTable driverstation, knuckles;
 	private double angle = 0;
+	private AnalogInput ultrasonic;
+
 	
 	//Booleans
-	private boolean isNavXConnected, encodersConnected, elevatorEncoders;
+	private boolean isNavXConnected, encodersConnected, elevatorEncoders, ultrasonicConnected;
 	private boolean sendDataToDS;
 	
 	public Aggregator(){
@@ -40,6 +43,15 @@ public class Aggregator extends Thread{
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 			navXMicro = null;
 		}
+	    
+	    try {
+	    	new AnalogInput(RobotMap.ultrasonicAnalogPort);
+	    	ultrasonicConnected = true;
+	    }catch(RuntimeException ex) {
+	    	ultrasonicConnected = false;
+	    	DriverStation.reportError("Error instantiating ultrasonic: " + ex.getMessage(), true);
+	    	ultrasonic = null;
+	    }
 	    	    
 	    new Thread(new Runnable() {
 	        @Override
@@ -158,5 +170,10 @@ public class Aggregator extends Thread{
 	public void areElevatorEncodersWorking(boolean b) {
 		elevatorEncoders = b;
 	}
+	
+	public double getDistanceUltrasonic() {
+		return ultrasonic.getValue()/19.6;
+	}
+	
 }
 

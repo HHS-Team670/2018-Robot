@@ -40,6 +40,7 @@ public class RobotMap {
     
     //Sensor Ports
     public final static Port navXPort = SerialPort.Port.kUSB;
+    public final static int ultrasonicAnalogPort = 0;
     
     //Joysticks
     public final static int leftDriveStick = 0;

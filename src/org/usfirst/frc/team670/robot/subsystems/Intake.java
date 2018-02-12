@@ -54,7 +54,7 @@ public class Intake extends Subsystem {
 		deployIntakeElevator.set(deploy);
 	}
 	
-	public void deployIntake(boolean deploy)
+	public void deployGrabber(boolean deploy)
 	{
 		deployGrabber.set(deploy);
 	}

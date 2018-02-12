@@ -29,9 +29,10 @@ public class RobotMap {
     
     //Elevator
     
-    //PDP
+    //CAN Systems
     public static final int pdp = 0;
-    
+	public static final int compressor = 9;
+
     //Intake
     public static final int intakeDeploy = 1;
     public static final int clawDeploy = 2;

@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,10 +18,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Intake extends Subsystem {
-
-	//DOES INTAKE NOT WORK?
-	//CHECK THE CONSTANTS FOR intakeMaxVoltage
 	
+	private Compressor comp;
 	private Solenoid deployIntakeElevator, deployGrabber;
 	private TalonSRX leftIntake, rightIntake;
 	// Put methods for controlling this subsystem
@@ -28,10 +27,12 @@ public class Intake extends Subsystem {
 
 	public Intake()
 	{
+		comp = new Compressor(RobotMap.compressor);
+		comp.setClosedLoopControl(true);
 		leftIntake = new TalonSRX(RobotMap.intakeLeftTalon);
 		rightIntake = new TalonSRX(RobotMap.intakeRightTalon);
-		deployIntakeElevator = new Solenoid(RobotMap.intakeDeploy);
-		deployGrabber = new Solenoid(RobotMap.clawDeploy);
+		deployIntakeElevator = new Solenoid(RobotMap.compressor,RobotMap.intakeDeploy);
+		deployGrabber = new Solenoid(RobotMap.compressor, RobotMap.clawDeploy);
 		leftIntake.setNeutralMode(NeutralMode.Brake);
 		rightIntake.setNeutralMode(NeutralMode.Brake);
 	}
@@ -55,7 +56,7 @@ public class Intake extends Subsystem {
 	}
 	
 	public void deployGrabber(boolean deploy)
-	{
+	{	
 		deployGrabber.set(deploy);
 	}
 	
@@ -66,10 +67,12 @@ public class Intake extends Subsystem {
 
 	public boolean isIntakeOpen() {
 		return deployGrabber.get();
+		//return false;
 	}
 
 	public boolean isIntakeDeployed() {
 		return deployIntakeElevator.get();
+		//return false;
 	}
 }
 

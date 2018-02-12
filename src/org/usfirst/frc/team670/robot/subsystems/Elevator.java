@@ -27,38 +27,26 @@ public class Elevator extends Subsystem {
 		elevator = new TalonSRX(RobotMap.elevatorMotor);
 		encoder = new SensorCollection(elevator);
 		encoder.setPulseWidthPosition(0, 0);
-		elevator.configForwardSoftLimitThreshold(RoboConstants.maxElevatorTicks, RoboConstants.kTimeoutMs);
-		elevator.configReverseSoftLimitThreshold(RoboConstants.minElevatorTicks, RoboConstants.kTimeoutMs);
-		elevator.configForwardSoftLimitEnable(true, RoboConstants.kTimeoutMs);
-		elevator.configReverseSoftLimitEnable(true, RoboConstants.kTimeoutMs);
+		//elevator.configForwardSoftLimitThreshold(RoboConstants.maxElevatorTicks, RoboConstants.kTimeoutMs);
+		//elevator.configReverseSoftLimitThreshold(RoboConstants.minElevatorTicks, RoboConstants.kTimeoutMs);
+		//elevator.configForwardSoftLimitEnable(true, RoboConstants.kTimeoutMs);
+		//elevator.configReverseSoftLimitEnable(true, RoboConstants.kTimeoutMs);
 	}
 	
 	public void initPID(TalonSRX talon) {
 		int absolutePosition = talon.getSelectedSensorPosition(RoboConstants.kTimeoutMs)
-				& 0xFFF; /*
-							 * mask out the bottom12 bits, we don't care about
-							 * the wrap arounds
-							 */
-		/* use the low level API to set the quad encoder signal */
+				& 0xFFF; 
 		talon.setSelectedSensorPosition(absolutePosition, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs);
 
-		/* choose the sensor and sensor direction */
 		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs);
 		talon.setSensorPhase(true);
 
-		/* set the peak and nominal outputs, 12V means full */
 		talon.configNominalOutputForward(0, RoboConstants.kTimeoutMs);
 		talon.configNominalOutputReverse(0, RoboConstants.kTimeoutMs);
 		talon.configPeakOutputForward(1, RoboConstants.kTimeoutMs);
 		talon.configPeakOutputReverse(-1, RoboConstants.kTimeoutMs);
-		/*
-		 * set the allowable closed-loop error, Closed-Loop output will be
-		 * neutral within this range. See Table in Section 17.2.1 for native
-		 * units per rotation.
-		 */
 		talon.configAllowableClosedloopError(0, RoboConstants.kPIDLoopIdx,
-				RoboConstants.kTimeoutMs); /* always servo */
-		/* set closed loop gains in slot0 */
+				RoboConstants.kTimeoutMs); 	
 		talon.config_kF(RoboConstants.kPIDLoopIdx, 0.0, RoboConstants.kTimeoutMs);
 		talon.config_kP(RoboConstants.kPIDLoopIdx, RoboConstants.ProportionElevator, RoboConstants.kTimeoutMs);
 		talon.config_kI(RoboConstants.kPIDLoopIdx, RoboConstants.IntegralElevator, RoboConstants.kTimeoutMs);
@@ -73,6 +61,7 @@ public class Elevator extends Subsystem {
 	public void moveElevator(double speed)
 	{
 		elevator.set(ControlMode.PercentOutput, speed);
+		System.out.println("Speed:" + speed + "|| Output Current:" + elevator.getOutputCurrent() + " || Motor Percent:" + elevator.getMotorOutputPercent());
 	}
 	
     public void initDefaultCommand() {

@@ -78,7 +78,10 @@ public class Aggregator extends Thread{
 	
 	public double getDistanceIntakeInches()
 	{
-		return 0;
+		if(ultrasonic!=null)
+			return ultrasonic.getValue()/19.6;
+		else
+			return 0;
 	}
 	
 	public double getAngle()
@@ -169,10 +172,6 @@ public class Aggregator extends Thread{
 
 	public void areElevatorEncodersWorking(boolean b) {
 		elevatorEncoders = b;
-	}
-	
-	public double getDistanceUltrasonic() {
-		return ultrasonic.getValue()/19.6;
 	}
 	
 }

@@ -41,8 +41,5 @@ public class left_switch_side extends CommandGroup {
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
 		addSequential(new Drive(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth + Field.TOLERANCE));
     	addSequential(new DropCube());
-		addSequential(new Drive(-(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth + Field.TOLERANCE)));
-		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
-		addSequential(new Pivot(-90));
 	}
 }

@@ -40,7 +40,5 @@ public class left_scale_opposite extends CommandGroup {
 		addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE)); //Raise Elevator
 		addSequential(new Drive(RoboConstants.frontToElevator)); // DRIVE distance from front of robot to elevator arm
     	addSequential(new DropCube());
-		addSequential(new Drive(-RoboConstants.frontToElevator)); //BACK UP
-		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE)); //Lower Elevator
 	}
 }

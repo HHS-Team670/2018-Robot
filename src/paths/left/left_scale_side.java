@@ -42,8 +42,5 @@ public class left_scale_side extends CommandGroup {
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
     	addSequential(new Drive(RoboConstants.frontToElevator));
     	addSequential(new DropCube());
-    	addSequential(new Drive(Robot.length * -1.5));
-    	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE)); //Lower Elevator
-    	addSequential(new Pivot(-90));
     }
 }

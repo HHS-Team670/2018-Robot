@@ -5,3 +5,4 @@ src/org/usfirst/frc/team670/robot/commands/joysticks/Joystick_Drive.java
 *.class
 *.class
 build/org/usfirst/frc/team670/robot/utilities/DriverState.class
+.classpath

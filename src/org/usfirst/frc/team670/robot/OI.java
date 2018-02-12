@@ -7,8 +7,11 @@
 
 package org.usfirst.frc.team670.robot;
 
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Grab;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
+import org.usfirst.frc.team670.robot.commands.actions.PickupCube;
+import org.usfirst.frc.team670.robot.commands.actions.components.CancelIntake;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.actions.components.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.actions.components.Set_OperatorControl;
@@ -45,8 +48,8 @@ public class OI {
 	private Button intakedeploy = new JoystickButton(arcadeStick, 1);
 	private Button intakeretract = new JoystickButton(arcadeStick, 10);
 
-	private Button runIntake = new JoystickButton(arcadeStick, 2);
-	private Button stopIntake = new JoystickButton(arcadeStick, 9);
+	private Button pickUpCube = new JoystickButton(arcadeStick, 2);
+	private Button dropCube = new JoystickButton(arcadeStick, 9);
 
 	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
 	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
@@ -67,8 +70,10 @@ public class OI {
 		// Arcade buttons
 		intakedeploy.whenPressed(new Grab(true));
 		intakeretract.whenPressed(new Grab(false));
-		runIntake.whenPressed(new Intake(1.0, 10));
-		stopIntake.whenPressed(new Intake(0,0));
+		pickUpCube.whenPressed(new PickupCube());
+		pickUpCube.whenReleased(new CancelIntake());
+		dropCube.whenPressed(new DropCube());
+		dropCube.whenReleased(new CancelIntake());
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
 		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
 		elevatorHighScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));

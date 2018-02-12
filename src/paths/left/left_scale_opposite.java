@@ -3,6 +3,7 @@ package paths.left;
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
@@ -38,7 +39,7 @@ public class left_scale_opposite extends CommandGroup {
 		addSequential(new Drive(Field.DSToScale - (Field.DSToSwitch + Field.SwitchWidth - Robot.length + 0.5*(Field.DSToPlatform - Field.DSToSwitch - Field.SwitchWidth)) - Robot.length + Field.TOLERANCE));
 		addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE)); //Raise Elevator
 		addSequential(new Drive(RoboConstants.frontToElevator)); // DRIVE distance from front of robot to elevator arm
-		addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
+    	addSequential(new DropCube());
 		addSequential(new Drive(-RoboConstants.frontToElevator)); //BACK UP
 		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE)); //Lower Elevator
 	}

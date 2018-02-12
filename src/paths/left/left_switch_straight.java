@@ -4,6 +4,7 @@ import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.Delay;
 import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.constants.ElevatorState;
@@ -37,9 +38,8 @@ public class left_switch_straight extends CommandGroup {
 		addParallel(new Deploy(true));
 		addSequential(new Drive(Field.DSToSwitch - Robot.length));
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
-		addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
-		addSequential(new Delay(2.5));
-		addSequential(new Drive(-(Field.DSToSwitch)));
+    	addSequential(new DropCube());
+		addSequential(new Drive(-(Field.DSToSwitch - Robot.length)));
 		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
 	}
 }

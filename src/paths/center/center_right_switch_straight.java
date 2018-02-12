@@ -3,6 +3,7 @@ package paths.center;
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
@@ -41,7 +42,7 @@ public class center_right_switch_straight extends CommandGroup {
     	addSequential(new Pivot(-Math.atan((Field.DSToSwitch-1.5*Robot.length)/(0.5*(Field.SwitchLength-Robot.width-Field.ExchangeWidth)))));
     	addSequential(new Drive(0.5*Robot.length));
     	addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
-    	addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
+    	addSequential(new DropCube());
     	addSequential(new Drive(-0.5*Robot.length));
 		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
     }

@@ -3,6 +3,7 @@ package paths.left;
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
@@ -41,7 +42,7 @@ public class left_scale_straight extends CommandGroup {
     	addSequential(new Pivot(-90));
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE)); //Raise Elevator
     	addSequential(new Drive(RoboConstants.frontToElevator)); // DRIVE distance from front of robot to elevator arm
-		addSequential(new Intake(-0.8, RoboConstants.intakeRunTime)); //Place cube
+    	addSequential(new DropCube());
 		addSequential(new Drive(-RoboConstants.frontToElevator)); //BACK UP
 		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));//lower Elevator
     }

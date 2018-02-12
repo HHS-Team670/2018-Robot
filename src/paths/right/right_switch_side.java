@@ -3,6 +3,7 @@ package paths.right;
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Drive;
@@ -40,7 +41,7 @@ public class right_switch_side extends CommandGroup {
     	addSequential(new Pivot(-90));
     	addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
     	addSequential(new Drive(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth + Field.TOLERANCE));
-    	addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
+    	addSequential(new DropCube());
     	addSequential(new Encoders_Drive(-(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth + Field.TOLERANCE)));
     	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Pivot(90));

@@ -4,6 +4,7 @@ import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.Delay;
 import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
@@ -48,9 +49,8 @@ public class center_baseline extends CommandGroup {
     	addSequential(new Drive(Field.CubePileWidth));
     	addSequential(new Pivot(90));
     	addSequential(new Drive(Robot.length + Field.TOLERANCE));
-    	addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
     	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
-
+    	addSequential(new DropCube());
 
     }
 }

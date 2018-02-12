@@ -3,6 +3,7 @@ package paths.left;
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
@@ -40,7 +41,7 @@ public class left_scale_side extends CommandGroup {
     	addSequential(new Drive(Field.SideToScale - Field.SideTriangleWidth));
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
     	addSequential(new Drive(RoboConstants.frontToElevator));
-    	addSequential(new Intake(-0.8, RoboConstants.intakeRunTime)); //Place Cube
+    	addSequential(new DropCube());
     	addSequential(new Drive(Robot.length * -1.5));
     	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE)); //Lower Elevator
     	addSequential(new Pivot(-90));

@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Drive;
 import org.usfirst.frc.team670.robot.commands.actions.components.NavX_Pivot;
+import org.usfirst.frc.team670.robot.commands.autonomous.Auto_Center;
+import org.usfirst.frc.team670.robot.commands.autonomous.Auto_Left;
+import org.usfirst.frc.team670.robot.commands.autonomous.Auto_Right;
 import org.usfirst.frc.team670.robot.commands.autonomous.CancelCommand;
 import org.usfirst.frc.team670.robot.constants.PathFinder;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
@@ -52,20 +55,19 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		sensors = new Aggregator();
 		
-		m_chooser.addDefault("Do Nothing", new CancelCommand());
+		/*m_chooser.addDefault("Do Nothing", new CancelCommand());
 		m_chooser.addObject("Turn Right 90 degrees", new NavX_Pivot(90));
 		m_chooser.addObject("Turn Left 90 degrees", new NavX_Pivot(-90));
 		m_chooser.addObject("Turn Right 60 degrees", new NavX_Pivot(60));
 		m_chooser.addObject("Turn Left 60 degrees", new NavX_Pivot(-60));
 		m_chooser.addObject("1ft_encoders", new Encoders_Drive(1));
 		m_chooser.addObject("1ft_encoders_back", new Encoders_Drive(-1));
+		 */
 		
-		/*
 		m_chooser.addDefault("Do Nothing", new CancelCommand());
 		m_chooser.addObject("Right Position", new Auto_Right());
 		m_chooser.addObject("Center Position", new Auto_Center());
 		m_chooser.addObject("Left Position", new Auto_Left());
-		*/
 		
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);

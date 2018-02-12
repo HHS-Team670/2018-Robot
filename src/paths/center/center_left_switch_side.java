@@ -46,7 +46,7 @@ public class center_left_switch_side extends CommandGroup {
     	addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
     	addSequential(new Drive(-0.5*Robot.length));
     	addSequential(new Pivot(-90));
-		addSequential(new Encoders_Elevator(ElevatorState.DOWN));
+		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
 
     }
 }

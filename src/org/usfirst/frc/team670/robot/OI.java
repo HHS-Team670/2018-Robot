@@ -72,7 +72,7 @@ public class OI {
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
 		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
 		elevatorHighScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
-		elevatorMidScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
+		elevatorMidScale.whenPressed(new Encoders_Elevator(ElevatorState.MIDSCALE));
 		cancelCommand.whenPressed(new CancelCommand());
 
 		// Driver Controls

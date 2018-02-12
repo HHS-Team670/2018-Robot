@@ -43,7 +43,7 @@ public class center_left_switch_straight extends CommandGroup {
     	addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
     	addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
     	addSequential(new Drive(-0.5*Robot.length));    
-		addSequential(new Encoders_Elevator(ElevatorState.DOWN));
+		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
 
     }
 }

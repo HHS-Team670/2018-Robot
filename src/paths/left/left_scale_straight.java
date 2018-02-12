@@ -43,6 +43,6 @@ public class left_scale_straight extends CommandGroup {
     	addSequential(new Drive(RoboConstants.frontToElevator)); // DRIVE distance from front of robot to elevator arm
 		addSequential(new Intake(-0.8, RoboConstants.intakeRunTime)); //Place cube
 		addSequential(new Drive(-RoboConstants.frontToElevator)); //BACK UP
-		addSequential(new Encoders_Elevator(ElevatorState.DOWN));//lower Elevator
+		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));//lower Elevator
     }
 }

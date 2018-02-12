@@ -33,8 +33,7 @@ public class RoboConstants {
 	public static final double DIAMETERinInchesElevator = 6;
 
 	//Elevator Heights
-	public static final double elevatorPulseForDown = 0; //SET THESE
-	public static final double elevatorPulseForExchange= 0;
+	public static final double elevatorPulseForExchange = 0; //SET THESE
 	public static final double elevatorPulseForSwitch = 0;
 	public static final double elevatorPulseForHighScale = 0;
 	public static final double elevatorPulseForMidScale = 0;

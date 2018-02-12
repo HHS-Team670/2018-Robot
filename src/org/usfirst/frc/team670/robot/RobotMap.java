@@ -31,7 +31,7 @@ public class RobotMap {
     
     //CAN Systems
     public static final int pdp = 0;
-	public static final int compressor = 9;
+	public static final int PCModule = 9;
 
     //Intake
     public static final int intakeDeploy = 1;

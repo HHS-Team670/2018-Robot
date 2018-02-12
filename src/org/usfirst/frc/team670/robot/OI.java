@@ -7,10 +7,8 @@
 
 package org.usfirst.frc.team670.robot;
 
-import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Grab;
-import org.usfirst.frc.team670.robot.commands.actions.Intake;
 import org.usfirst.frc.team670.robot.commands.actions.PickupCube;
 import org.usfirst.frc.team670.robot.commands.actions.components.CancelIntake;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;

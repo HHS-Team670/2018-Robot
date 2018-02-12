@@ -27,14 +27,12 @@ public class Intake extends Subsystem {
 
 	public Intake()
 	{
-		comp = new Compressor(RobotMap.compressor);
+		comp = new Compressor(RobotMap.PCModule);
 		comp.setClosedLoopControl(true);
 		leftIntake = new TalonSRX(RobotMap.intakeLeftTalon);
 		rightIntake = new TalonSRX(RobotMap.intakeRightTalon);
-		deployIntakeElevator = new Solenoid(RobotMap.compressor,RobotMap.intakeDeploy);
-		deployGrabber = new Solenoid(RobotMap.compressor, RobotMap.clawDeploy);
-		leftIntake.setNeutralMode(NeutralMode.Brake);
-		rightIntake.setNeutralMode(NeutralMode.Brake);
+		deployIntakeElevator = new Solenoid(RobotMap.PCModule,RobotMap.intakeDeploy);
+		deployGrabber = new Solenoid(RobotMap.PCModule, RobotMap.clawDeploy);
 	}
 	
 	public void driveIntake(double speed)

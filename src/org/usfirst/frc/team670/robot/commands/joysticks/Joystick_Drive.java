@@ -20,6 +20,7 @@ public class Joystick_Drive extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		joy = Robot.oi.getLeftStick();
+		Robot.driveBase.initJoystickDrive();
 	}
 
 	// Called repeatedly when this Command is scheduled to run

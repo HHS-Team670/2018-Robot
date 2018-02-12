@@ -16,7 +16,6 @@ public class Grab extends Command {
 	 */
     public Grab(boolean isDeploy) {
     	this.isDeploy = isDeploy;
-        requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time

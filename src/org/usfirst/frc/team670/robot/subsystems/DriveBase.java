@@ -14,6 +14,7 @@ import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -40,7 +41,7 @@ public class DriveBase extends Subsystem {
 		left2 = new TalonSRX(RobotMap.leftMotor2);
 		right1 = new TalonSRX(RobotMap.rightMotor1);
 		right2 = new TalonSRX(RobotMap.rightMotor2);
-
+				
 		left1.setInverted(true);
 		left2.setInverted(true);
 		right1.setInverted(false);
@@ -86,6 +87,14 @@ public class DriveBase extends Subsystem {
 		default: // Not a drivetrain Talon!
 			return null;
 		}
+	}
+	
+	public void initJoystickDrive()
+	{
+		left1.setNeutralMode(NeutralMode.Coast);
+		left2.setNeutralMode(NeutralMode.Coast);
+		right1.setNeutralMode(NeutralMode.Coast);
+		right2.setNeutralMode(NeutralMode.Coast);
 	}
 
 	public void drive(double left, double right) {
@@ -148,6 +157,11 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void initPID(TalonSRX talon) {
+		left1.setNeutralMode(NeutralMode.Brake);
+		left2.setNeutralMode(NeutralMode.Brake);
+		right1.setNeutralMode(NeutralMode.Brake);
+		right2.setNeutralMode(NeutralMode.Brake);
+		
 		int absolutePosition = talon.getSelectedSensorPosition(RoboConstants.kTimeoutMs)
 				& 0xFFF; /*
 							 * mask out the bottom12 bits, we don't care about

@@ -61,7 +61,6 @@ public class Elevator extends Subsystem {
 	public void moveElevator(double speed)
 	{
 		elevator.set(ControlMode.PercentOutput, speed);
-		System.out.println("Speed:" + speed + "|| Output Current:" + elevator.getOutputCurrent() + " || Motor Percent:" + elevator.getMotorOutputPercent());
 	}
 	
     public void initDefaultCommand() {

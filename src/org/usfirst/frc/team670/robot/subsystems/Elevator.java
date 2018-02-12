@@ -28,7 +28,7 @@ public class Elevator extends Subsystem {
 		encoder = new SensorCollection(elevator);
 		encoder.setPulseWidthPosition(0, 0);
 		elevator.configForwardSoftLimitThreshold(RoboConstants.maxElevatorTicks, RoboConstants.kTimeoutMs);
-		elevator.configForwardSoftLimitThreshold(RoboConstants.minElevatorTicks, RoboConstants.kTimeoutMs);
+		elevator.configReverseSoftLimitThreshold(RoboConstants.minElevatorTicks, RoboConstants.kTimeoutMs);
 		elevator.configForwardSoftLimitEnable(true, RoboConstants.kTimeoutMs);
 		elevator.configReverseSoftLimitEnable(true, RoboConstants.kTimeoutMs);
 	}

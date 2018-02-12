@@ -44,6 +44,6 @@ public class right_switch_straight extends CommandGroup {
 		addSequential(new Intake(-0.8, RoboConstants.intakeRunTime));
 		addSequential(new Delay(2.5));
 		addSequential(new Drive(-(Field.DSToSwitch)));
-		addSequential(new Encoders_Elevator(ElevatorState.DOWN));
+		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
 	}
 }

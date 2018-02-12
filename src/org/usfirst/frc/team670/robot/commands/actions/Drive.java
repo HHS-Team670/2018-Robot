@@ -25,14 +25,14 @@ public class Drive extends Command{
 		requires(Robot.driveBase);
 		this.distance = distance;
 
-		if(Robot.driveBase.getLeft().getSensorCollection() != null && Robot.driveBase.getRight().getSensorCollection() != null ) {
+//		if(Robot.driveBase.getLeft().getSensorCollection() != null && Robot.driveBase.getRight().getSensorCollection() != null ) {
 			com = new Encoders_Drive(distance);
 			Robot.sensors.areEncodersWorking(true);
-		}
-		else {
-			com = new Time_Drive(1/(RoboConstants.wheelVelocity/distance), RoboConstants.timeAutoSpeed);
-			Robot.sensors.areEncodersWorking(false);
-		}
+//		}
+//		else {
+//			com = new Time_Drive(1/(RoboConstants.wheelVelocity/distance), RoboConstants.timeAutoSpeed);
+//			Robot.sensors.areEncodersWorking(false);
+//		}
 		com.start();
 	}
 

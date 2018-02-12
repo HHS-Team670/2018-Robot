@@ -13,8 +13,8 @@ public class Intake extends Command {
 	
     public Intake(double speed, double seconds) {
     	this.speed = speed;
-        this.seconds = seconds;
-        requires(Robot.intake);
+    	this.seconds = seconds;
+    	requires(Robot.intake);
     }
 
     // Called just before this Command runs the first time
@@ -29,7 +29,7 @@ public class Intake extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+    	return isTimedOut();
     }
 
     // Called once after isFinished returns true

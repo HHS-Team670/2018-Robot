@@ -16,9 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Drive;
 import org.usfirst.frc.team670.robot.commands.actions.components.NavX_Pivot;
-import org.usfirst.frc.team670.robot.commands.autonomous.Auto_Center;
-import org.usfirst.frc.team670.robot.commands.autonomous.Auto_Left;
-import org.usfirst.frc.team670.robot.commands.autonomous.Auto_Right;
 import org.usfirst.frc.team670.robot.commands.autonomous.CancelCommand;
 import org.usfirst.frc.team670.robot.constants.PathFinder;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;

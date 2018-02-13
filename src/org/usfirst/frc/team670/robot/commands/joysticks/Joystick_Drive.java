@@ -49,10 +49,10 @@ public class Joystick_Drive extends Command {
 		ry = Robot.oi.getRightStick().getY();
 		ly = Robot.oi.getLeftStick().getY();
 		x = Robot.oi.getLeftStick().getX();
-
-		ry = Math.pow(ry, 3);
-		ly = Math.pow(ly, 3);
-		x = Math.pow(x, 3);
+				
+		ry = etherDrive(ry, Robot.oi.getRightStick().getThrottle());
+		ly = etherDrive(ly, Robot.oi.getLeftStick().getThrottle());
+		x = etherDrive(x, Robot.oi.getLeftStick().getThrottle());
 		
 		if (Robot.oi.getDS().equals(DriverState.TANKREVERSE)) 
 			Robot.driveBase.drive(-ly, -ry);
@@ -76,6 +76,17 @@ public class Joystick_Drive extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		Robot.driveBase.drive(0, 0);
+	}
+	
+	/**
+	 * 
+	 * @param x The value of the joystick
+	 * @param a ranges from 0 to +1
+	 * @return
+	 */
+	private double etherDrive(double x, double a)
+	{
+		return a*Math.pow(x, 3) + (1-a)*x;
 	}
 
 	private void PartyDrive(double x, double y)

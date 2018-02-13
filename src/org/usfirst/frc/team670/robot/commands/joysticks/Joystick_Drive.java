@@ -26,6 +26,7 @@ public class Joystick_Drive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double x, ly, ry;
+		
 		/*double power = 10.0*(1 - (Robot.elevator.getCurrentPosition())/(Constants.maxElevatorTicks * 1.0));
 		if(power < 0.5)
 			power = 0.5;
@@ -49,6 +50,9 @@ public class Joystick_Drive extends Command {
 		ly = Robot.oi.getLeftStick().getY();
 		x = Robot.oi.getLeftStick().getX();
 
+		ry = Math.pow(ry, 3);
+		ly = Math.pow(ly, 3);
+		x = Math.pow(x, 3);
 		
 		if (Robot.oi.getDS().equals(DriverState.TANKREVERSE)) 
 			Robot.driveBase.drive(-ly, -ry);

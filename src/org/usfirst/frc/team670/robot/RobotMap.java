@@ -34,8 +34,9 @@ public class RobotMap {
 	public static final int PCModule = 9;
 
     //Intake
-    public static final int intakeDeploy = 1;
-    public static final int clawDeploy = 2;
+    public static final int intakeDeploy = 2;
+    public static final int clawDeploySoft = 1;
+    public static final int clawDeployHard = 1;
     public static final int intakeLeftTalon = 6;
     public static final int intakeRightTalon = 7;
     

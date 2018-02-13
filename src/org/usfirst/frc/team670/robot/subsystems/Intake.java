@@ -32,7 +32,7 @@ public class Intake extends Subsystem {
 		leftIntake = new TalonSRX(RobotMap.intakeLeftTalon);
 		rightIntake = new TalonSRX(RobotMap.intakeRightTalon);
 		deployIntakeElevator = new Solenoid(RobotMap.PCModule,RobotMap.intakeDeploy);
-		deployGrabber = new Solenoid(RobotMap.PCModule, RobotMap.clawDeploy);
+		deployGrabber = new Solenoid(RobotMap.PCModule, RobotMap.clawDeploySoft);
 	}
 	
 	public void driveIntake(double speed)

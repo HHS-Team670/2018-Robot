@@ -1,7 +1,7 @@
 - [ ] Things that need to be on the robot: 
-	- [ ] Ultrasonic and lidar connected to the intake
+	- [ ] Lidar connected to the intake
 	- [ ] Camera (fisheye) --> Top of the elevator (first stage)
-	- [ ] Camera (intake )
+	- [ ] Camera (intake)
 	- [ ] Camera at exchange level
 - [ ] Things that need to be tested
 	- [ ] Drivebase (P, I, D values) (Brake and Coast mode are correct)

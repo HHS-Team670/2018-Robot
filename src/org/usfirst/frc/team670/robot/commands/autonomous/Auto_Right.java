@@ -8,12 +8,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import paths.left.left_baseline;
 import paths.left.left_scale_opposite;
-import paths.left.left_scale_straight;
 import paths.left.left_switch_side;
-import paths.left.left_switch_straight;
 import paths.right.right_baseline;
 import paths.right.right_scale_opposite;
-import paths.right.right_scale_straight;
+import paths.right.right_scale_side;
 import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 
@@ -30,7 +28,7 @@ public class Auto_Right extends CommandGroup {
     	addSequential(new Delay(delay));
     	
     	if(t.equals(Target.ScaleStraight))
-			addSequential(new right_scale_straight());
+    		addSequential(new right_scale_side());
 		else if(t.equals(Target.ScaleOnOtherSide))
 			addSequential(new right_scale_opposite());
 		else if(t.equals(Target.SwitchFromStraight))

@@ -55,20 +55,20 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		sensors = new Aggregator();
 		
-		/*m_chooser.addDefault("Do Nothing", new CancelCommand());
+		m_chooser.addDefault("Do Nothing", new CancelCommand());
 		m_chooser.addObject("Turn Right 90 degrees", new NavX_Pivot(90));
 		m_chooser.addObject("Turn Left 90 degrees", new NavX_Pivot(-90));
 		m_chooser.addObject("Turn Right 60 degrees", new NavX_Pivot(60));
 		m_chooser.addObject("Turn Left 60 degrees", new NavX_Pivot(-60));
 		m_chooser.addObject("1ft_encoders", new Encoders_Drive(1));
 		m_chooser.addObject("1ft_encoders_back", new Encoders_Drive(-1));
-		 */
+		 
 		
-		m_chooser.addDefault("Do Nothing", new CancelCommand());
+		/*m_chooser.addDefault("Do Nothing", new CancelCommand());
 		m_chooser.addObject("Right Position", new Auto_Right());
 		m_chooser.addObject("Center Position", new Auto_Center());
 		m_chooser.addObject("Left Position", new Auto_Left());
-		
+		*/
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
 		autonomousDelay.addObject("2 Second", 2.0);

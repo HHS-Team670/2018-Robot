@@ -4,6 +4,8 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,11 +23,11 @@ public class Aggregator extends Thread{
 	private AHRS navXMicro;
 	private NetworkTable driverstation, knuckles;
 	private double angle = 0;
-	private AnalogInput ultrasonic;
+	private I2C lidar;
 
 	
 	//Booleans
-	private boolean isNavXConnected, encodersConnected, elevatorEncoders, ultrasonicConnected;
+	private boolean isNavXConnected, lidarConnected, encodersConnected, elevatorEncoders;
 	private boolean sendDataToDS;
 	
 	public Aggregator(){
@@ -43,14 +45,14 @@ public class Aggregator extends Thread{
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 			navXMicro = null;
 		}
-	    
+	    	    
 	    try {
-	    	new AnalogInput(RobotMap.ultrasonicAnalogPort);
-	    	ultrasonicConnected = true;
+	    	lidar = new I2C(Port.kMXP, 0x29);
+	    	lidarConnected = true;
 	    }catch(RuntimeException ex) {
-	    	ultrasonicConnected = false;
+	    	lidarConnected = false;
 	    	DriverStation.reportError("Error instantiating ultrasonic: " + ex.getMessage(), true);
-	    	ultrasonic = null;
+	    	lidar = null;
 	    }
 	    	    
 	    new Thread(new Runnable() {
@@ -67,6 +69,7 @@ public class Aggregator extends Thread{
 			        	driverstation.putDouble("voltage", DriverStation.getInstance().getBatteryVoltage());
 			        	driverstation.putBoolean("navX", isNavXConnected);
 			        	driverstation.putBoolean("encoders", encodersConnected);
+			        	driverstation.putBoolean("elevator_encoders", elevatorEncoders);
 			        	driverstation.putBoolean("isIntakeOpen", Robot.intake.isIntakeOpen());
 			        	driverstation.putBoolean("isIntakeDeployed", Robot.intake.isIntakeDeployed());
 			        	angle = knuckles.getNumber("angle", 0);
@@ -78,8 +81,8 @@ public class Aggregator extends Thread{
 	
 	public double getDistanceIntakeInches()
 	{
-		if(ultrasonic!=null)
-			return ultrasonic.getValue()/19.6;
+		if(lidarConnected)
+			return 0;
 		else
 			return 0;
 	}

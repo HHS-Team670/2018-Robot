@@ -36,11 +36,15 @@ public class right_scale_side extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new Deploy(true));
-    	addSequential(new Drive(Field.DSToScale - Robot.length + Field.ScaleWidth/2));
+    	addSequential(new Drive(Field.DSToScale - Robot.length/2 + Field.ScaleWidth/2));
     	addSequential(new Pivot(-90));
-    	addSequential(new Drive(Field.SideToScale + Field.TOLERANCE - Field.SideTriangleWidth));
-		addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE)); //Raise Elevator
-		addSequential(new Drive(RoboConstants.frontToElevator)); // DRIVE distance from front of robot to elevator arm
+    	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
+    	addSequential(new Drive(Field.SideToScale - Field.SideTriangleWidth - Robot.width + RoboConstants.frontToElevator));
     	addSequential(new DropCube());
+    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
+    	addSequential(new Drive(-(Field.SideToScale - Field.SideTriangleWidth - Robot.width + RoboConstants.frontToElevator)));
+    	addSequential(new Pivot(-90));
+    	addSequential(new Drive(Field.DSToScale - (Field.DSToSwitch + Field.SwitchWidth - Robot.length) + Robot.width));
+    	addSequential(new Pivot(90));
 	}
 }

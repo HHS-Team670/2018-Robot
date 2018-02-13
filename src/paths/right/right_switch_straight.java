@@ -6,7 +6,9 @@ import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.Drive;
 import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Intake;
+import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
+import org.usfirst.frc.team670.robot.commands.actions.components.Time_Drive;
 import org.usfirst.frc.team670.robot.constants.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
@@ -14,7 +16,7 @@ import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ *@pre Line up Robot with the switch
  */
 public class right_switch_straight extends CommandGroup {
 
@@ -40,8 +42,18 @@ public class right_switch_straight extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new Deploy(true));
-		addSequential(new Drive(Field.DSToSwitch - Robot.length));
+		addSequential(new Drive(Field.DSToSwitch - Robot.length - 18));
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
+		addSequential(new Drive(12));
+		addSequential(new Time_Drive(1, 0.6));
     	addSequential(new DropCube());
+    	addSequential(new Drive(-Robot.length));
+    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
+    	addSequential(new Pivot(90));
+    	addSequential(new Drive(Field.SideToSwitch + Robot.width));
+    	addSequential(new Drive(Robot.length - Field.SideTriangleWidth));
+    	addSequential(new Pivot(-90));
+    	addSequential(new Drive(Robot.length + Field.SwitchWidth + (Field.DSToPlatform - Field.DSToSwitch)/2));
+    	addSequential(new Pivot(90));
 	}
 }

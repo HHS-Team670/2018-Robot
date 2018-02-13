@@ -37,10 +37,15 @@ public class right_switch_side extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new Deploy(true));
-    	addSequential(new Drive(Field.DSToSwitch - Robot.length + Field.SwitchWidth/2));
-    	addSequential(new Pivot(-90));
-    	addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
-    	addSequential(new Drive(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth + Field.TOLERANCE));
+		addSequential(new Drive(Field.DSToSwitch - Robot.length/2 + Field.SwitchWidth/2));
+		addSequential(new Pivot(-90));
+		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
+		addSequential(new Drive(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth));
     	addSequential(new DropCube());
+    	addSequential(new Drive(-(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth)));
+    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
+    	addSequential(new Pivot(90));
+    	addSequential(new Drive((Field.DSToPlatform - (Field.DSToSwitch + Field.SwitchWidth))/2 + Robot.length/2 ));
+    	addSequential(new Pivot(-90));
 	}
 }

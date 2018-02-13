@@ -15,7 +15,7 @@ import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ *@pre starts next to the exchange
  */
 public class center_baseline extends CommandGroup {
 
@@ -44,12 +44,12 @@ public class center_baseline extends CommandGroup {
     	addSequential(new Pivot(90));
     	addSequential(new Drive(Field.DSToBaseline - Robot.length + Field.TOLERANCE));
     	addSequential(new Delay(2.5));
-    	addSequential(new Drive(-(Field.DSToBaseline - Robot.length + Field.TOLERANCE)));
+    	addSequential(new Drive(-(Field.DSToBaseline - Robot.length)));
     	addSequential(new Pivot(90));
     	addSequential(new Drive(Field.CubePileWidth));
     	addSequential(new Pivot(90));
-    	addSequential(new Drive(Robot.length + Field.TOLERANCE));
     	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
+    	addSequential(new Drive(Robot.length));
     	addSequential(new DropCube());
 
     }

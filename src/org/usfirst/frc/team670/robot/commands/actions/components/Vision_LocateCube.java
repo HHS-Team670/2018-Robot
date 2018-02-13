@@ -17,7 +17,7 @@ public class Vision_LocateCube extends CommandGroup {
         double angle = Robot.sensors.getAngle();
         addParallel(new Grab(false));
         addSequential(new Pivot(angle));
-        addParallel(new Intake(0.7, 3));
+        addParallel(new Intake(0.7, 5));
         addSequential(new Lidar_DriveLimit(0.3, 6));
         addSequential(new PickupCube());
         

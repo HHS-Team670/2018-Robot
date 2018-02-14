@@ -3,10 +3,13 @@ package org.usfirst.frc.team670.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,11 +26,12 @@ public class Aggregator extends Thread{
 	private AHRS navXMicro;
 	private NetworkTable driverstation, knuckles;
 	private double angle = 0;
-	private I2C lidar;
-
+	private DigitalInput arduinoEcho;
+	private DigitalOutput arduinoTrig;
+	private Ultrasonic ultra;
 	
 	//Booleans
-	private boolean isNavXConnected, lidarConnected, encodersConnected, elevatorEncoders;
+	private boolean isNavXConnected, encodersConnected, elevatorEncoders;
 	private boolean sendDataToDS;
 	
 	public Aggregator(){
@@ -46,14 +50,9 @@ public class Aggregator extends Thread{
 			navXMicro = null;
 		}
 	    	    
-	    try {
-	    	lidar = new I2C(Port.kMXP, 0x29);
-	    	lidarConnected = true;
-	    }catch(RuntimeException ex) {
-	    	lidarConnected = false;
-	    	DriverStation.reportError("Error instantiating ultrasonic: " + ex.getMessage(), true);
-	    	lidar = null;
-	    }
+	    arduinoEcho = new DigitalInput(0);
+		arduinoTrig = new DigitalOutput(1);
+		ultra = new Ultrasonic(arduinoTrig, arduinoEcho);
 	    	    
 	    new Thread(new Runnable() {
 	        @Override
@@ -81,10 +80,11 @@ public class Aggregator extends Thread{
 	
 	public double getDistanceIntakeInches()
 	{
-		if(lidarConnected)
-			return 0;
-		else
-			return 0;
+		ultra.ping();
+		double dist = ultra.getRangeInches();
+		if(dist <= 1.0)
+			dist = 1.0;
+		return dist;
 	}
 	
 	public double getAngle()

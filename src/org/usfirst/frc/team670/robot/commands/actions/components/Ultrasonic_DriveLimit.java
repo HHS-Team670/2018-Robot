@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Lidar_DriveLimit extends Command {
+public class Ultrasonic_DriveLimit extends Command {
 
 	double speed, limit;
 	
-    public Lidar_DriveLimit(double speed, double limitInches) {
+    public Ultrasonic_DriveLimit(double speed, double limitInches) {
         requires(Robot.driveBase);
         limit = limitInches;
         this.speed = speed;

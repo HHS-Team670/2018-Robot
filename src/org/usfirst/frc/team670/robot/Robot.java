@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Try Left from Center", tryLeft);
 		SmartDashboard.putData("Try Right from Center", tryRight);
 	}
-
+	
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
 	 * You can use it to reset any subsystem information you want to clear when
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override

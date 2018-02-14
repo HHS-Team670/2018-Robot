@@ -1,8 +1,9 @@
-package org.usfirst.frc.team670.robot.commands.actions;
+package org.usfirst.frc.team670.robot.commands.actions.components;
 
 import org.usfirst.frc.team670.robot.Robot;
-import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
-import org.usfirst.frc.team670.robot.commands.actions.components.Lidar_DriveLimit;
+import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.actions.PickupCube;
+import org.usfirst.frc.team670.robot.commands.actions.Pivot;
 import org.usfirst.frc.team670.robot.constants.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.Field;
 
@@ -28,7 +29,7 @@ public class NoVision_AutoCube extends CommandGroup {
     		addSequential(new Pivot(90));
     	else
     		addSequential(new Pivot(-90));
-    	addSequential(new Lidar_DriveLimit(0.5, 4));
+    	addSequential(new Ultrasonic_DriveLimit(0.5, 4));
     	addSequential(new PickupCube());
         // Add Commands here:
         // e.g. addSequential(new Command1());

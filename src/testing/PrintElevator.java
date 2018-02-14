@@ -3,6 +3,7 @@ package testing;
 import org.usfirst.frc.team670.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -24,6 +25,7 @@ public class PrintElevator extends Command {
     	double y = Robot.oi.getLeftStick().getY();
     	Robot.elevator.moveElevator(y*0.1);
     	System.out.println(Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition());
+    	SmartDashboard.putString("Elevator Ticks", Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition() + "");
     }
 
     // Make this return true when this Command no longer needs to run execute()

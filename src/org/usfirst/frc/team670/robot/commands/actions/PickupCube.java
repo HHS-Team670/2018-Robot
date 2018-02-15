@@ -31,7 +31,7 @@ public class PickupCube extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if(Robot.sensors.getDistanceIntakeInches() <= 1.5 || com.isCompleted()) {
+		if(Robot.sensors.getDistanceIntakeInches() <= 2 || com.isCompleted()) {
 			return true;
 		}
 		else

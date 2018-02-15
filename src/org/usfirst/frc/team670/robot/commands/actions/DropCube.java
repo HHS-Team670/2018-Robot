@@ -31,7 +31,7 @@ public class DropCube extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Robot.sensors.getDistanceIntakeInches() >= 2 || com.isCompleted())
+        if(Robot.sensors.getDistanceIntakeInches() >= 4 || com.isCompleted())
         	return true;
         else
         	return false;

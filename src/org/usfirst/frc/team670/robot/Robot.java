@@ -55,18 +55,22 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Do Nothing", new CancelCommand());
 		m_chooser.addObject("Turn Right 90 degrees", new NavX_Pivot(90));
 		m_chooser.addObject("Turn Left 90 degrees", new NavX_Pivot(-90));
-		m_chooser.addObject("Turn Right 60 degrees", new NavX_Pivot(60));
-		m_chooser.addObject("Turn Left 60 degrees", new NavX_Pivot(-60));
-		m_chooser.addObject("1ft_encoders", new Encoders_Drive(1));
-		m_chooser.addObject("1ft_encoders_back", new Encoders_Drive(-1));
-		 
+		m_chooser.addObject("Turn Right 45 degrees", new NavX_Pivot(45));
+		m_chooser.addObject("Turn Left 45 degrees", new NavX_Pivot(-45));
+		
+		m_chooser.addObject("0.5ft_encoders", new Encoders_Drive(6));
+		m_chooser.addObject("0.5ft_encoders_back", new Encoders_Drive(-6));
+		m_chooser.addObject("1.5ft_encoders", new Encoders_Drive(18));
+		m_chooser.addObject("1.5ft_encoders_back", new Encoders_Drive(-18));
+		m_chooser.addObject("1ft_encoders", new Encoders_Drive(12));
+		m_chooser.addObject("1ft_encoders_back", new Encoders_Drive(-12));
 		
 		/*m_chooser.addDefault("Do Nothing", new CancelCommand());
 		m_chooser.addObject("Right Position", new Auto_Right());
 		m_chooser.addObject("Center Position", new Auto_Center());
 		m_chooser.addObject("Left Position", new Auto_Left());
 		*/
-		autonomousDelay.addDefault("0 Second", 0.0);
+		/*autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
 		autonomousDelay.addObject("2 Second", 2.0);
 		autonomousDelay.addObject("3 Second", 3.0);
@@ -86,7 +90,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
 		SmartDashboard.putData("Approach Type", ApproachType);
 		SmartDashboard.putData("Try Left from Center", tryLeft);
-		SmartDashboard.putData("Try Right from Center", tryRight);
+		SmartDashboard.putData("Try Right from Center", tryRight);*/
 	}
 	
 	/**

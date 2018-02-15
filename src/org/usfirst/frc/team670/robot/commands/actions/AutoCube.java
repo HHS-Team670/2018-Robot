@@ -2,7 +2,7 @@ package org.usfirst.frc.team670.robot.commands.actions;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
-import org.usfirst.frc.team670.robot.commands.actions.components.Lidar_DriveLimit;
+import org.usfirst.frc.team670.robot.commands.actions.components.Ultrasonic_DriveLimit;
 import org.usfirst.frc.team670.robot.constants.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.Field;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class NoVision_AutoCube extends CommandGroup {
+public class AutoCube extends CommandGroup {
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class NoVision_AutoCube extends CommandGroup {
 	 * @param left True if the Robot is on the left of the switch from the perspective of the DS, false if it is on the right.
 	 * @param cube The cube it should pick up counting from the starting side of the switch (between 1 and 6 inclusive)
 	 */
-    public NoVision_AutoCube(boolean left, int cube) {
+    public AutoCube(boolean left, int cube) {
     	
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	//Drives to the specified cube
@@ -28,7 +28,7 @@ public class NoVision_AutoCube extends CommandGroup {
     		addSequential(new Pivot(90));
     	else
     		addSequential(new Pivot(-90));
-    	addSequential(new Lidar_DriveLimit(0.5, 4));
+    	addSequential(new Ultrasonic_DriveLimit(0.5, 4));
     	addSequential(new PickupCube());
         // Add Commands here:
         // e.g. addSequential(new Command1());

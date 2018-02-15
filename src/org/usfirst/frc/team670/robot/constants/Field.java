@@ -37,5 +37,5 @@ public class Field {
 	public static final double DSToPlatform = 261.47;
 	
 	public static final double CubeWidth = 13;
-	public static final double DistBetweenCubes = (SwitchWidth - CubeWidth * 6)/5; //SET THIS	
+	public static final double DistBetweenCubes = (SwitchWidth - CubeWidth * 6)/5;
 }

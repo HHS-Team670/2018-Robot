@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team670.robot;
 
+import org.usfirst.frc.team670.robot.commands.actions.Deploy;
 import org.usfirst.frc.team670.robot.commands.actions.DropCube;
 import org.usfirst.frc.team670.robot.commands.actions.Grab;
 import org.usfirst.frc.team670.robot.commands.actions.PickupCube;
@@ -14,6 +15,7 @@ import org.usfirst.frc.team670.robot.commands.actions.components.CancelIntake;
 import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.actions.components.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.actions.components.Set_OperatorControl;
+import org.usfirst.frc.team670.robot.commands.actions.components.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.commands.autonomous.CancelCommand;
 import org.usfirst.frc.team670.robot.constants.DriverState;
 import org.usfirst.frc.team670.robot.constants.ElevatorState;
@@ -43,6 +45,8 @@ public class OI {
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
 	private Button toggleIntake = new JoystickButton(operatorStick, 4);
 	private Button toggleClimber = new JoystickButton(operatorStick, 5);
+	private Button grab = new JoystickButton(operatorStick, 10);
+	private Button release = new JoystickButton(operatorStick, 11);
 	
 	// Arcade Controls
 	private Button intakedeploy = new JoystickButton(arcadeStick, 1);
@@ -74,20 +78,19 @@ public class OI {
 		toggleElevator.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		toggleIntake.whenPressed(new Set_OperatorControl(OperatorState.INTAKE));
 		toggleIntake.whenReleased(new Set_OperatorControl(OperatorState.NONE));
-		
+		grab.whenPressed(new Grab(true));
+		grab.whenPressed(new Grab(false));
 		// Driver Controls
 		/*tankDrive.whenPressed(new Set_DriverControl(DriverState.TANK));
 		reverseTankDrive.whenPressed(new Set_DriverControl(DriverState.TANKREVERSE));
 		singleStickDrive.whenPressed(new Set_DriverControl(DriverState.SINGLE));*/
-				
-		// Arcade buttons
-		intakedeploy.whenPressed(new Grab(true)); //1
-		intakeretract.whenPressed(new Grab(false)); //10
 		
-		pickUpCube.whenPressed(new Grab(true));//2
-		//pickUpCube.whenReleased(new CancelIntake());
-		dropCube.whenPressed(new Grab(false));//9
-		//dropCube.whenReleased(new CancelIntake());
+		// Arcade buttons
+		intakedeploy.whenPressed(new Deploy(true)); //1
+		intakeretract.whenPressed(new Deploy(false)); //10
+		
+		pickUpCube.whenPressed(new Vision_PowerCube(0.4));//2
+		dropCube.whenPressed(new DropCube());//9
 		
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));//3
 		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));//8

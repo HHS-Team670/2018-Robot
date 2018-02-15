@@ -25,7 +25,7 @@ public class Aggregator extends Thread{
 	// Sensors
 	private AHRS navXMicro;
 	private NetworkTable driverstation, knuckles;
-	private double angle = 0;
+	private double angle = 0, x, y, w, h;
 	private DigitalInput arduinoEcho;
 	private DigitalOutput arduinoTrig;
 	private Ultrasonic ultra;
@@ -72,6 +72,10 @@ public class Aggregator extends Thread{
 			        	driverstation.putBoolean("isIntakeOpen", Robot.intake.isIntakeOpen());
 			        	driverstation.putBoolean("isIntakeDeployed", Robot.intake.isIntakeDeployed());
 			        	angle = knuckles.getNumber("angle", 0);
+			        	x = knuckles.getNumber("x", 0);
+			        	y = knuckles.getNumber("y", 0);
+			        	w = knuckles.getNumber("w", 0);
+			        	h = knuckles.getNumber("h", 0);
 	        		}
 	        	}
 	        }
@@ -147,11 +151,6 @@ public class Aggregator extends Thread{
 		if (isNavXConnected())
 			return navXMicro.getDisplacementZ();
 		return -1;
-	}
-	
-	public String toString()
-	{
-		return "";
 	}
 	
 	public String getVal(String data) {

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class NoVision_AutoCube extends CommandGroup {
+public class AutoCube extends CommandGroup {
 
 	/**
 	 * 
@@ -20,7 +20,7 @@ public class NoVision_AutoCube extends CommandGroup {
 	 * @param left True if the Robot is on the left of the switch from the perspective of the DS, false if it is on the right.
 	 * @param cube The cube it should pick up counting from the starting side of the switch (between 1 and 6 inclusive)
 	 */
-    public NoVision_AutoCube(boolean left, int cube) {
+    public AutoCube(boolean left, int cube) {
     	
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	//Drives to the specified cube

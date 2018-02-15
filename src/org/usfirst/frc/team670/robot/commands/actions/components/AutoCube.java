@@ -29,8 +29,7 @@ public class AutoCube extends CommandGroup {
     		addSequential(new Pivot(90));
     	else
     		addSequential(new Pivot(-90));
-    	addSequential(new Ultrasonic_DriveLimit(0.5, 4));
-    	addSequential(new PickupCube());
+    	addSequential(new Vision_PowerCube(0.4));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -31,7 +31,7 @@ import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 
 import org.usfirst.frc.team670.robot.commands.actions.Delay;
-import org.usfirst.frc.team670.robot.commands.autonomous.CancelCommand;
+import org.usfirst.frc.team670.robot.commands.actions.components.CancelCommand;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
 import org.usfirst.frc.team670.robot.subsystems.Elevator;
@@ -142,17 +142,17 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		String data = DriverStation.getInstance().getGameSpecificMessage();
-		if(data != null){
-			data = data.substring(0, 2);
-			if(data.equalsIgnoreCase("RR"))
-				m_autonomousCommand = getCommand(mainMenu, subMenuRR);
-			else if(data.equalsIgnoreCase("LL"))
-				m_autonomousCommand = getCommand(mainMenu, subMenuLL);
-			else if(data.equalsIgnoreCase("LR"))
-				m_autonomousCommand = getCommand(mainMenu, subMenuLR);
-			else if(data.equalsIgnoreCase("RL"))
-				m_autonomousCommand = getCommand(mainMenu, subMenuRL);
-		}
+		data = data.substring(0, 2);
+		if(data.equalsIgnoreCase("RR"))
+			m_autonomousCommand = getCommand(mainMenu, subMenuRR);
+		else if(data.equalsIgnoreCase("LL"))
+			m_autonomousCommand = getCommand(mainMenu, subMenuLL);
+		else if(data.equalsIgnoreCase("LR"))
+			m_autonomousCommand = getCommand(mainMenu, subMenuLR);
+		else if(data.equalsIgnoreCase("RL"))
+			m_autonomousCommand = getCommand(mainMenu, subMenuRL);
+		else
+			m_autonomousCommand = new CancelCommand();
 		//RUN THE AUTONOMOUS COMMAND------------------------------
 		CommandGroup combined = new CommandGroup();
 		combined.addSequential(new Delay(autonomousDelay.getSelected()));

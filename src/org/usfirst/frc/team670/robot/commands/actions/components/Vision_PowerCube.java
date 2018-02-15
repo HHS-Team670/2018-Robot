@@ -26,7 +26,7 @@ public class Vision_PowerCube extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double angle = Robot.sensors.getAngle();
-    	double shift = (angle/60);
+    	double shift = (angle/30);
     	if(shift > 1.0)
     		shift = 1.0;
     	if(angle > 0) //turn right

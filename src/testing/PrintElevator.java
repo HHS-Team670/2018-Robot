@@ -24,6 +24,8 @@ public class PrintElevator extends Command {
     protected void execute() {
     	double y = Robot.oi.getLeftStick().getY();
     	Robot.elevator.moveElevator(y*0.1);
+    	if(Robot.oi.getOperatorStick().getRawButton(1))
+    			Robot.elevator.getTalon().getSensorCollection().setPulseWidthPosition(0, 0);
     	System.out.println(Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition());
     	SmartDashboard.putString("Elevator Ticks", Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition() + "");
     }

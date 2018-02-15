@@ -42,11 +42,12 @@ public class OI {
 	// Operator Controls
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
 	private Button toggleIntake = new JoystickButton(operatorStick, 4);
-
+	private Button toggleClimber = new JoystickButton(operatorStick, 5);
+	
 	// Arcade Controls
 	private Button intakedeploy = new JoystickButton(arcadeStick, 1);
 	private Button intakeretract = new JoystickButton(arcadeStick, 10);
-
+	
 	private Button pickUpCube = new JoystickButton(arcadeStick, 2);
 	private Button dropCube = new JoystickButton(arcadeStick, 9);
 
@@ -61,36 +62,40 @@ public class OI {
 
 	
 	// Driver Controls
-	private Button tankDrive = new JoystickButton(leftDriveStick, 3);
+	/*private Button tankDrive = new JoystickButton(leftDriveStick, 3);
 	private Button reverseTankDrive = new JoystickButton(leftDriveStick, 4);
-	private Button singleStickDrive = new JoystickButton(leftDriveStick, 5);
+	private Button singleStickDrive = new JoystickButton(leftDriveStick, 5);*/
 	
 	public OI() {
-		// Arcade buttons
-		intakedeploy.whenPressed(new Grab(true));
-		intakeretract.whenPressed(new Grab(false));
-		pickUpCube.whenPressed(new PickupCube());
-		pickUpCube.whenReleased(new CancelIntake());
-		dropCube.whenPressed(new DropCube());
-		dropCube.whenReleased(new CancelIntake());
-		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
-		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
-		elevatorHighScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
-		elevatorMidScale.whenPressed(new Encoders_Elevator(ElevatorState.MIDSCALE));
-		cancelCommand.whenPressed(new CancelCommand());
-
-		// Driver Controls
-		tankDrive.whenPressed(new Set_DriverControl(DriverState.TANK));
-		reverseTankDrive.whenPressed(new Set_DriverControl(DriverState.TANKREVERSE));
-		singleStickDrive.whenPressed(new Set_DriverControl(DriverState.SINGLE));
-		
 		// Operator buttons
+		toggleClimber.whenPressed(new Set_OperatorControl(OperatorState.CLIMBER));
+		toggleClimber.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		toggleElevator.whenPressed(new Set_OperatorControl(OperatorState.ELEVATOR));
 		toggleElevator.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		toggleIntake.whenPressed(new Set_OperatorControl(OperatorState.INTAKE));
 		toggleIntake.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		
-		printElevator.whenPressed(new testing.PrintElevator());
+		// Driver Controls
+		/*tankDrive.whenPressed(new Set_DriverControl(DriverState.TANK));
+		reverseTankDrive.whenPressed(new Set_DriverControl(DriverState.TANKREVERSE));
+		singleStickDrive.whenPressed(new Set_DriverControl(DriverState.SINGLE));*/
+				
+		// Arcade buttons
+		intakedeploy.whenPressed(new Grab(true)); //1
+		intakeretract.whenPressed(new Grab(false)); //10
+		
+		pickUpCube.whenPressed(new Grab(true));//2
+		//pickUpCube.whenReleased(new CancelIntake());
+		dropCube.whenPressed(new Grab(false));//9
+		//dropCube.whenReleased(new CancelIntake());
+		
+		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));//3
+		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));//8
+		elevatorHighScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));//4
+		elevatorMidScale.whenPressed(new Encoders_Elevator(ElevatorState.MIDSCALE));//7
+		
+		cancelCommand.whenPressed(new CancelCommand()); //5
+		printElevator.whenPressed(new testing.PrintElevator()); //6
 	}
 
 	public Joystick getLeftStick() {

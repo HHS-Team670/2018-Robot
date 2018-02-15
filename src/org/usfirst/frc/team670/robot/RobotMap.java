@@ -25,24 +25,28 @@ public class RobotMap {
     public static final int rightMotor2 = 2;
     public static final int leftMotor1 = 3;
     public static final int leftMotor2 = 4;
-    public static final int elevatorMotor = 5;
     
     //Elevator
+    public static final int elevatorMotor = 5;
+	
+    //Climber
+    public static final int climberMotor = 8;
     
-    //CAN Systems
-    public static final int pdp = 0;
-	public static final int PCModule = 9;
-
     //Intake
-    public static final int intakeDeploy = 2;
-    public static final int clawDeploySoft = 1;
-    public static final int clawDeployHard = 1;
-    public static final int intakeLeftTalon = 6;
-    public static final int intakeRightTalon = 7;
-    
+    	//Solenoids
+	    public static final int deployer = 2;
+	    public static final int claw = 1;
+    	//Motors
+	    public static final int intakeLeftTalon = 6;
+	    public static final int intakeRightTalon = 7;
+
     //Sensor Ports
     public final static Port navXPort = SerialPort.Port.kUSB;
     public final static int ultrasonicAnalogPort = 0;
+	    
+    //CAN Systems
+    public static final int pdp = 0;
+	public static final int PCModule = 9;
     
     //Joysticks
     public final static int leftDriveStick = 0;

@@ -7,7 +7,6 @@ import org.usfirst.frc.team670.robot.commands.joysticks.Joystick_Intake;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -20,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Intake extends Subsystem {
 	
 	private Compressor comp;
-	private Solenoid deployIntakeElevator, deployGrabber;
+	private Solenoid deployer, claw;
 	private TalonSRX leftIntake, rightIntake;
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -31,8 +30,8 @@ public class Intake extends Subsystem {
 		comp.setClosedLoopControl(true);
 		leftIntake = new TalonSRX(RobotMap.intakeLeftTalon);
 		rightIntake = new TalonSRX(RobotMap.intakeRightTalon);
-		deployIntakeElevator = new Solenoid(RobotMap.PCModule,RobotMap.intakeDeploy);
-		deployGrabber = new Solenoid(RobotMap.PCModule, RobotMap.clawDeploySoft);
+		deployer = new Solenoid(RobotMap.PCModule,RobotMap.deployer);
+		claw = new Solenoid(RobotMap.PCModule, RobotMap.claw);
 	}
 	
 	public void driveIntake(double speed)
@@ -42,7 +41,7 @@ public class Intake extends Subsystem {
 		double current = Robot.pdp.getCurrent(RobotMap.intakeLeftTalon);
 		current += Robot.pdp.getCurrent(RobotMap.intakeRightTalon);
 		if(current >= currentLimit){
-			//Write information to network tables
+			System.out.println("Intake is under stress");
 		}
 		leftIntake.set(ControlMode.PercentOutput, speed);
 		rightIntake.set(ControlMode.PercentOutput, -speed);
@@ -50,12 +49,12 @@ public class Intake extends Subsystem {
 	
 	public void deploySupport(boolean deploy)
 	{
-		deployIntakeElevator.set(deploy);
+		deployer.set(deploy);
 	}
 	
 	public void deployGrabber(boolean deploy)
 	{	
-		deployGrabber.set(deploy);
+		claw.set(deploy);
 	}
 	
     public void initDefaultCommand() {
@@ -64,12 +63,12 @@ public class Intake extends Subsystem {
     }
 
 	public boolean isIntakeOpen() {
-		return deployGrabber.get();
+		return claw.get();
 		//return false;
 	}
 
 	public boolean isIntakeDeployed() {
-		return deployIntakeElevator.get();
+		return deployer.get();
 		//return false;
 	}
 }

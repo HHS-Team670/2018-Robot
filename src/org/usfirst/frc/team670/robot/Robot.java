@@ -32,6 +32,7 @@ import paths.right.right_switch_straight;
 
 import org.usfirst.frc.team670.robot.commands.actions.Delay;
 import org.usfirst.frc.team670.robot.commands.autonomous.CancelCommand;
+import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
 import org.usfirst.frc.team670.robot.subsystems.Elevator;
 import org.usfirst.frc.team670.robot.subsystems.Intake;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	public static final Elevator elevator = new Elevator();
 	public static final DriveBase driveBase = new DriveBase();
 	public static final Intake intake = new Intake();
+	public static final Climber climber = new Climber();
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel(RobotMap.pdp);
 	
 	public static Aggregator sensors;
@@ -55,12 +57,7 @@ public class Robot extends TimedRobot {
 	private SendableChooser<String> mainMenu;
 	private SendableChooser<Double> autonomousDelay;
     private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
-	/*public static SendableChooser<Command> m_chooser = new SendableChooser<>();
-	public static SendableChooser<Double> autonomousDelay = new SendableChooser<>();
-	public static SendableChooser<Boolean> ApproachType = new SendableChooser<>();
-	public static SendableChooser<Boolean> tryLeft = new SendableChooser<>();
-	public static SendableChooser<Boolean> tryRight = new SendableChooser<>();
-	*/
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.

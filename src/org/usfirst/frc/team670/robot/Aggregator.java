@@ -38,7 +38,7 @@ public class Aggregator extends Thread{
 		sendDataToDS = true;
 		
 	    driverstation = NetworkTable.getTable("driverstation");
-		knuckles = NetworkTable.getTable("vision");
+		knuckles = NetworkTable.getTable("knuckles_vision");
 		
 		//Check the navXMicro is plugged in
 	    try {
@@ -59,7 +59,7 @@ public class Aggregator extends Thread{
 	        public void run() {
 	        	while(true)
 	        	{
-	        		if(sendDataToDS && System.currentTimeMillis()%50==0)
+	        		if(sendDataToDS)
 	        		{
 	        			driverstation.putString("operator_state", Robot.oi.getOS().toString());
 	        			driverstation.putString("driver_state", Robot.oi.getDS().toString());

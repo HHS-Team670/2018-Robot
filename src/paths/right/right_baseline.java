@@ -1,8 +1,8 @@
 package paths.right;
 
-import org.usfirst.frc.team670.robot.commands.actions.Delay;
-import org.usfirst.frc.team670.robot.commands.actions.Deploy;
-import org.usfirst.frc.team670.robot.commands.actions.Drive;
+import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
+import org.usfirst.frc.team670.robot.commands.drive.Drive;
+import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.Field;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;

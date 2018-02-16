@@ -7,19 +7,20 @@
 
 package org.usfirst.frc.team670.robot;
 
-import org.usfirst.frc.team670.robot.commands.actions.Deploy;
-import org.usfirst.frc.team670.robot.commands.actions.DropCube;
-import org.usfirst.frc.team670.robot.commands.actions.Grab;
-import org.usfirst.frc.team670.robot.commands.actions.PickupCube;
-import org.usfirst.frc.team670.robot.commands.actions.components.CancelCommand;
-import org.usfirst.frc.team670.robot.commands.actions.components.CancelIntake;
-import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Elevator;
-import org.usfirst.frc.team670.robot.commands.actions.components.Set_DriverControl;
-import org.usfirst.frc.team670.robot.commands.actions.components.Set_OperatorControl;
-import org.usfirst.frc.team670.robot.commands.actions.components.Vision_PowerCube;
-import org.usfirst.frc.team670.robot.constants.DriverState;
-import org.usfirst.frc.team670.robot.constants.ElevatorState;
-import org.usfirst.frc.team670.robot.constants.OperatorState;
+import org.usfirst.frc.team670.robot.commands.CancelCommand;
+import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
+import org.usfirst.frc.team670.robot.commands.intake.StopIntakeWheels;
+import org.usfirst.frc.team670.robot.commands.intake.Deploy;
+import org.usfirst.frc.team670.robot.commands.intake.DropCube;
+import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
+import org.usfirst.frc.team670.robot.commands.intake.PickupCube;
+import org.usfirst.frc.team670.robot.commands.intake.Vision_PowerCube;
+import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
+import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
+import org.usfirst.frc.team670.robot.constants.RobotMap;
+import org.usfirst.frc.team670.robot.enums.DriverState;
+import org.usfirst.frc.team670.robot.enums.ElevatorState;
+import org.usfirst.frc.team670.robot.enums.OperatorState;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -78,8 +79,8 @@ public class OI {
 		toggleElevator.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		toggleIntake.whenPressed(new Set_OperatorControl(OperatorState.INTAKE));
 		toggleIntake.whenReleased(new Set_OperatorControl(OperatorState.NONE));
-		grab.whenPressed(new Grab(true));
-		grab.whenPressed(new Grab(false));
+		grab.whenPressed(new CloseIntake(true));
+		grab.whenPressed(new CloseIntake(false));
 		// Driver Controls
 		/*tankDrive.whenPressed(new Set_DriverControl(DriverState.TANK));
 		reverseTankDrive.whenPressed(new Set_DriverControl(DriverState.TANKREVERSE));

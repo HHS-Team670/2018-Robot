@@ -1,13 +1,12 @@
-package paths.left;
+package org.usfirst.frc.team670.robot.commands.auto_specific;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
-import org.usfirst.frc.team670.robot.commands.intake.Deploy;
-import org.usfirst.frc.team670.robot.commands.intake.DropCube;
+import org.usfirst.frc.team670.robot.commands.intake.PickupCube;
+import org.usfirst.frc.team670.robot.commands.intake.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.constants.Field;
-import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import org.usfirst.frc.team670.robot.enums.ElevatorState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -15,9 +14,24 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class left_scale_side extends CommandGroup {
+public class AutoCube extends CommandGroup {
 
-    public left_scale_side() {
+	/**
+	 * 
+	 * 
+	 * @param left True if the Robot is on the left of the switch from the perspective of the DS, false if it is on the right.
+	 * @param cube The cube it should pick up counting from the starting side of the switch (between 1 and 6 inclusive)
+	 */
+    public AutoCube(boolean left, int cube) {
+    	
+    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
+    	//Drives to the specified cube
+    	addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH + Field.DIST_BETWEEN_CUBES * (cube - 1) + Field.CUBE_WIDTH * cube - Field.CUBE_WIDTH/2));
+    	if(left)
+    		addSequential(new Pivot(90));
+    	else
+    		addSequential(new Pivot(-90));
+    	addSequential(new Vision_PowerCube(0.4));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -34,16 +48,5 @@ public class left_scale_side extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new Deploy(true));
-    	addSequential(new Drive(Field.DS_TO_SCALE - Robot.length/2 + Field.SCALE_WIDTH/2));
-    	addSequential(new Pivot(90));
-    	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
-    	addSequential(new Drive(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR));
-    	addSequential(new DropCube());
-    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
-    	addSequential(new Drive(-(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR)));
-    	addSequential(new Pivot(90));
-    	addSequential(new Drive(Field.DS_TO_SCALE - (Field.DS_TO_SWITCH + Field.SWITCH_WIDTH - Robot.length) + Robot.width));
-    	addSequential(new Pivot(-90));
     }
 }

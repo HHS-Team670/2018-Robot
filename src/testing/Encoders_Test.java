@@ -1,6 +1,7 @@
 package testing;
 
 import org.usfirst.frc.team670.robot.Robot;
+
 import com.ctre.phoenix.motorcontrol.SensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 

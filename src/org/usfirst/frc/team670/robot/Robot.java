@@ -30,10 +30,12 @@ import paths.right.right_scale_side;
 import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 
-import org.usfirst.frc.team670.robot.commands.actions.Delay;
-import org.usfirst.frc.team670.robot.commands.actions.Drive;
-import org.usfirst.frc.team670.robot.commands.actions.components.CancelCommand;
-import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Drive;
+import org.usfirst.frc.team670.robot.commands.CancelCommand;
+import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
+import org.usfirst.frc.team670.robot.commands.drive.Drive;
+import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+import org.usfirst.frc.team670.robot.constants.RobotMap;
+import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
 import org.usfirst.frc.team670.robot.subsystems.Elevator;

@@ -66,6 +66,12 @@ public class Elevator extends Subsystem {
 		elevator.configReverseSoftLimitEnable(limitOn, 0);
 	}
 	
+	public void resetEncoder() {
+		encoder.setPulseWidthPosition(0, 0);
+		encoder.setAnalogPosition(0, 0);
+		encoder.setQuadraturePosition(0, 0);
+	}
+	
 	public void moveElevator(double speed)
 	{
 		elevator.set(ControlMode.PercentOutput, speed);

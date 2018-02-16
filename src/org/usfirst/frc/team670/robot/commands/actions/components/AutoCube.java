@@ -24,7 +24,7 @@ public class AutoCube extends CommandGroup {
     	
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	//Drives to the specified cube
-    	addSequential(new Drive(Field.SideToSwitch - Robot.width - Field.SideTriangleWidth + Field.DistBetweenCubes * (cube - 1) + Field.CubeWidth * cube - Field.CubeWidth/2));
+    	addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH + Field.DIST_BETWEEN_CUBES * (cube - 1) + Field.CUBE_WIDTH * cube - Field.CUBE_WIDTH/2));
     	if(left)
     		addSequential(new Pivot(90));
     	else

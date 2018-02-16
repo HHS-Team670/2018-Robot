@@ -18,9 +18,9 @@ public class Encoders_Pivot extends Command{
 	private int numTimesMotorOutput;
 	
 	public Encoders_Pivot(double angle) {
-		double circum = Math.PI*RoboConstants.pivotRadius;
+		double circum = Math.PI*RoboConstants.PIVOT_RADIUS;
 		double inches = circum*(angle/360.0);
- 		this.ticksToTravel = ((inches)/(Math.PI*RoboConstants.DIAMETERinInchesDriveBase)) * RoboConstants.drivebaseTickPerRotation;
+ 		this.ticksToTravel = ((inches)/(Math.PI*RoboConstants.DRIVEBASE_WHEEL_DIAMETER)) * RoboConstants.DRIVEBASE_TICKS_PER_ROTATION;
 		requires(Robot.driveBase);
 	}
 

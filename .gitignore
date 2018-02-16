@@ -8,3 +8,6 @@ build/org/usfirst/frc/team670/robot/utilities/DriverState.class
 .classpath
 *.class
 *.class
+*.jar
+build/jars/WPILib.jar
+*.jar

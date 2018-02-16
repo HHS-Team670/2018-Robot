@@ -26,8 +26,8 @@ public class Encoders_Drive extends Command {
 
 	public Encoders_Drive(double inches) {
 
-		this.ticksToTravel = ((inches) / (Math.PI * RoboConstants.DIAMETERinInchesDriveBase))
-				* RoboConstants.drivebaseTickPerRotation;
+		this.ticksToTravel = ((inches) / (Math.PI * RoboConstants.DRIVEBASE_WHEEL_DIAMETER))
+				* RoboConstants.DRIVEBASE_TICKS_PER_ROTATION;
 		requires(Robot.driveBase);
 		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
 		rightEncoder = Robot.driveBase.getRight().getSensorCollection();

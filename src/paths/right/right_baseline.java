@@ -30,8 +30,8 @@ public class right_baseline extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new Deploy(true));
-    	addSequential(new Drive(Field.DSToBaseline + Field.TOLERANCE));
+    	addSequential(new Drive(Field.DS_TO_BASELINE + Field.TOLERANCE));
     	addSequential(new Delay(4));
-    	addSequential(new Drive(-Field.DSToBaseline));
+    	addSequential(new Drive(-Field.DS_TO_BASELINE));
 	}
 }

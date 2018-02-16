@@ -38,9 +38,9 @@ public class center_right_switch_side extends CommandGroup {
     	addParallel(new Deploy(true));
     	addSequential(new Drive(0.5*Robot.length));
     	addSequential(new Pivot(90));
-    	addSequential(new Drive(0.5*Field.SwitchLength + 2*Robot.length));
+    	addSequential(new Drive(0.5*Field.SWITCH_LENGTH + 2*Robot.length));
     	addSequential(new Pivot(-90));
-    	addSequential(new Drive(Field.DSToSwitch + Field.SwitchWidth/2 - 0.5*Robot.length));
+    	addSequential(new Drive(Field.DS_TO_SWITCH + Field.SWITCH_WIDTH/2 - 0.5*Robot.length));
     	addSequential(new Pivot(-90));
     	addSequential(new Drive(Robot.length)); //Check if TOLERANCE is actually accounted for
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));

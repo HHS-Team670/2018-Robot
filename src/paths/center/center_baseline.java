@@ -40,13 +40,13 @@ public class center_baseline extends CommandGroup {
     	addParallel(new Deploy(true));
     	addSequential(new Drive(Robot.length));
     	addSequential(new Pivot(-90));
-    	addSequential(new Drive(Field.ExchangeWidth/2 + Field.CubePileWidth));
+    	addSequential(new Drive(Field.EXCHANGE_WIDTH/2 + Field.CUBEPILE_WIDTH));
     	addSequential(new Pivot(90));
-    	addSequential(new Drive(Field.DSToBaseline - Robot.length + Field.TOLERANCE));
+    	addSequential(new Drive(Field.DS_TO_BASELINE - Robot.length + Field.TOLERANCE));
     	addSequential(new Delay(2.5));
-    	addSequential(new Drive(-(Field.DSToBaseline - Robot.length)));
+    	addSequential(new Drive(-(Field.DS_TO_BASELINE - Robot.length)));
     	addSequential(new Pivot(90));
-    	addSequential(new Drive(Field.CubePileWidth));
+    	addSequential(new Drive(Field.CUBEPILE_WIDTH));
     	addSequential(new Pivot(90));
     	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Drive(Robot.length));

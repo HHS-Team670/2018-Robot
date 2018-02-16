@@ -3,7 +3,6 @@ package org.usfirst.frc.team670.robot.subsystems;
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.RobotMap;
 import org.usfirst.frc.team670.robot.commands.joysticks.Joystick_Intake;
-
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -37,7 +36,7 @@ public class Intake extends Subsystem {
 	public void driveIntake(double speed)
 	{
 		double batteryVoltage = Robot.pdp.getVoltage();
-		double currentLimit = RoboConstants.maxIntakeVoltage/batteryVoltage;
+		double currentLimit = RoboConstants.MAX_INTAKE_VOLTAGE/batteryVoltage;
 		double current = Robot.pdp.getCurrent(RobotMap.intakeLeftTalon);
 		current += Robot.pdp.getCurrent(RobotMap.intakeRightTalon);
 		if(current >= currentLimit){

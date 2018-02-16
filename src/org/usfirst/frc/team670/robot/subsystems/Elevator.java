@@ -21,6 +21,9 @@ public class Elevator extends Subsystem {
     // here. Call these from Commands.
 	private TalonSRX elevator;
 	private SensorCollection encoder;
+	private final double PROPORTION_ELEVATOR = 1;
+	private final double INTEGRAL_ELEVATOR = 0;
+	private final double DERIVATIVE_ELEVATOR = 0;
 	
 	public Elevator()
 	{
@@ -48,9 +51,9 @@ public class Elevator extends Subsystem {
 		talon.configAllowableClosedloopError(0, RoboConstants.kPIDLoopIdx,
 				RoboConstants.kTimeoutMs); 	
 		talon.config_kF(RoboConstants.kPIDLoopIdx, 0.0, RoboConstants.kTimeoutMs);
-		talon.config_kP(RoboConstants.kPIDLoopIdx, RoboConstants.ProportionElevator, RoboConstants.kTimeoutMs);
-		talon.config_kI(RoboConstants.kPIDLoopIdx, RoboConstants.IntegralElevator, RoboConstants.kTimeoutMs);
-		talon.config_kD(RoboConstants.kPIDLoopIdx, RoboConstants.DerivativeElevator, RoboConstants.kTimeoutMs);
+		talon.config_kP(RoboConstants.kPIDLoopIdx, PROPORTION_ELEVATOR, RoboConstants.kTimeoutMs);
+		talon.config_kI(RoboConstants.kPIDLoopIdx, INTEGRAL_ELEVATOR, RoboConstants.kTimeoutMs);
+		talon.config_kD(RoboConstants.kPIDLoopIdx, DERIVATIVE_ELEVATOR, RoboConstants.kTimeoutMs);
 	}
 	
 	public double getCurrentPosition()

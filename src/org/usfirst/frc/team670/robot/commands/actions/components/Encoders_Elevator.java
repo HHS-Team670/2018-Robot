@@ -21,17 +21,17 @@ public class Encoders_Elevator extends Command{
 	public Encoders_Elevator(ElevatorState state) {
 		requires(Robot.elevator);
 		if(state == ElevatorState.EXCHANGE)
-			targetPulseHeight = RoboConstants.elevatorPulseForExchange;
+			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;
 		else if(state.equals(ElevatorState.SWITCH))
-			targetPulseHeight = RoboConstants.elevatorPulseForSwitch;
+			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_SWITCH;
 		else if(state.equals(ElevatorState.HIGHSCALE))
-			targetPulseHeight = RoboConstants.elevatorPulseForHighScale;
+			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_HIGHSCALE;
 		else if(state.equals(ElevatorState.EXCHANGE))
-			targetPulseHeight = RoboConstants.elevatorPulseForExchange;
+			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;
 		else if(state.equals(ElevatorState.MIDSCALE))
-			targetPulseHeight = RoboConstants.elevatorPulseForMidScale;
+			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_MIDSCALE;
 		else
-			targetPulseHeight = RoboConstants.elevatorPulseForExchange;
+			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;
 		
  		//this.ticksToTravel = ((inches)/(Math.PI*Constants.DIAMETERinInchesDriveBase)) * Constants.drivebaseTickPerRotation;
 		

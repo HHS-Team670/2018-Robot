@@ -42,7 +42,7 @@ public class right_switch_straight extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new Deploy(true));
-		addSequential(new Drive(Field.DSToSwitch - Robot.length - 18));
+		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 18));
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
 		addSequential(new Drive(12));
 		addSequential(new Time_Drive(1, 0.6));
@@ -50,10 +50,10 @@ public class right_switch_straight extends CommandGroup {
     	addSequential(new Drive(-Robot.length));
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Pivot(90));
-    	addSequential(new Drive(Field.SideToSwitch + Robot.width));
-    	addSequential(new Drive(Robot.length - Field.SideTriangleWidth));
+    	addSequential(new Drive(Field.SIDE_TO_SWITCH + Robot.width));
+    	addSequential(new Drive(Robot.length - Field.SIDE_TRIANGLE_WIDTH));
     	addSequential(new Pivot(-90));
-    	addSequential(new Drive(Robot.length + Field.SwitchWidth + (Field.DSToPlatform - Field.DSToSwitch)/2));
+    	addSequential(new Drive(Robot.length + Field.SWITCH_WIDTH + (Field.DS_TO_PLATFORM - Field.DS_TO_SWITCH)/2));
     	addSequential(new Pivot(90));
 	}
 }

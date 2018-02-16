@@ -41,7 +41,7 @@ public class DriveBase extends Subsystem {
 		left2 = new TalonSRX(RobotMap.leftMotor2);
 		right1 = new TalonSRX(RobotMap.rightMotor1);
 		right2 = new TalonSRX(RobotMap.rightMotor2);
-				
+
 		left1.setInverted(true);
 		left2.setInverted(true);
 		right1.setInverted(false);
@@ -88,9 +88,8 @@ public class DriveBase extends Subsystem {
 			return null;
 		}
 	}
-	
-	public void initJoystickDrive()
-	{
+
+	public void initJoystickDrive() {
 		left1.setNeutralMode(NeutralMode.Coast);
 		left2.setNeutralMode(NeutralMode.Coast);
 		right1.setNeutralMode(NeutralMode.Coast);
@@ -130,13 +129,15 @@ public class DriveBase extends Subsystem {
 	public double getLeftEncPositionInFeet() {
 		double ticks = left1.getSensorCollection().getQuadraturePosition();
 		// Convert encoder ticks to feet
-		return ((Math.PI * RoboConstants.DIAMETERinInchesDriveBase) / (RoboConstants.drivebaseTickPerRotation * RoboConstants.gearRatioDB) * ticks) / 12;
+		return ((Math.PI * RoboConstants.DIAMETERinInchesDriveBase)
+				/ (RoboConstants.drivebaseTickPerRotation * RoboConstants.gearRatioDB) * ticks) / 12;
 	}
 
 	public double getRightEncPositionInFeet() {
 		double ticks = right1.getSensorCollection().getQuadraturePosition();
 		// Convert encoder ticks to feet
-		return ((Math.PI * RoboConstants.DIAMETERinInchesDriveBase) / (RoboConstants.drivebaseTickPerRotation * RoboConstants.gearRatioDB) * ticks) / 12;
+		return ((Math.PI * RoboConstants.DIAMETERinInchesDriveBase)
+				/ (RoboConstants.drivebaseTickPerRotation * RoboConstants.gearRatioDB) * ticks) / 12;
 	}
 
 	/**
@@ -145,15 +146,16 @@ public class DriveBase extends Subsystem {
 	 * public double feetToEncoderTicks(double feet)
 	 * </pre>
 	 * 
-	 * Returns a value in ticks based on a certain value in feet using the
-	 * Magnetic Encoder.
+	 * Returns a value in ticks based on a certain value in feet using the Magnetic
+	 * Encoder.
 	 * 
 	 * @param feet
 	 *            The value in feet
 	 * @return The value in ticks
 	 */
 	public double feetToEncoderTicks(double feet) {
-		return (RoboConstants.drivebaseTickPerRotation * RoboConstants.gearRatioDB) / (Math.PI * RoboConstants.DIAMETERinInchesDriveBase) * feet;
+		return (RoboConstants.drivebaseTickPerRotation * RoboConstants.gearRatioDB)
+				/ (Math.PI * RoboConstants.DIAMETERinInchesDriveBase) * feet;
 	}
 
 	public void initPID(TalonSRX talon) {
@@ -161,17 +163,17 @@ public class DriveBase extends Subsystem {
 		left2.setNeutralMode(NeutralMode.Brake);
 		right1.setNeutralMode(NeutralMode.Brake);
 		right2.setNeutralMode(NeutralMode.Brake);
-		
+
 		int absolutePosition = talon.getSelectedSensorPosition(RoboConstants.kTimeoutMs)
 				& 0xFFF; /*
-							 * mask out the bottom12 bits, we don't care about
-							 * the wrap arounds
+							 * mask out the bottom12 bits, we don't care about the wrap arounds
 							 */
 		/* use the low level API to set the quad encoder signal */
 		talon.setSelectedSensorPosition(absolutePosition, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs);
 
 		/* choose the sensor and sensor direction */
-		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs);
+		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, RoboConstants.kPIDLoopIdx,
+				RoboConstants.kTimeoutMs);
 		talon.setSensorPhase(true);
 
 		/* set the peak and nominal outputs, 12V means full */
@@ -179,13 +181,12 @@ public class DriveBase extends Subsystem {
 		talon.configNominalOutputReverse(0, RoboConstants.kTimeoutMs);
 		talon.configPeakOutputForward(1, RoboConstants.kTimeoutMs);
 		talon.configPeakOutputReverse(-1, RoboConstants.kTimeoutMs);
+		talon.configClosedloopRamp(1, 0);
 		/*
-		 * set the allowable closed-loop error, Closed-Loop output will be
-		 * neutral within this range. See Table in Section 17.2.1 for native
-		 * units per rotation.
+		 * set the allowable closed-loop error, Closed-Loop output will be neutral
+		 * within this range. See Table in Section 17.2.1 for native units per rotation.
 		 */
-		talon.configAllowableClosedloopError(0, RoboConstants.kPIDLoopIdx,
-				RoboConstants.kTimeoutMs); /* always servo */
+		talon.configAllowableClosedloopError(0, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs); /* always servo */
 		/* set closed loop gains in slot0 */
 		talon.config_kF(RoboConstants.kPIDLoopIdx, 0.0, RoboConstants.kTimeoutMs);
 		talon.config_kP(RoboConstants.kPIDLoopIdx, RoboConstants.Proportion, RoboConstants.kTimeoutMs);

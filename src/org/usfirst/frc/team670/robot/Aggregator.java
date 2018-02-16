@@ -76,6 +76,7 @@ public class Aggregator extends Thread{
 			        	y = knuckles.getNumber("y", 0);
 			        	w = knuckles.getNumber("w", 0);
 			        	h = knuckles.getNumber("h", 0);
+			        	System.out.println("Angle to the cube: " + angle);
 	        		}
 	        	}
 	        }

@@ -42,9 +42,9 @@ public class Vision_PowerCube extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Robot.sensors.getDistanceIntakeInches() <= 4)
-    		return true;
-        else
+       // if(Robot.sensors.getDistanceIntakeInches() <= 4)
+    	//	return true;
+        //else
         	return false;
     }
 

@@ -31,7 +31,9 @@ import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 
 import org.usfirst.frc.team670.robot.commands.actions.Delay;
+import org.usfirst.frc.team670.robot.commands.actions.Drive;
 import org.usfirst.frc.team670.robot.commands.actions.components.CancelCommand;
+import org.usfirst.frc.team670.robot.commands.actions.components.Encoders_Drive;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
 import org.usfirst.frc.team670.robot.subsystems.Elevator;
@@ -57,7 +59,7 @@ public class Robot extends TimedRobot {
 	private SendableChooser<String> mainMenu;
 	private SendableChooser<Double> autonomousDelay;
     private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
-	
+	private SendableChooser<Command> testing;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -66,14 +68,19 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		oi = new OI();
 		sensors = new Aggregator();
-		lastChoice = null;
+		lastChoice = "";
 		
+		testing = new SendableChooser<Command>();
+		testing.addDefault("2ft", new Encoders_Drive(24));
+		testing.addObject("1ft", new Encoders_Drive(12));
+		testing.addObject("5ft", new Encoders_Drive(12*5));
 		//The first character is the switch, the second one is the scale
 		mainMenu = new SendableChooser<String>();
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();
 		subMenuRL = new SendableChooser<String>();
 		subMenuLR = new SendableChooser<String>();
+		autonomousDelay = new SendableChooser<Double>();
 
         mainMenu.addDefault("None", "default");
         mainMenu.addObject("Left", "Left");
@@ -87,7 +94,6 @@ public class Robot extends TimedRobot {
         autonomousDelay.addObject("4 Second", 4.0);
         autonomousDelay.addObject("5 Second", 5.0);
         
-        SmartDashboard.putData("Position Selector", mainMenu);
         SmartDashboard.putData("Auton Delay", autonomousDelay);
 	}
 	
@@ -103,8 +109,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		
-		if (mainMenu.getSelected() != null) {
+        SmartDashboard.putData(testing);
+		/*if (mainMenu.getSelected() != null) {
 			if(!lastChoice.equalsIgnoreCase(mainMenu.getSelected())){
 				subMenuRR = populateList(mainMenu.getSelected());
 				subMenuLL = populateList(mainMenu.getSelected());
@@ -123,7 +129,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData(subMenuLL);
 		SmartDashboard.putData(subMenuRL);
 		SmartDashboard.putData(subMenuRL);
-		
+		*/
 		Scheduler.getInstance().run();
 	}
 	
@@ -141,7 +147,7 @@ public class Robot extends TimedRobot {
 	 */ 
 	@Override
 	public void autonomousInit() {
-		String data = DriverStation.getInstance().getGameSpecificMessage();
+		/*String data = DriverStation.getInstance().getGameSpecificMessage();
 		data = data.substring(0, 2);
 		if(data.equalsIgnoreCase("RR"))
 			m_autonomousCommand = getCommand(mainMenu, subMenuRR);
@@ -164,7 +170,11 @@ public class Robot extends TimedRobot {
 		else
 		{
 			SmartDashboard.putString("dataStatus", "SMARTDASHBOARD AUTON ERROR");
-		}
+		}*/
+		m_autonomousCommand = testing.getSelected();
+		System.out.println(m_autonomousCommand.toString());
+		if (m_autonomousCommand != null)
+			(m_autonomousCommand).start();
 	}
 	
 	/**

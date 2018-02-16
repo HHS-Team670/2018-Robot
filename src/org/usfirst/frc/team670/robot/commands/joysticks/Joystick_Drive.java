@@ -46,20 +46,20 @@ public class Joystick_Drive extends Command {
 		else
 			ry = Math.pow(Robot.oi.getRightStick().getY(), power);
 		*/
-		ry = Robot.oi.getRightStick().getY();
-		ly = Robot.oi.getLeftStick().getY();
-		x = Robot.oi.getLeftStick().getX();
+		//ry = Robot.oi.getRightStick().getY();
+		//ly = Robot.oi.getLeftStick().getY();
+		//x = Robot.oi.getLeftStick().getX();
 				
-		ry = etherDrive(ry, Robot.oi.getRightStick().getThrottle());
-		ly = etherDrive(ly, Robot.oi.getLeftStick().getThrottle());
-		x = etherDrive(x, Robot.oi.getLeftStick().getThrottle());
+		//ry = etherDrive(ry, Robot.oi.getRightStick().getThrottle());
+		//ly = etherDrive(ly, Robot.oi.getLeftStick().getThrottle());
+		//x = etherDrive(x, Robot.oi.getLeftStick().getThrottle());
 		
-		if (Robot.oi.getDS().equals(DriverState.TANKREVERSE)) 
-			Robot.driveBase.drive(-ly, -ry);
-		else if (Robot.oi.getDS().equals(DriverState.SINGLE))
-			PartyDrive(x, ly);
-		else
-			Robot.driveBase.drive(ly, ry);
+		//if (Robot.oi.getDS().equals(DriverState.TANKREVERSE)) 
+		Robot.driveBase.drive(Robot.oi.getLeftStick().getY(), Robot.oi.getRightStick().getY());
+		//else if (Robot.oi.getDS().equals(DriverState.SINGLE))
+			//PartyDrive(x, ly);
+		//else
+			//Robot.driveBase.drive(ly, ry);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -58,6 +58,11 @@ public class Elevator extends Subsystem {
 		return encoder.getPulseWidthPosition();
 	}
 	
+	public void toggleSoftLimits(boolean limitOn) {
+		elevator.configForwardSoftLimitEnable(limitOn, 0);
+		elevator.configReverseSoftLimitEnable(limitOn, 0);
+	}
+	
 	public void moveElevator(double speed)
 	{
 		elevator.set(ControlMode.PercentOutput, speed);

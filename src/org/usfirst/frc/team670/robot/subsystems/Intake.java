@@ -41,7 +41,7 @@ public class Intake extends Subsystem {
 		double current = Robot.pdp.getCurrent(RobotMap.intakeLeftTalon);
 		current += Robot.pdp.getCurrent(RobotMap.intakeRightTalon);
 		if(current >= currentLimit){
-			System.out.println("Intake is under stress");
+			//System.out.println("Intake is under stress");
 		}
 		leftIntake.set(ControlMode.PercentOutput, speed);
 		rightIntake.set(ControlMode.PercentOutput, -speed);

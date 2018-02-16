@@ -24,7 +24,7 @@ public class Drive extends Command{
 	public Drive(double distance) {
 		requires(Robot.driveBase);
 		this.distance = distance;
-
+		
 //		if(Robot.driveBase.getLeft().getSensorCollection() != null && Robot.driveBase.getRight().getSensorCollection() != null ) {
 			com = new Encoders_Drive(distance);
 			Robot.sensors.areEncodersWorking(true);
@@ -33,7 +33,6 @@ public class Drive extends Command{
 //			com = new Time_Drive(1/(RoboConstants.wheelVelocity/distance), RoboConstants.timeAutoSpeed);
 //			Robot.sensors.areEncodersWorking(false);
 //		}
-		com.start();
 	}
 
 	@Override

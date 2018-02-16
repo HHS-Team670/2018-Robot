@@ -98,8 +98,8 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void drive(double left, double right) {
-		left1.set(ControlMode.PercentOutput, -left);
-		right1.set(ControlMode.PercentOutput, -right);
+		left1.set(ControlMode.PercentOutput, left);
+		right1.set(ControlMode.PercentOutput, right);
 	}
 
 	public TalonSRX getLeft() {

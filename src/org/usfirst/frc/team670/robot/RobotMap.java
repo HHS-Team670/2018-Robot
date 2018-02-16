@@ -21,10 +21,10 @@ import edu.wpi.first.wpilibj.SerialPort.Port;
 public class RobotMap {
 		
 	//DriveBase
-	public static final int rightMotor1 = 1;
-    public static final int rightMotor2 = 2;
-    public static final int leftMotor1 = 3;
-    public static final int leftMotor2 = 4;
+	public static final int rightMotor1 = 3;
+    public static final int rightMotor2 = 4;
+    public static final int leftMotor1 = 1;
+    public static final int leftMotor2 = 2;
     
     //Elevator
     public static final int elevatorMotor = 5;

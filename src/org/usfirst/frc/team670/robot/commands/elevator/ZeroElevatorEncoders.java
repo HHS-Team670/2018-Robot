@@ -23,7 +23,7 @@ public class ZeroElevatorEncoders extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.elevator.moveElevator(-0.05);
+		Robot.elevator.moveElevator(-0.5);
 		//    	for(int i = 1; i < pastEncoderVals.length; i++) {
 		//    		pastEncoderVals[i-1] = pastEncoderVals[i];
 		//    	}

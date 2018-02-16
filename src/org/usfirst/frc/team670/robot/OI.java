@@ -9,6 +9,7 @@ package org.usfirst.frc.team670.robot;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
+import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.StopIntakeWheels;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.DropCube;
@@ -48,13 +49,15 @@ public class OI {
 	private Button toggleClimber = new JoystickButton(operatorStick, 5);
 	private Button grab = new JoystickButton(operatorStick, 10);
 	private Button release = new JoystickButton(operatorStick, 11);
+	private Button deploy = new JoystickButton(operatorStick, 8);
+	private Button retract = new JoystickButton(operatorStick, 9);
 	
 	// Arcade Controls
-	private Button intakedeploy = new JoystickButton(arcadeStick, 1);
-	private Button intakeretract = new JoystickButton(arcadeStick, 10);
+	private Button pickUpCube = new JoystickButton(arcadeStick, 1);
+	private Button dropCube = new JoystickButton(arcadeStick, 10);
 	
-	private Button pickUpCube = new JoystickButton(arcadeStick, 2);
-	private Button dropCube = new JoystickButton(arcadeStick, 9);
+	//private Button pickUpCube = new JoystickButton(arcadeStick, 2);
+	private Button zeroElevator = new JoystickButton(arcadeStick, 9);
 
 	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
 	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
@@ -80,18 +83,21 @@ public class OI {
 		toggleIntake.whenPressed(new Set_OperatorControl(OperatorState.INTAKE));
 		toggleIntake.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		grab.whenPressed(new CloseIntake(true));
-		grab.whenPressed(new CloseIntake(false));
+		release.whenPressed(new CloseIntake(false));
+		deploy.whenPressed(new Deploy(true));
+		retract.whenPressed(new Deploy(false));
+		
 		// Driver Controls
 		/*tankDrive.whenPressed(new Set_DriverControl(DriverState.TANK));
 		reverseTankDrive.whenPressed(new Set_DriverControl(DriverState.TANKREVERSE));
 		singleStickDrive.whenPressed(new Set_DriverControl(DriverState.SINGLE));*/
 		
 		// Arcade buttons
-		intakedeploy.whenPressed(new Deploy(true)); //1
-		intakeretract.whenPressed(new Deploy(false)); //10
+		pickUpCube.whenPressed(new Vision_PowerCube(0.4)); //1
+		dropCube.whenPressed(new DropCube()); //10
 		
-		pickUpCube.whenPressed(new Vision_PowerCube(0.4));//2
-		dropCube.whenPressed(new DropCube());//9
+		//pickUpCube.whenPressed(new Vision_PowerCube(0.4));//2
+		zeroElevator.whenPressed(new ZeroElevatorEncoders());//9
 		
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));//3
 		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));//8

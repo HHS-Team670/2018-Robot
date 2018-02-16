@@ -35,7 +35,7 @@ public class Drive extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		return !com.isRunning();
+		return com.isCompleted();
 	}
 
 }

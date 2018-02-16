@@ -18,9 +18,9 @@ import org.usfirst.frc.team670.robot.commands.intake.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
-import org.usfirst.frc.team670.robot.enums.DriverState;
-import org.usfirst.frc.team670.robot.enums.ElevatorState;
-import org.usfirst.frc.team670.robot.enums.OperatorState;
+import org.usfirst.frc.team670.robot.constants.enums.DriverState;
+import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
+import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

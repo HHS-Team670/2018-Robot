@@ -1,7 +1,7 @@
 package org.usfirst.frc.team670.robot.commands.joystick_control;
 
 import org.usfirst.frc.team670.robot.Robot;
-import org.usfirst.frc.team670.robot.enums.OperatorState;
+import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 
 import edu.wpi.first.wpilibj.command.Command;
 

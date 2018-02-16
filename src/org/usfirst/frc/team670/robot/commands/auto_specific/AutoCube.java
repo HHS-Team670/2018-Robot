@@ -7,7 +7,7 @@ import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.intake.PickupCube;
 import org.usfirst.frc.team670.robot.commands.intake.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.constants.Field;
-import org.usfirst.frc.team670.robot.enums.ElevatorState;
+import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

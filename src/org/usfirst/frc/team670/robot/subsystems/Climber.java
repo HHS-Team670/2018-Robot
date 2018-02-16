@@ -1,7 +1,7 @@
 package org.usfirst.frc.team670.robot.subsystems;
 
+import org.usfirst.frc.team670.robot.commands.joystick_control.Joystick_Climber;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
-import org.usfirst.frc.team670.robot.joystick_control.Joystick_Climber;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;

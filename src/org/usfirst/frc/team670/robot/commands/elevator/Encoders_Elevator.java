@@ -2,7 +2,7 @@ package org.usfirst.frc.team670.robot.commands.elevator;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
-import org.usfirst.frc.team670.robot.enums.ElevatorState;
+import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;

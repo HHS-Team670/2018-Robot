@@ -2,7 +2,7 @@ package org.usfirst.frc.team670.robot.commands.elevator;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
-import org.usfirst.frc.team670.robot.enums.ElevatorState;
+import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
 import edu.wpi.first.wpilibj.command.Command;
 

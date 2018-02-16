@@ -11,7 +11,7 @@ import org.usfirst.frc.team670.robot.commands.intake.DropCube;
 import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
-import org.usfirst.frc.team670.robot.enums.ElevatorState;
+import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

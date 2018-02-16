@@ -1,7 +1,7 @@
 package org.usfirst.frc.team670.robot.commands.state_change;
 
 import org.usfirst.frc.team670.robot.Robot;
-import org.usfirst.frc.team670.robot.enums.DriverState;
+import org.usfirst.frc.team670.robot.constants.enums.DriverState;
 
 import edu.wpi.first.wpilibj.command.Command;
 

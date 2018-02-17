@@ -36,6 +36,7 @@ public class RobotMap {
     	//Solenoids
 	    public static final int deployer = 2;
 	    public static final int claw = 1;
+	    public static final int clawMode = 0;
     	//Motors
 	    public static final int intakeLeftTalon = 6;
 	    public static final int intakeRightTalon = 7;

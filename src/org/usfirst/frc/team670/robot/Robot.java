@@ -35,6 +35,7 @@ import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
@@ -176,6 +177,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("RR", subMenuRR);
 		SmartDashboard.putData("LR", subMenuLR);
 		SmartDashboard.putData("RL", subMenuRL);
+		
+		new CloseIntake(true); //0 - off is hard, 0 - on is soft
 	}
 	
 	public Command parseCommand(String str) {		

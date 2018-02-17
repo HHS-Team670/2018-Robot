@@ -47,16 +47,17 @@ public class OI {
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
 	private Button toggleIntake = new JoystickButton(operatorStick, 4);
 	private Button toggleClimber = new JoystickButton(operatorStick, 5);
+	private Button open_close = new JoystickButton(operatorStick, 1);
 	private Button grab = new JoystickButton(operatorStick, 10);
 	private Button release = new JoystickButton(operatorStick, 11);
 	private Button deploy = new JoystickButton(operatorStick, 8);
 	private Button retract = new JoystickButton(operatorStick, 9);
 	
 	// Arcade Controls
-	private Button pickUpCube = new JoystickButton(arcadeStick, 1);
+	private Button pickUpCubeSoft = new JoystickButton(arcadeStick, 1);
 	private Button dropCube = new JoystickButton(arcadeStick, 10);
 	
-	//private Button pickUpCube = new JoystickButton(arcadeStick, 2);
+	private Button pickUpCubeHard = new JoystickButton(arcadeStick, 2);
 	private Button zeroElevator = new JoystickButton(arcadeStick, 9);
 
 	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
@@ -66,7 +67,7 @@ public class OI {
 	private Button elevatorMidScale = new JoystickButton(arcadeStick, 7);
 	
 	private Button cancelCommand = new JoystickButton(arcadeStick, 5);
-	private Button printElevator = new JoystickButton(arcadeStick, 6);
+	private Button GANAR = new JoystickButton(arcadeStick, 6);
 
 	
 	// Driver Controls
@@ -86,6 +87,7 @@ public class OI {
 		release.whenPressed(new CloseIntake(false));
 		deploy.whenPressed(new Deploy(true));
 		retract.whenPressed(new Deploy(false));
+		open_close.whenPressed(new CloseIntake(Robot.intake.isIntakeOpen()));
 		
 		// Driver Controls
 		/*tankDrive.whenPressed(new Set_DriverControl(DriverState.TANK));
@@ -93,10 +95,10 @@ public class OI {
 		singleStickDrive.whenPressed(new Set_DriverControl(DriverState.SINGLE));*/
 		
 		// Arcade buttons
-		pickUpCube.whenPressed(new Vision_PowerCube(0.4)); //1
-		dropCube.whenPressed(new DropCube()); //10
+		pickUpCubeSoft.whenPressed(new CloseIntake(true)); //1
+		dropCube.whenPressed(new CloseIntake(false)); //10
 		
-		//pickUpCube.whenPressed(new Vision_PowerCube(0.4));//2
+		pickUpCubeHard.whenPressed(new CloseIntake(true));//2
 		zeroElevator.whenPressed(new ZeroElevatorEncoders());//9
 		
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));//3
@@ -105,7 +107,7 @@ public class OI {
 		elevatorMidScale.whenPressed(new Encoders_Elevator(ElevatorState.MIDSCALE));//7
 		
 		cancelCommand.whenPressed(new CancelCommand()); //5
-		printElevator.whenPressed(new testing.PrintElevator()); //6
+		GANAR.whenPressed(new testing.PrintElevator()); //6
 	}
 
 	public Joystick getLeftStick() {

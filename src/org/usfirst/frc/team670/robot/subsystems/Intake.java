@@ -18,8 +18,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Intake extends Subsystem {
 	
 	private Compressor comp;
-	private Solenoid deployer, claw;
+	private Solenoid deployer, claw, clawMode;
 	private TalonSRX leftIntake, rightIntake;
+	public boolean is_hard;
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -31,6 +32,7 @@ public class Intake extends Subsystem {
 		rightIntake = new TalonSRX(RobotMap.intakeRightTalon);
 		deployer = new Solenoid(RobotMap.PCModule,RobotMap.deployer);
 		claw = new Solenoid(RobotMap.PCModule, RobotMap.claw);
+		clawMode = new Solenoid(RobotMap.PCModule, RobotMap.clawMode);
 	}
 	
 	public void driveIntake(double speed)
@@ -44,6 +46,11 @@ public class Intake extends Subsystem {
 		}
 		leftIntake.set(ControlMode.PercentOutput, speed);
 		rightIntake.set(ControlMode.PercentOutput, -speed);
+	}
+	
+	public void setHard(boolean isHard)
+	{
+		clawMode.set(isHard);
 	}
 	
 	public void deploySupport(boolean deploy)
@@ -62,13 +69,13 @@ public class Intake extends Subsystem {
     }
 
 	public boolean isIntakeOpen() {
-		//return claw.get();
-		return false;
+		return claw.get();
+		//return false;
 	}
 
 	public boolean isIntakeDeployed() {
-		//return deployer.get();
-		return false;
+		return deployer.get();
+		//return false;
 	}
 }
 

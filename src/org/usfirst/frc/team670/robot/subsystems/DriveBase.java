@@ -64,31 +64,6 @@ public class DriveBase extends Subsystem {
 
 	}
 
-	/**
-	 * Gets the Talon based on the ID.
-	 * 
-	 * @param id
-	 *            The device ID of the Talon.
-	 * @return The Talon bound to the ID port, or {@code null} if no drivetrain
-	 *         Talon was found.
-	 * 
-	 * @see CAN RobotMap.CAN
-	 */
-	public TalonSRX getTalon(int id) {
-		switch (id) {
-		case RobotMap.leftMotor1:
-			return left1;
-		case RobotMap.rightMotor1:
-			return right1;
-		case RobotMap.leftMotor2:
-			return left2;
-		case RobotMap.rightMotor2:
-			return right2;
-		default: // Not a drivetrain Talon!
-			return null;
-		}
-	}
-
 	public void initJoystickDrive() {
 		left1.setNeutralMode(NeutralMode.Coast);
 		left2.setNeutralMode(NeutralMode.Coast);

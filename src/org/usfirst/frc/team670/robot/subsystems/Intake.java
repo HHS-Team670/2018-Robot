@@ -62,13 +62,13 @@ public class Intake extends Subsystem {
     }
 
 	public boolean isIntakeOpen() {
-		return claw.get();
-		//return false;
+		//return claw.get();
+		return false;
 	}
 
 	public boolean isIntakeDeployed() {
-		return deployer.get();
-		//return false;
+		//return deployer.get();
+		return false;
 	}
 }
 

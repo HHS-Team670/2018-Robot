@@ -70,7 +70,8 @@ public class Elevator extends Subsystem {
 	
 	public double getCurrentPosition()
 	{
-		return encoder.getPulseWidthPosition();
+		//return encoder.getPulseWidthPosition();
+		return 0;
 	}
 	
 	public void toggleSoftLimits(boolean limitOn) {

@@ -59,15 +59,8 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	
 	Command m_autonomousCommand;
-	private String lastChoice;
-	private SendableChooser<String> mainMenu;
 	private SendableChooser<Double> autonomousDelay;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
-	private SendableChooser<Command> testing;
-
-	private SensorCollection leftEncoder;
-	private SensorCollection rightEncoder;
-
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -76,25 +69,12 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		oi = new OI();
 		sensors = new Aggregator();
-		lastChoice = "";
-
-		testing = new SendableChooser<Command>();
-		testing.addDefault("2ft", new Encoders_Drive(24));
-		testing.addObject("1ft", new Encoders_Drive(12));
-		testing.addObject("5ft", new Encoders_Drive(60));
-		testing.addObject("15ft", new Encoders_Drive(12 * 15));
-		// The first character is the switch, the second one is the scale
-		mainMenu = new SendableChooser<String>();
+		
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();
 		subMenuRL = new SendableChooser<String>();
 		subMenuLR = new SendableChooser<String>();
 		autonomousDelay = new SendableChooser<Double>();
-
-		mainMenu.addDefault("None", "default");
-		mainMenu.addObject("Left", "Left");
-		mainMenu.addObject("Center", "Center");
-		mainMenu.addObject("Right", "Right");
 
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
@@ -103,16 +83,130 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
 
+		//populateList(subMenuLL,"LL");
+		//populateList(subMenuRR,"RR");
+		//populateList(subMenuLR,"LR");
+		//populateList(subMenuRL,"RL");
+		
+		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
+		subMenuLL.addObject("----CENTER----", "left_baseline");
+		subMenuLL.addObject("left_baseline", "left_baseline");
+		subMenuLL.addObject("left_scale_opposite", "left_scale_opposite");
+		subMenuLL.addObject("left_scale_side", "left_scale_side");
+		subMenuLL.addObject("left_switch_side", "left_switch_side");
+		subMenuLL.addObject("----LEFT----", "left_baseline");
+		subMenuLL.addObject("center_baseline", "center_baseline");
+		subMenuLL.addObject("center_left_switch_side", "center_left_switch_side");
+		subMenuLL.addObject("center_left_switch_straight", "center_left_switch_straight");
+		subMenuLL.addObject("center_right_switch_straight", "center_right_switch_straight");
+		subMenuLL.addObject("center_right_switch_side", "center_right_switch_side");
+		subMenuLL.addObject("----RIGHT----", "left_baseline");
+		subMenuLL.addObject("right_baseline", "right_baseline");
+		subMenuLL.addObject("right_scale_opposite", "right_scale_opposite");
+		subMenuLL.addObject("right_scale_side", "right_scale_side");
+		subMenuLL.addObject("right_switch_side", "right_switch_side");
+		subMenuLL.addObject("right_switch_straight", "right_switch_straight");
+		
+		subMenuRR.addDefault("RR (KEY ONLY)", "left_baseline");
+		subMenuRR.addObject("----CENTER----", "left_baseline");
+		subMenuRR.addObject("left_baseline", "left_baseline");
+		subMenuRR.addObject("left_scale_opposite", "left_scale_opposite");
+		subMenuRR.addObject("left_scale_side", "left_scale_side");
+		subMenuRR.addObject("left_switch_side", "left_switch_side");
+		subMenuRR.addObject("----LEFT----", "left_baseline");
+		subMenuRR.addObject("center_baseline", "center_baseline");
+		subMenuRR.addObject("center_left_switch_side", "center_left_switch_side");
+		subMenuRR.addObject("center_left_switch_straight", "center_left_switch_straight");
+		subMenuRR.addObject("center_right_switch_straight", "center_right_switch_straight");
+		subMenuRR.addObject("center_right_switch_side", "center_right_switch_side");
+		subMenuRR.addObject("----RIGHT----", "left_baseline");
+		subMenuRR.addObject("right_baseline", "right_baseline");
+		subMenuRR.addObject("right_scale_opposite", "right_scale_opposite");
+		subMenuRR.addObject("right_scale_side", "right_scale_side");
+		subMenuRR.addObject("right_switch_side", "right_switch_side");
+		subMenuRR.addObject("right_switch_straight", "right_switch_straight");
+		
+		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
+		subMenuLR.addObject("----CENTER----", "left_baseline");
+		subMenuLR.addObject("left_baseline", "left_baseline");
+		subMenuLR.addObject("left_scale_opposite", "left_scale_opposite");
+		subMenuLR.addObject("left_scale_side", "left_scale_side");
+		subMenuLR.addObject("left_switch_side", "left_switch_side");
+		subMenuLR.addObject("----LEFT----", "left_baseline");
+		subMenuLR.addObject("center_baseline", "center_baseline");
+		subMenuLR.addObject("center_left_switch_side", "center_left_switch_side");
+		subMenuLR.addObject("center_left_switch_straight", "center_left_switch_straight");
+		subMenuLR.addObject("center_right_switch_straight", "center_right_switch_straight");
+		subMenuLR.addObject("center_right_switch_side", "center_right_switch_side");
+		subMenuLR.addObject("----RIGHT----", "left_baseline");
+		subMenuLR.addObject("right_baseline", "right_baseline");
+		subMenuLR.addObject("right_scale_opposite", "right_scale_opposite");
+		subMenuLR.addObject("right_scale_side", "right_scale_side");
+		subMenuLR.addObject("right_switch_side", "right_switch_side");
+		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
+		
+		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
+		subMenuRL.addObject("----CENTER----", "left_baseline");
+		subMenuRL.addObject("left_baseline", "left_baseline");
+		subMenuRL.addObject("left_scale_opposite", "left_scale_opposite");
+		subMenuRL.addObject("left_scale_side", "left_scale_side");
+		subMenuRL.addObject("left_switch_side", "left_switch_side");
+		subMenuRL.addObject("----LEFT----", "left_baseline");
+		subMenuRL.addObject("center_baseline", "center_baseline");
+		subMenuRL.addObject("center_left_switch_side", "center_left_switch_side");
+		subMenuRL.addObject("center_left_switch_straight", "center_left_switch_straight");
+		subMenuRL.addObject("center_right_switch_straight", "center_right_switch_straight");
+		subMenuRL.addObject("center_right_switch_side", "center_right_switch_side");
+		subMenuRL.addObject("----RIGHT----", "left_baseline");
+		subMenuRL.addObject("right_baseline", "right_baseline");
+		subMenuRL.addObject("right_scale_opposite", "right_scale_opposite");
+		subMenuRL.addObject("right_scale_side", "right_scale_side");
+		subMenuRL.addObject("right_switch_side", "right_switch_side");
+		subMenuRL.addObject("right_switch_straight", "right_switch_straight");
+		
+
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
-
-		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
-		rightEncoder = Robot.driveBase.getRight().getSensorCollection();
-
-		leftEncoder.setQuadraturePosition(0, 0);
-		rightEncoder.setQuadraturePosition(0, 0);
-
+		SmartDashboard.putData("LL", subMenuLL);
+		SmartDashboard.putData("RR", subMenuRR);
+		SmartDashboard.putData("LR", subMenuLR);
+		SmartDashboard.putData("RL", subMenuRL);
 	}
-
+	
+	public Command parseCommand(String str) {		
+		switch(str.toLowerCase()){
+				case "left_baseline":
+						return new left_baseline();	
+				case "left_scale_opposite":
+					return new left_scale_opposite();
+				case "left_scale_side":
+					return new left_scale_side();
+				case "left_switch_side":
+					return new left_switch_side();
+				case "center_baseline":
+					return new center_baseline();
+				case "center_left_switch_side":
+					return new center_left_switch_side();
+				case "center_left_switch_straight":
+					return new center_left_switch_straight();
+				case "center_right_switch_straight":
+					return new center_right_switch_straight();
+				case "center_right_swtich_side":
+					return new center_right_switch_side();
+				case "right_baseline":
+					return new right_baseline();
+				case "right_scale_opposite":
+					return new right_scale_opposite();
+				case "right_scale_side":
+					return new right_scale_side();
+				case "right_switch_side":
+					return new right_switch_side();
+				case "right_switch_straight":
+					return new right_switch_straight();
+				default: 
+					return new left_baseline();		
+			}
+		}
+	
 	/**
 	 * This function is called once each time the robot enters Disabled mode. You
 	 * can use it to reset any subsystem information you want to clear when the
@@ -124,25 +218,9 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
-	public void disabledPeriodic() {
-		SmartDashboard.putData(testing);
-		/*
-		 * if (mainMenu.getSelected() != null) {
-		 * if(!lastChoice.equalsIgnoreCase(mainMenu.getSelected())){ subMenuRR =
-		 * populateList(mainMenu.getSelected()); subMenuLL =
-		 * populateList(mainMenu.getSelected()); subMenuRL =
-		 * populateList(mainMenu.getSelected()); subMenuLR =
-		 * populateList(mainMenu.getSelected()); subMenuRR.setName("RR");
-		 * subMenuLL.setName("LL"); subMenuRL.setName("RL"); subMenuLR.setName("LR");
-		 * lastChoice = mainMenu.getSelected(); } }
-		 * 
-		 * SmartDashboard.putData(mainMenu); SmartDashboard.putData(subMenuRR);
-		 * SmartDashboard.putData(subMenuLL); SmartDashboard.putData(subMenuRL);
-		 * SmartDashboard.putData(subMenuRL);
-		 */
+	public void disabledPeriodic() {	
+		
 		Scheduler.getInstance().run();
-		System.out.println("Left: " + leftEncoder.getQuadraturePosition());
-		System.out.println("Right: " + rightEncoder.getQuadraturePosition());
 	}
 
 	/**
@@ -159,26 +237,33 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		/*
-		 * String data = DriverStation.getInstance().getGameSpecificMessage(); data =
-		 * data.substring(0, 2); if(data.equalsIgnoreCase("RR")) m_autonomousCommand =
-		 * getCommand(mainMenu, subMenuRR); else if(data.equalsIgnoreCase("LL"))
-		 * m_autonomousCommand = getCommand(mainMenu, subMenuLL); else
-		 * if(data.equalsIgnoreCase("LR")) m_autonomousCommand = getCommand(mainMenu,
-		 * subMenuLR); else if(data.equalsIgnoreCase("RL")) m_autonomousCommand =
-		 * getCommand(mainMenu, subMenuRL); else m_autonomousCommand = new
-		 * CancelCommand(); //RUN THE AUTONOMOUS COMMAND------------------------------
-		 * CommandGroup combined = new CommandGroup(); combined.addSequential(new
-		 * Delay(autonomousDelay.getSelected())); if (m_autonomousCommand != null) {
-		 * combined.addSequential(m_autonomousCommand);
-		 * System.out.println(m_autonomousCommand.getName()); //combined.start(); } else
-		 * { SmartDashboard.putString("dataStatus", "SMARTDASHBOARD AUTON ERROR"); }
-		 */
-		m_autonomousCommand = testing.getSelected();
-		System.out.println(m_autonomousCommand.toString());
-
+		String data = DriverStation.getInstance().getGameSpecificMessage(); 
+		data = data.substring(0, 2); 
+		
+		String cmd = "";
+		
+		if(data.equalsIgnoreCase("RR")) 
+			cmd = subMenuRR.getSelected();
+		else if(data.equalsIgnoreCase("LL"))
+			cmd = subMenuLL.getSelected();
+		else if(data.equalsIgnoreCase("LR"))
+			cmd = subMenuLR.getSelected();
+		else if(data.equalsIgnoreCase("RL"))
+			cmd = subMenuRL.getSelected();
+		
+		m_autonomousCommand = parseCommand(cmd);
+		
+		//RUN THE AUTONOMOUS COMMAND------------------------------
+		
+		CommandGroup combined = new CommandGroup(); 
+		
+		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
+		
 		if (m_autonomousCommand != null)
-			(m_autonomousCommand).start();
+			combined.addSequential(m_autonomousCommand);
+		
+		if (combined != null)
+			(combined).start();
 	}
 
 	/**
@@ -186,7 +271,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		//Scheduler.getInstance().run();
 	}
 
 	@Override
@@ -213,81 +298,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-	}
-
-	public SendableChooser<String> populateList(String side) {
-		SendableChooser<String> list = new SendableChooser<String>();
-
-		if (side.equalsIgnoreCase("Left")) {
-			list.addDefault("left_baseline", "l_base");
-			list.addObject("left_scale_opposite", "l_sc_opp");
-			list.addObject("left_scale_side", "l_sc_side");
-			list.addObject("left_switch_side", "l_sw_side");
-			list.addObject("back", "l_back");
-			return list;
-		} else if (side.equalsIgnoreCase("Center")) {
-			list.addDefault("center_baseline", "c_base");
-			list.addObject("center_left_switch_side", "c_l_sw_side");
-			list.addObject("center_left_switch_straight", "c_l_sw_str");
-			list.addObject("center_right_switch_straight", "c_r_sw_str");
-			list.addObject("center_right_switch_side", "c_r_sw_side");
-			list.addObject("back", "c_back");
-			return list;
-		} else if (side.equalsIgnoreCase("Right")) {
-			list.addDefault("right_baseline", "r_base");
-			list.addObject("right_scale_opposite", "r_sc_opp");
-			list.addObject("right_scale_side", "r_sc_side");
-			list.addObject("right_switch_side", "r_sw_side");
-			list.addObject("right_switch_straight", "r_sw_str");
-			list.addObject("back", "r_back");
-			return list;
-		} else {
-			list.addObject("Please select a side", "default");
-			return list;
-		}
-	}
-
-	public Command getCommand(SendableChooser<String> mainMenu, SendableChooser<String> list) {
-		if (mainMenu.getSelected().equals("Left")) {
-			if (list.getSelected().equals("l_sc_opp"))
-				return new left_scale_opposite();
-			else if (list.getSelected().equals("l_sc_side"))
-				return new left_scale_side();
-			else if (list.getSelected().equals("l_sw_side"))
-				return new left_switch_side();
-			else
-				return new left_baseline();
-		}
-
-		if (mainMenu.getSelected().equals("Center")) {
-			if (list.getSelected().equals("c_l_sw_side"))
-				return new center_left_switch_side();
-			else if (list.getSelected().equals("c_l_sw_str"))
-				return new center_left_switch_straight();
-			else if (list.getSelected().equals("c_r_sw_str"))
-				return new center_right_switch_straight();
-			else if (list.getSelected().equals("c_r_sw_side"))
-				return new center_right_switch_side();
-			else
-				return new center_baseline();
-		}
-
-		if (mainMenu.getSelected().equals("Right")) {
-			if (list.getSelected().equals("r_sc_opp")) {
-				return new right_scale_opposite();
-			} else if (list.getSelected().equals("r_sc_side")) {
-				return new right_scale_side();
-			} else if (list.getSelected().equals("r_sw_side")) {
-				return new right_switch_side();
-			} else if (list.getSelected().equals("r_sw_str")) {
-				return new right_switch_straight();
-			} else {
-				return new right_baseline();
-			}
-		}
-
-		else
-			return new CancelCommand();
 	}
 }
 

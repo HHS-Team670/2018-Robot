@@ -31,6 +31,7 @@ import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
+import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
@@ -59,7 +60,7 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	
 	Command m_autonomousCommand;
-	private SendableChooser<Double> autonomousDelay;
+	private SendableChooser<Double> autonomousDelay, CubePickup;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
 		subMenuRL = new SendableChooser<String>();
 		subMenuLR = new SendableChooser<String>();
 		autonomousDelay = new SendableChooser<Double>();
+		CubePickup = new SendableChooser<Double>();
 
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
@@ -82,11 +84,14 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("3 Second", 3.0);
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
-
-		//populateList(subMenuLL,"LL");
-		//populateList(subMenuRR,"RR");
-		//populateList(subMenuLR,"LR");
-		//populateList(subMenuRL,"RL");
+		
+		CubePickup.addDefault("No Cube Pickup", -1.0);
+		CubePickup.addObject("Cube 1", 1.0);
+		CubePickup.addObject("Cube 2", 2.0);
+		CubePickup.addObject("Cube 3", 3.0);
+		CubePickup.addObject("Cube 4", 4.0);
+		CubePickup.addObject("Cube 5", 5.0);
+		CubePickup.addObject("Cube 6", 6.0);
 		
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----CENTER----", "left_baseline");
@@ -166,6 +171,7 @@ public class Robot extends TimedRobot {
 		
 
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
+		SmartDashboard.putData("Cube Pickup", CubePickup);
 		SmartDashboard.putData("LL", subMenuLL);
 		SmartDashboard.putData("RR", subMenuRR);
 		SmartDashboard.putData("LR", subMenuLR);
@@ -174,38 +180,75 @@ public class Robot extends TimedRobot {
 	
 	public Command parseCommand(String str) {		
 		switch(str.toLowerCase()){
-				case "left_baseline":
-						return new left_baseline();	
-				case "left_scale_opposite":
-					return new left_scale_opposite();
-				case "left_scale_side":
-					return new left_scale_side();
-				case "left_switch_side":
-					return new left_switch_side();
-				case "center_baseline":
-					return new center_baseline();
-				case "center_left_switch_side":
-					return new center_left_switch_side();
-				case "center_left_switch_straight":
-					return new center_left_switch_straight();
-				case "center_right_switch_straight":
-					return new center_right_switch_straight();
-				case "center_right_swtich_side":
-					return new center_right_switch_side();
-				case "right_baseline":
-					return new right_baseline();
-				case "right_scale_opposite":
-					return new right_scale_opposite();
-				case "right_scale_side":
-					return new right_scale_side();
-				case "right_switch_side":
-					return new right_switch_side();
-				case "right_switch_straight":
-					return new right_switch_straight();
-				default: 
-					return new left_baseline();		
-			}
+			case "left_baseline":
+					return new left_baseline();	
+			case "left_scale_opposite":
+				return new left_scale_opposite();
+			case "left_scale_side":
+				return new left_scale_side();
+			case "left_switch_side":
+				return new left_switch_side();
+			case "center_baseline":
+				return new center_baseline();
+			case "center_left_switch_side":
+				return new center_left_switch_side();
+			case "center_left_switch_straight":
+				return new center_left_switch_straight();
+			case "center_right_switch_straight":
+				return new center_right_switch_straight();
+			case "center_right_swtich_side":
+				return new center_right_switch_side();
+			case "right_baseline":
+				return new right_baseline();
+			case "right_scale_opposite":
+				return new right_scale_opposite();
+			case "right_scale_side":
+				return new right_scale_side();
+			case "right_switch_side":
+				return new right_switch_side();
+			case "right_switch_straight":
+				return new right_switch_straight();
+			default: 
+				return new left_baseline();		
 		}
+	}
+	
+	public Boolean isLeft(String str)
+	{
+		switch(str.toLowerCase()){
+		case "left_baseline":
+				return null;	
+		case "left_scale_opposite":
+			return false;
+		case "left_scale_side":
+			return true;
+		case "left_switch_side":
+			return true;
+		case "center_baseline":
+			return null;
+		case "center_left_switch_side":
+			return null;
+		case "center_left_switch_straight":
+			return null;
+		case "center_right_switch_straight":
+			return null;
+		case "center_right_swtich_side":
+			return null;
+		case "right_baseline":
+			return null;
+		case "right_scale_opposite":
+			return true;
+		case "right_scale_side":
+			return false;
+		case "right_switch_side":
+			return false;
+		case "right_switch_straight":
+			return false;
+		default: 
+			return null;		
+	}	}
+	
+	
 	
 	/**
 	 * This function is called once each time the robot enters Disabled mode. You
@@ -252,18 +295,21 @@ public class Robot extends TimedRobot {
 			cmd = subMenuRL.getSelected();
 		
 		m_autonomousCommand = parseCommand(cmd);
+		Boolean isL = isLeft(cmd);
+		double selectedCube = CubePickup.getSelected();
 		
 		//RUN THE AUTONOMOUS COMMAND------------------------------
 		
 		CommandGroup combined = new CommandGroup(); 
 		
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
+		combined.addSequential(m_autonomousCommand);
 		
-		if (m_autonomousCommand != null)
-			combined.addSequential(m_autonomousCommand);
+		if(selectedCube!=-1.0 && isL != null)
+			combined.addSequential(new AutoCube(isL, (int)selectedCube));
 		
 		if (combined != null)
-			(combined).start();
+			combined.start();
 	}
 
 	/**
@@ -271,7 +317,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		//Scheduler.getInstance().run();
+		Scheduler.getInstance().run();
 	}
 
 	@Override
@@ -300,46 +346,3 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 }
-
-/*
- * m_chooser.addDefault("Do Nothing", new CancelCommand());
- * m_chooser.addObject("Turn Right 90 degrees", new NavX_Pivot(90));
- * m_chooser.addObject("Turn Left 90 degrees", new NavX_Pivot(-90));
- * m_chooser.addObject("Turn Right 45 degrees", new NavX_Pivot(45));
- * m_chooser.addObject("Turn Left 45 degrees", new NavX_Pivot(-45));
- * 
- * m_chooser.addObject("0.5ft_encoders", new Encoders_Drive(6));
- * m_chooser.addObject("0.5ft_encoders_back", new Encoders_Drive(-6));
- * m_chooser.addObject("1.5ft_encoders", new Encoders_Drive(18));
- * m_chooser.addObject("1.5ft_encoders_back", new Encoders_Drive(-18));
- * m_chooser.addObject("1ft_encoders", new Encoders_Drive(12));
- * m_chooser.addObject("1ft_encoders_back", new Encoders_Drive(-12));
- * 
- * /*m_chooser.addDefault("Do Nothing", new CancelCommand());
- * m_chooser.addObject("Right Position", new Auto_Right());
- * m_chooser.addObject("Center Position", new Auto_Center());
- * m_chooser.addObject("Left Position", new Auto_Left());
- */
-/*
- * autonomousDelay.addDefault("0 Second", 0.0);
- * autonomousDelay.addObject("1 Second", 1.0);
- * autonomousDelay.addObject("2 Second", 2.0);
- * autonomousDelay.addObject("3 Second", 3.0);
- * autonomousDelay.addObject("4 Second", 4.0);
- * autonomousDelay.addObject("5 Second", 5.0);
- * 
- * ApproachType.addDefault("Straight", true); ApproachType.addObject("Side",
- * false);
- * 
- * tryLeft.addDefault("Try left", true); tryLeft.addObject("Do not try left",
- * false);
- * 
- * tryRight.addDefault("Try right", true);
- * tryRight.addObject("Do not try right", false);
- * 
- * SmartDashboard.putData("Auto mode", m_chooser);
- * SmartDashboard.putData("Auton Delay", autonomousDelay);
- * SmartDashboard.putData("Approach Type", ApproachType);
- * SmartDashboard.putData("Try Left from Center", tryLeft);
- * SmartDashboard.putData("Try Right from Center", tryRight);
- */

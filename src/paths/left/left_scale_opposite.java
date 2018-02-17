@@ -47,6 +47,5 @@ public class left_scale_opposite extends CommandGroup {
     	addSequential(new Pivot(-90));
     	addSequential(new Drive(Field.DS_TO_SCALE - (Field.DS_TO_SWITCH + Field.SWITCH_WIDTH - Robot.length) + Robot.width));
     	addSequential(new Pivot(90));
-    	addSequential(new Time_Drive(1.5, -0.75));
 	}
 }

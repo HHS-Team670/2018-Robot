@@ -31,6 +31,7 @@ public class AutoCube extends CommandGroup {
     		addSequential(new Pivot(90));
     	else
     		addSequential(new Pivot(-90));
+    	
     	addSequential(new Vision_PowerCube(0.4));
         // Add Commands here:
         // e.g. addSequential(new Command1());

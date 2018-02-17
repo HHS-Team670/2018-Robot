@@ -37,15 +37,15 @@ public class Elevator extends Subsystem {
 	}
 	
 	/*
-		- command to move elevator all the way down slowly and reset encoders
-		- soft limits
-		- Heights:
-		    - Exchange = low as possible
-		    - Switch = 35”
-		    - Mid Scale = 71”
-		    - High Scale = 83”
-		    - Also do second stage
-		    - Full height
+	*	- command to move elevator all the way down slowly and reset encoders
+	*	- soft limits
+	*	- Heights:
+	*	    - Exchange = low as possible
+	*	    - Switch = 35
+	*	    - Mid Scale = 71
+	*	    - High Scale = 83
+	*	    - Also do second stage
+	*	    - Full height
 	 */
 	
 	public void initPID(TalonSRX talon) {

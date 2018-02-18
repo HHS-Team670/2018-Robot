@@ -32,16 +32,9 @@ import paths.right.right_switch_straight;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
-import org.usfirst.frc.team670.robot.commands.auto_specific.AutoDropSwitchStraight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
-<<<<<<< HEAD
-import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
-import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
-=======
-import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
->>>>>>> parent of 7485210... NAVX DOESNT WORK + GAME SPECIFIC STRING WAIT TIME
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;

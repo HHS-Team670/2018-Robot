@@ -112,12 +112,9 @@ public class OI {
 		b7.whenPressed(new Deploy(false));
 		b8.whenPressed(new OpenIntake(false));
 		b9.whenPressed(new OpenIntake(true));
-		b10.whenPressed(new PickupCube());
-		b11.whenPressed(new DropCube());
 		b12.whenPressed(new ZeroElevatorEncoders());
 		b13.whenPressed(new Toggle_HardSoft(true));
 		b14.whenPressed(new Toggle_HardSoft(false));
-		b15.whenPressed(new AutoDropSwitchStraight());
 		
 		/*open.whenPressed(new CloseIntake(true));
 		close.whenPressed(new CloseIntake(false));

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Encoders_Elevator extends Command{
 	
-	private double ticksToTravel, minPercentOutput = 0.05, targetPulseHeight;
+	private double ticksToTravel, minPercentOutput = 0.05, targetPulseHeight, speed = 0.75, tolerance = 200;
 	private int numTimesMotorOutput;
 	
 	public Encoders_Elevator(ElevatorState state) {
@@ -35,26 +35,42 @@ public class Encoders_Elevator extends Command{
 		
  		//this.ticksToTravel = ((inches)/(Math.PI*Constants.DIAMETERinInchesDriveBase)) * Constants.drivebaseTickPerRotation;
 		
-		targetPulseHeight = targetPulseHeight - Robot.elevator.getCurrentPosition();
+		ticksToTravel = targetPulseHeight - Robot.elevator.getCurrentPosition();
 	}
 	
 	// Called just before this Command runs the first time
 		protected void initialize() {
-			Robot.elevator.initPID(Robot.elevator.getTalon());
+			ticksToTravel = targetPulseHeight - Robot.elevator.getCurrentPosition();
 		}
 
 		// Called repeatedly when this Command is scheduled to run
 		protected void execute() {
-			Robot.elevator.getTalon().set(ControlMode.Position, ticksToTravel); 
+			if(ticksToTravel < 0)
+				Robot.elevator.moveElevator(-speed);
+			else
+				Robot.elevator.moveElevator(speed);
 		}
 
 		// Make this return true when this Command no longer needs to run execute()
 		protected boolean isFinished() 
 		{
-			if (Math.abs(Robot.elevator.getTalon().getMotorOutputPercent()) <= minPercentOutput)
-				numTimesMotorOutput++;
-
-			return (numTimesMotorOutput >= 100);
+			if(ticksToTravel < 0)
+			{
+				double test1 = targetPulseHeight - Robot.elevator.getCurrentPosition();
+				if(test1 > tolerance)
+					return true;
+				else
+					return false;
+			}
+			else
+			{
+				double test1 = targetPulseHeight - Robot.elevator.getCurrentPosition();
+				if(test1 < tolerance)
+					return true;
+				else
+					return false;
+			}
+			
 		}
 
 		// Called once after isFinished returns true

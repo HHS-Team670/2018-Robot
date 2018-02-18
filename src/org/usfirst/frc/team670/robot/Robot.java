@@ -35,6 +35,7 @@ import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
@@ -305,6 +306,7 @@ public class Robot extends TimedRobot {
 		
 		CommandGroup combined = new CommandGroup(); 
 		
+		combined.addParallel(new ZeroElevatorEncoders()); 
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 		combined.addSequential(m_autonomousCommand);
 		

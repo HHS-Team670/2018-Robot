@@ -30,23 +30,13 @@ public class Elevator extends Subsystem {
 		elevator = new TalonSRX(RobotMap.elevatorMotor);
 		encoder = new SensorCollection(elevator);
 		encoder.setPulseWidthPosition(0, 0);
-		//elevator.configForwardSoftLimitThreshold(RoboConstants.maxElevatorTicks, RoboConstants.kTimeoutMs);
-		//elevator.configReverseSoftLimitThreshold(RoboConstants.minElevatorTicks, RoboConstants.kTimeoutMs);
+		elevator.setNeutralMode(NeutralMode.Brake);
+		//elevator.configForwardSoftLimitThreshold(RoboConstants.MAX_ELEVATOR_TICKS, RoboConstants.kTimeoutMs);
+		//elevator.configReverseSoftLimitThreshold(RoboConstants.MIN_ELEVATOR_TICKS, RoboConstants.kTimeoutMs);
 		//elevator.configForwardSoftLimitEnable(true, RoboConstants.kTimeoutMs);
 		//elevator.configReverseSoftLimitEnable(true, RoboConstants.kTimeoutMs);
 	}
 	
-	/*
-	*	- command to move elevator all the way down slowly and reset encoders
-	*	- soft limits
-	*	- Heights:
-	*	    - Exchange = low as possible
-	*	    - Switch = 35
-	*	    - Mid Scale = 71
-	*	    - High Scale = 83
-	*	    - Also do second stage
-	*	    - Full height
-	 */
 	
 	public void initPID(TalonSRX talon) {
 		int absolutePosition = talon.getSelectedSensorPosition(RoboConstants.kTimeoutMs)
@@ -70,8 +60,7 @@ public class Elevator extends Subsystem {
 	
 	public double getCurrentPosition()
 	{
-		//return encoder.getPulseWidthPosition();
-		return 0;
+		return encoder.getQuadraturePosition();
 	}
 	
 	public void toggleSoftLimits(boolean limitOn) {

@@ -95,12 +95,12 @@ public class Robot extends TimedRobot {
 		CubePickup.addObject("Cube 6", 6.0);
 		
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
-		subMenuLL.addObject("----CENTER----", "left_baseline");
+		subMenuLL.addObject("----LEFT----", "left_baseline");
 		subMenuLL.addObject("left_baseline", "left_baseline");
 		subMenuLL.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuLL.addObject("left_scale_side", "left_scale_side");
 		subMenuLL.addObject("left_switch_side", "left_switch_side");
-		subMenuLL.addObject("----LEFT----", "left_baseline");
+		subMenuLL.addObject("----CENTER----", "center_baseline");
 		subMenuLL.addObject("center_baseline", "center_baseline");
 		subMenuLL.addObject("center_left_switch_side", "center_left_switch_side");
 		subMenuLL.addObject("center_left_switch_straight", "center_left_switch_straight");
@@ -114,12 +114,12 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("right_switch_straight", "right_switch_straight");
 		
 		subMenuRR.addDefault("RR (KEY ONLY)", "left_baseline");
-		subMenuRR.addObject("----CENTER----", "left_baseline");
+		subMenuRR.addObject("----LEFT----", "left_baseline");
 		subMenuRR.addObject("left_baseline", "left_baseline");
 		subMenuRR.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuRR.addObject("left_scale_side", "left_scale_side");
 		subMenuRR.addObject("left_switch_side", "left_switch_side");
-		subMenuRR.addObject("----LEFT----", "left_baseline");
+		subMenuRR.addObject("----CENTER----", "center_baseline");
 		subMenuRR.addObject("center_baseline", "center_baseline");
 		subMenuRR.addObject("center_left_switch_side", "center_left_switch_side");
 		subMenuRR.addObject("center_left_switch_straight", "center_left_switch_straight");
@@ -133,12 +133,12 @@ public class Robot extends TimedRobot {
 		subMenuRR.addObject("right_switch_straight", "right_switch_straight");
 		
 		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
-		subMenuLR.addObject("----CENTER----", "left_baseline");
+		subMenuLR.addObject("----LEFT----", "left_baseline");
 		subMenuLR.addObject("left_baseline", "left_baseline");
 		subMenuLR.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuLR.addObject("left_scale_side", "left_scale_side");
 		subMenuLR.addObject("left_switch_side", "left_switch_side");
-		subMenuLR.addObject("----LEFT----", "left_baseline");
+		subMenuLR.addObject("----CENTER----", "center_baseline");
 		subMenuLR.addObject("center_baseline", "center_baseline");
 		subMenuLR.addObject("center_left_switch_side", "center_left_switch_side");
 		subMenuLR.addObject("center_left_switch_straight", "center_left_switch_straight");
@@ -152,12 +152,12 @@ public class Robot extends TimedRobot {
 		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
 		
 		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
-		subMenuRL.addObject("----CENTER----", "left_baseline");
+		subMenuRL.addObject("----LEFT----", "left_baseline");
 		subMenuRL.addObject("left_baseline", "left_baseline");
 		subMenuRL.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuRL.addObject("left_scale_side", "left_scale_side");
 		subMenuRL.addObject("left_switch_side", "left_switch_side");
-		subMenuRL.addObject("----LEFT----", "left_baseline");
+		subMenuRL.addObject("----CENTER----", "center_baseline");
 		subMenuRL.addObject("center_baseline", "center_baseline");
 		subMenuRL.addObject("center_left_switch_side", "center_left_switch_side");
 		subMenuRL.addObject("center_left_switch_straight", "center_left_switch_straight");

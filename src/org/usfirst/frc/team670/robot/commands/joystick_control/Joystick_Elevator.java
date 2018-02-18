@@ -4,6 +4,7 @@ import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -17,6 +18,8 @@ public class Joystick_Elevator extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		Robot.elevator.toggleSoftLimits(false);
+		Robot.elevator.resetEncoder();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,6 +28,7 @@ public class Joystick_Elevator extends Command {
     		Robot.elevator.moveElevator((Robot.oi.getOperatorStick().getY()));
     	else
     		Robot.elevator.moveElevator(0);
+    	SmartDashboard.putNumber("TICKS FOR ELEVATOR", Robot.elevator.getCurrentPosition());
     }
 
     // Make this return true when this Command no longer needs to run execute()

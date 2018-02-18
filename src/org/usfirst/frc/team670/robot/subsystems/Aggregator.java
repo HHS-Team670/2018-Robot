@@ -29,9 +29,7 @@ public class Aggregator extends Thread{
 	private AHRS navXMicro;
 	private NetworkTable driverstation, knuckles;
 	private double angle = 0, x, y, w, h;
-	private DigitalInput arduinoEcho;
-	private DigitalOutput arduinoTrig;
-	private Ultrasonic ultra;
+	private AnalogInput aio;
 	
 	//Booleans
 	private boolean isNavXConnected, encodersConnected, elevatorEncoders;
@@ -53,9 +51,7 @@ public class Aggregator extends Thread{
 			navXMicro = null;
 		}
 	    	    
-	    arduinoEcho = new DigitalInput(0);
-		arduinoTrig = new DigitalOutput(1);
-		ultra = new Ultrasonic(arduinoTrig, arduinoEcho);
+	    aio = new AnalogInput(0);
 	    	    
 	    new Thread(new Runnable() {
 	        @Override
@@ -87,11 +83,7 @@ public class Aggregator extends Thread{
 	
 	public double getDistanceIntakeInches()
 	{
-		ultra.ping();
-		double dist = ultra.getRangeInches();
-		if(dist <= 1.0)
-			dist = 1.0;
-		return dist;
+		return aio.getValue()/19.6;
 	}
 	
 	public double getAngle()

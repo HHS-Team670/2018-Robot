@@ -20,7 +20,7 @@ public class Intake extends Subsystem {
 	private Compressor comp;
 	private Solenoid deployer, claw, clawMode;
 	private TalonSRX leftIntake, rightIntake;
-	public boolean is_hard;
+	public boolean is_hard, isIntakeOpen, isIntakeDeployed;
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -55,26 +55,33 @@ public class Intake extends Subsystem {
 	
 	public void deploySupport(boolean deploy)
 	{
+		isIntakeDeployed = deploy;
 		deployer.set(deploy);
 	}
 	
 	public void deployGrabber(boolean deploy)
 	{	
+		isIntakeOpen = deploy;
 		claw.set(deploy);
 	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new Joystick_Intake());
-    }
+    }    
 
 	public boolean isIntakeOpen() {
-		return claw.get();
+		return isIntakeOpen;
 		//return false;
+	}
+	
+	public boolean isHard()
+	{
+		return clawMode.get();
 	}
 
 	public boolean isIntakeDeployed() {
-		return deployer.get();
+		return isIntakeDeployed;
 		//return false;
 	}
 }

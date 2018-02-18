@@ -1,7 +1,7 @@
-package org.usfirst.frc.team670.robot.commands.intake;
+package org.usfirst.frc.team670.robot.commands.auto_specific;
 
 import org.usfirst.frc.team670.robot.Robot;
-import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
+import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -20,9 +20,11 @@ public class DropCube extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	com.addParallel(new SpinIntake(-0.8, 10));
+    	setTimeout(3);
+		new CloseIntake(false).start();
+    	com.addParallel(new SpinIntake(-0.55, 10));
     	com.addSequential(new Delay(1.5));
-    	com.addSequential(new CloseIntake(false));
+    	com.addSequential(new CloseIntake(true));
     	com.start();
     }
 
@@ -32,16 +34,13 @@ public class DropCube extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Robot.sensors.getDistanceIntakeInches() >= 4 || com.isCompleted())
-        	return true;
-        else
-        	return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	com.cancel();
-    	new CloseIntake(false).start();
+    	new CloseIntake(true).start();
     	Robot.intake.driveIntake(0);
     }
 

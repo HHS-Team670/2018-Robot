@@ -18,9 +18,11 @@ public class Encoders_Pivot extends Command{
 	private int numTimesMotorOutput;
 	
 	public Encoders_Pivot(double angle) {
-		double circum = Math.PI*RoboConstants.PIVOT_RADIUS;
+		double ticksPerDegree = 4711/90;
+		ticksToTravel = ticksPerDegree*angle;
+		/*double circum = Ma th.PI*RoboConstants.PIVOT_RADIUS;
 		double inches = circum*(angle/360.0);
- 		this.ticksToTravel = ((inches)/(Math.PI*RoboConstants.DRIVEBASE_WHEEL_DIAMETER)) * RoboConstants.DRIVEBASE_TICKS_PER_ROTATION;
+ 		this.ticksToTravel = ((inches)/(Math.PI*RoboConstants.DRIVEBASE_WHEEL_DIAMETER)) * RoboConstants.DRIVEBASE_TICKS_PER_ROTATION;*/
 		requires(Robot.driveBase);
 	}
 
@@ -42,7 +44,7 @@ public class Encoders_Pivot extends Command{
 		if (Math.abs(Robot.driveBase.getLeft().getMotorOutputPercent()) <= minPercentOutput && Math.abs(Robot.driveBase.getRight().getMotorOutputPercent()) <= minPercentOutput)
 			numTimesMotorOutput++;
 
-		return (numTimesMotorOutput >= 100);
+		return (numTimesMotorOutput >= 50);
 	}
 
 	// Called once after isFinished returns true

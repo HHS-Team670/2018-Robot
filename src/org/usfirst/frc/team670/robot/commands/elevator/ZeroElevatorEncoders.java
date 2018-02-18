@@ -46,7 +46,7 @@ public class ZeroElevatorEncoders extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.elevator.resetEncoder();
-		Robot.elevator.toggleSoftLimits(true);
+		//Robot.elevator.toggleSoftLimits(true);
 		Robot.elevator.moveElevator(0);
 	}
 

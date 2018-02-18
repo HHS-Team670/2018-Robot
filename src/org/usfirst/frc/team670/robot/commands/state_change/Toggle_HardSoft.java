@@ -7,17 +7,20 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class Set_Hard_Soft extends InstantCommand {
+public class Toggle_HardSoft extends InstantCommand {
 
-    public Set_Hard_Soft() {
+	private boolean isHard;
+	
+    public Toggle_HardSoft(boolean isHard) {
         super();
+    	this.isHard = isHard;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.intake.setHard(!Robot.intake.is_hard);
+    	Robot.intake.setHard(isHard);
     }
 
 }

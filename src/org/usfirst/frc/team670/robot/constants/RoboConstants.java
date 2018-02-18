@@ -1,16 +1,28 @@
 package org.usfirst.frc.team670.robot.constants;
 
+import edu.wpi.first.wpilibj.Preferences;
+
 public class RoboConstants {
 
 	// Gear ratio from motor to shaft = 10.71
 	// Ratio encoder to shaft = 1.0
 
+	//15 feet and 4.46 seconds
+	//TU = Oscillation PEriod (4.46)
+	//KU = (0.275)
+	//P = 0.6*KU
+	//D = 3*P*TU/40
+	//I = 1.2*Ku/Tu
+	
 	// All PID Variables
 	public static final int kSlotIdx = 0;
 	public static final int kPIDLoopIdx = 0;
 	public static final int kTimeoutMs = 10;
-	public static final double PROPORTION = .09, // Make P higher --> Set to 0.05 yesterday
-			INTEGRAL = 0, DERIVATIVE = 0;
+	public static final double KU = 0.275; //Original P value
+	public static final double TU = 4.46; //Oscillation in seconds
+	public static double PROPORTION = 0.2*KU;
+	public static double INTEGRAL = 0;//0.05*KU/TU;
+	public static double DERIVATIVE = 5*KU*TU/40;
 
 	// Ticks for one rotation of a drivebase wheel
 	public static final double DRIVEBASE_TICKS_PER_ROTATION = 4096.0;
@@ -34,15 +46,27 @@ public class RoboConstants {
 	// Diameter of wheel in elevator in inches
 	public static final double ELEVATOR_WHEEL_DIAMETER = 6; //Not sure if this is correct
 
+	/*
+	*	- command to move elevator all the way down slowly and reset encoders
+	*	- soft limits
+	*	- Heights:
+	*	    - Exchange = low as possible
+	*	    - Switch = 35
+	*	    - Mid Scale = 71
+	*	    - High Scale = 83
+	*	    - Also do second stage
+	*	    - Full height
+	 */
 	// Elevator Heights
 	public static final double ELEVATOR_PULSE_FOR_EXCHANGE = 0; // SET THESE
-	public static final double ELEVATOR_PULSE_FOR_SWITCH = 0;
-	public static final double ELEVATOR_PULSE_FOR_HIGHSCALE = 0;
-	public static final double ELEVATOR_PULSE_FOR_MIDSCALE = 0;
+	public static final double ELEVATOR_PULSE_FOR_SWITCH = 3638;
+	public static final double ELEVATOR_PULSE_FOR_HIGHSCALE = 9500;
+	public static final double ELEVATOR_PULSE_FOR_MIDSCALE = 8341;
+	public static final double ELEVATOR_PULSE_FOR_SECONDSTAGE = 5476; //In ticks
 	public static final double ELEVATOR_AUTON_SPEED = 0.05; // Probably make this higher after testing
 
-	public static final int MAX_ELEVATOR_TICKS = 0; // SET THIS
-	public static final int MIN_ELEVATOR_TICKS = 0; // SET THIS
+	public static final int MIN_ELEVATOR_TICKS = 50; // SET THIS
+	public static final int MAX_ELEVATOR_TICKS = 10500; // SET THIS
 
 	public static final double MAX_INTAKE_VOLTAGE = 10; //You're gonna want to set this, amde it nonzero to avoid repeatedly printing warning
 

@@ -49,9 +49,7 @@ public class Encoders_Drive extends Command {
 	protected void execute() {
 		System.out.println(ticksToTravel);
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
-		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel); /* 50 rotations in either direction */
-		System.out.println("Left: " + leftEncoder.getQuadraturePosition());
-		System.out.println("Right: " + rightEncoder.getQuadraturePosition());
+		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -60,7 +58,7 @@ public class Encoders_Drive extends Command {
 				&& Math.abs(Robot.driveBase.getRight().getMotorOutputPercent()) <= minPercentOutput)
 			numTimesMotorOutput++;
 
-		return (numTimesMotorOutput >= 100);
+		return (numTimesMotorOutput >= 50);
 	}
 
 	// Called once after isFinished returns true

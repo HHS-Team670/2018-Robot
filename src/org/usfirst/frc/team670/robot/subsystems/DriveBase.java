@@ -64,6 +64,31 @@ public class DriveBase extends Subsystem {
 
 	}
 
+	/**
+	 * Gets the Talon based on the ID.
+	 * 
+	 * @param id
+	 *            The device ID of the Talon.
+	 * @return The Talon bound to the ID port, or {@code null} if no drivetrain
+	 *         Talon was found.
+	 * 
+	 * @see CAN RobotMap.CAN
+	 */
+	public TalonSRX getTalon(int id) {
+		switch (id) {
+		case RobotMap.leftMotor1:
+			return left1;
+		case RobotMap.rightMotor1:
+			return right1;
+		case RobotMap.leftMotor2:
+			return left2;
+		case RobotMap.rightMotor2:
+			return right2;
+		default: // Not a drivetrain Talon!
+			return null;
+		}
+	}
+
 	public void initJoystickDrive() {
 		left1.setNeutralMode(NeutralMode.Coast);
 		left2.setNeutralMode(NeutralMode.Coast);
@@ -167,6 +192,42 @@ public class DriveBase extends Subsystem {
 		talon.config_kP(RoboConstants.kPIDLoopIdx, RoboConstants.PROPORTION, RoboConstants.kTimeoutMs);
 		talon.config_kI(RoboConstants.kPIDLoopIdx, RoboConstants.INTEGRAL, RoboConstants.kTimeoutMs);
 		talon.config_kD(RoboConstants.kPIDLoopIdx, RoboConstants.DERIVATIVE, RoboConstants.kTimeoutMs);
+	}
+	
+	public void initPIDPivoting(TalonSRX talon) {
+		left1.setNeutralMode(NeutralMode.Brake);
+		left2.setNeutralMode(NeutralMode.Brake);
+		right1.setNeutralMode(NeutralMode.Brake);
+		right2.setNeutralMode(NeutralMode.Brake);
+
+		int absolutePosition = talon.getSelectedSensorPosition(RoboConstants.kTimeoutMs)
+				& 0xFFF; /*
+							 * mask out the bottom12 bits, we don't care about the wrap arounds
+							 */
+		/* use the low level API to set the quad encoder signal */
+		talon.setSelectedSensorPosition(absolutePosition, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs);
+
+		/* choose the sensor and sensor direction */
+		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, RoboConstants.kPIDLoopIdx,
+				RoboConstants.kTimeoutMs);
+		talon.setSensorPhase(true);
+
+		/* set the peak and nominal outputs, 12V means full */
+		talon.configNominalOutputForward(0, RoboConstants.kTimeoutMs);
+		talon.configNominalOutputReverse(0, RoboConstants.kTimeoutMs);
+		talon.configPeakOutputForward(1, RoboConstants.kTimeoutMs);
+		talon.configPeakOutputReverse(-1, RoboConstants.kTimeoutMs);
+		//talon.configClosedloopRamp(1, 0);
+		/*
+		 * set the allowable closed-loop error, Closed-Loop output will be neutral
+		 * within this range. See Table in Section 17.2.1 for native units per rotation.
+		 */
+		talon.configAllowableClosedloopError(0, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs); /* always servo */
+		/* set closed loop gains in slot0 */
+		talon.config_kF(RoboConstants.kPIDLoopIdx, 0.0, RoboConstants.kTimeoutMs);
+		talon.config_kP(RoboConstants.kPIDLoopIdx, 0.125, RoboConstants.kTimeoutMs);
+		talon.config_kI(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
+		talon.config_kD(RoboConstants.kPIDLoopIdx, 0.15, RoboConstants.kTimeoutMs);
 	}
 
 	public void singleStickDrive(Joystick joy) {

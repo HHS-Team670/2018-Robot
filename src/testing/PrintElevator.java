@@ -23,11 +23,11 @@ public class PrintElevator extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double y = Robot.oi.getLeftStick().getY();
-    	Robot.elevator.moveElevator(y*0.1);
-    	if(Robot.oi.getOperatorStick().getRawButton(1))
-    			Robot.elevator.getTalon().getSensorCollection().setPulseWidthPosition(0, 0);
-    	System.out.println(Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition());
-    	SmartDashboard.putString("Elevator Ticks", Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition() + "");
+    	Robot.elevator.moveElevator(y);
+    	//if(Robot.oi.getOperatorStick().getRawButton(1))
+    		//	Robot.elevator.getTalon().getSensorCollection().setPulseWidthPosition(0, 0);
+    	//System.out.println(Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition());
+    	//SmartDashboard.putString("Elevator Ticks", Robot.elevator.getTalon().getSensorCollection().getPulseWidthPosition() + "");
     }
 
     // Make this return true when this Command no longer needs to run execute()

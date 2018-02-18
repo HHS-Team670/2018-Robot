@@ -8,16 +8,17 @@
 package org.usfirst.frc.team670.robot;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
+import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.StopIntakeWheels;
+import org.usfirst.frc.team670.robot.commands.auto_specific.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
-import org.usfirst.frc.team670.robot.commands.intake.StopIntakeWheels;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
-import org.usfirst.frc.team670.robot.commands.intake.DropCube;
 import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
-import org.usfirst.frc.team670.robot.commands.intake.PickupCube;
-import org.usfirst.frc.team670.robot.commands.intake.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
+import org.usfirst.frc.team670.robot.commands.state_change.Toggle_HardSoft;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.constants.enums.DriverState;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
@@ -26,6 +27,7 @@ import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import testing.PrintElevator;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,35 +47,33 @@ public class OI {
 
 	// Operator Controls
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
-	private Button toggleIntake = new JoystickButton(operatorStick, 4);
+	private Button toggleIntake = new JoystickButton(operatorStick, 1);
 	private Button toggleClimber = new JoystickButton(operatorStick, 5);
-	private Button open_close = new JoystickButton(operatorStick, 1);
-	private Button grab = new JoystickButton(operatorStick, 10);
-	private Button release = new JoystickButton(operatorStick, 11);
-	private Button deploy = new JoystickButton(operatorStick, 8);
-	private Button retract = new JoystickButton(operatorStick, 9);
 	
-	// Arcade Controls
-	private Button pickUpCubeSoft = new JoystickButton(arcadeStick, 1);
-	private Button dropCube = new JoystickButton(arcadeStick, 10);
+	private Button CancelCommand = new JoystickButton(operatorStick, 10);
+	private Button TestElevators = new JoystickButton(operatorStick, 11);
 	
-	private Button pickUpCubeHard = new JoystickButton(arcadeStick, 2);
-	private Button zeroElevator = new JoystickButton(arcadeStick, 9);
-
-	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
-	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
-
-	private Button elevatorHighScale = new JoystickButton(arcadeStick, 4);
-	private Button elevatorMidScale = new JoystickButton(arcadeStick, 7);
-	
-	private Button cancelCommand = new JoystickButton(arcadeStick, 5);
-	private Button GANAR = new JoystickButton(arcadeStick, 6);
-
+	private Button vision = new JoystickButton(operatorStick, 2);
 	
 	// Driver Controls
 	/*private Button tankDrive = new JoystickButton(leftDriveStick, 3);
 	private Button reverseTankDrive = new JoystickButton(leftDriveStick, 4);
 	private Button singleStickDrive = new JoystickButton(leftDriveStick, 5);*/
+	private Button open = new JoystickButton(arcadeStick, 1);
+	private Button close = new JoystickButton(arcadeStick, 10);
+	
+	private Button hard = new JoystickButton(arcadeStick, 2);
+	private Button soft = new JoystickButton(arcadeStick, 9);
+	
+	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
+	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
+	
+	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
+	private Button elevatorZero = new JoystickButton(arcadeStick, 7);
+
+	private Button PickupAuto = new JoystickButton(arcadeStick, 5);
+	private Button DropAuto = new JoystickButton(arcadeStick, 6);
+
 	
 	public OI() {
 		// Operator buttons
@@ -83,31 +83,26 @@ public class OI {
 		toggleElevator.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		toggleIntake.whenPressed(new Set_OperatorControl(OperatorState.INTAKE));
 		toggleIntake.whenReleased(new Set_OperatorControl(OperatorState.NONE));
-		grab.whenPressed(new CloseIntake(true));
-		release.whenPressed(new CloseIntake(false));
-		deploy.whenPressed(new Deploy(true));
-		retract.whenPressed(new Deploy(false));
-		open_close.whenPressed(new CloseIntake(Robot.intake.isIntakeOpen()));
 		
-		// Driver Controls
-		/*tankDrive.whenPressed(new Set_DriverControl(DriverState.TANK));
-		reverseTankDrive.whenPressed(new Set_DriverControl(DriverState.TANKREVERSE));
-		singleStickDrive.whenPressed(new Set_DriverControl(DriverState.SINGLE));*/
+		open.whenPressed(new CloseIntake(true));
+		close.whenPressed(new CloseIntake(false));
 		
-		// Arcade buttons
-		pickUpCubeSoft.whenPressed(new CloseIntake(true)); //1
-		dropCube.whenPressed(new CloseIntake(false)); //10
+		hard.whenPressed(new Toggle_HardSoft(false));
+		soft.whenPressed(new Toggle_HardSoft(true));
 		
-		pickUpCubeHard.whenPressed(new CloseIntake(true));//2
-		zeroElevator.whenPressed(new ZeroElevatorEncoders());//9
+		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
+		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
+		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
+		elevatorZero.whenPressed(new ZeroElevatorEncoders());
 		
-		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));//3
-		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));//8
-		elevatorHighScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));//4
-		elevatorMidScale.whenPressed(new Encoders_Elevator(ElevatorState.MIDSCALE));//7
+		PickupAuto.whenPressed(new PickupCube());
+		DropAuto.whenPressed(new DropCube());
 		
-		cancelCommand.whenPressed(new CancelCommand()); //5
-		GANAR.whenPressed(new testing.PrintElevator()); //6
+		CancelCommand.whenPressed(new CancelCommand());
+		TestElevators.whenPressed(new PrintElevator());
+		
+		vision.whenPressed(new Vision_PowerCube(0.4));
+		vision.whenReleased(new CancelCommand());
 	}
 
 	public Joystick getLeftStick() {

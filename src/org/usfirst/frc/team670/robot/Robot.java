@@ -180,7 +180,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("LR", subMenuLR);
 		SmartDashboard.putData("RL", subMenuRL);
 		
-		new OpenIntake(true); //0 - off is hard, 0 - on is soft
+		//new OpenIntake(true); //0 - off is hard, 0 - on is soft
 	}
 	
 	public Command parseCommand(String str) {		
@@ -284,7 +284,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		String data = DriverStation.getInstance().getGameSpecificMessage(); 
+		/*String data = DriverStation.getInstance().getGameSpecificMessage(); 
 		data = data.substring(0, 2); 
 		
 		String cmd = "";
@@ -338,7 +338,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		if (combined != null)
-			combined.start();
+			combined.start();*/
 	}
 
 	/**
@@ -355,9 +355,9 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (primaryCommand != null) {
+		/*if (primaryCommand != null) {
 			primaryCommand.cancel();
-		}
+		}*/
 	}
 
 	/**

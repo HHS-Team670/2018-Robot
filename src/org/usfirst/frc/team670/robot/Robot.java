@@ -36,8 +36,12 @@ import org.usfirst.frc.team670.robot.commands.auto_specific.AutoDropSwitchStraig
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+<<<<<<< HEAD
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
+=======
+import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
+>>>>>>> parent of 7485210... NAVX DOESNT WORK + GAME SPECIFIC STRING WAIT TIME
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
@@ -306,10 +310,13 @@ public class Robot extends TimedRobot {
 		
 		CommandGroup combined = new CommandGroup(); 
 		
+<<<<<<< HEAD
 		//Zero the elevators at the beggining of the match
 		combined.addParallel(new ZeroElevatorEncoders()); 
 		
 		//Add whateer time delay the driver selected
+=======
+>>>>>>> parent of 7485210... NAVX DOESNT WORK + GAME SPECIFIC STRING WAIT TIME
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 		
 		//Add the primary command sequence taken from the smartdashboard

@@ -65,6 +65,8 @@ public class RoboConstants {
 	public static final double ELEVATOR_PULSE_FOR_SECONDSTAGE = 5476; //In ticks
 	public static final double ELEVATOR_AUTON_SPEED = 0.05; // Probably make this higher after testing
 
+	public static final double ELEVATOR_STOPAGE_POINT = 308;
+	
 	public static final int MIN_ELEVATOR_TICKS = 50; // SET THIS
 	public static final int MAX_ELEVATOR_TICKS = 10500; // SET THIS
 

@@ -35,7 +35,6 @@ public class center_right_switch_side extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new Deploy(true));
     	addSequential(new Drive(0.5*Robot.length));
     	addSequential(new Pivot(90));
     	addSequential(new Drive(0.5*Field.SWITCH_LENGTH + 2*Robot.length));

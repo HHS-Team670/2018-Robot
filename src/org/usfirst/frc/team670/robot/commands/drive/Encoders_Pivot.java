@@ -28,8 +28,8 @@ public class Encoders_Pivot extends Command{
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveBase.initPID(Robot.driveBase.getLeft());
-		Robot.driveBase.initPID(Robot.driveBase.getRight());
+		Robot.driveBase.initPIDPivoting(Robot.driveBase.getLeft());
+		Robot.driveBase.initPIDPivoting(Robot.driveBase.getRight());
 	}
 
 	// Called repeatedly when this Command is scheduled to run

@@ -16,8 +16,6 @@ public class Drive extends CommandGroup{
 	 * @param distance Distance in inches
 	 */
 	public Drive(double distance) {
-
-		Robot.sensors.areEncodersWorking(true);
 		addSequential(new Encoders_Drive(distance));
 	}
 }

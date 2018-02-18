@@ -35,8 +35,7 @@ public class right_scale_side extends CommandGroup {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-		addParallel(new Deploy(true));
-    	addSequential(new Drive(Field.DS_TO_SCALE - Robot.length/2 + Field.SCALE_WIDTH/2));
+		addSequential(new Drive(Field.DS_TO_SCALE - Robot.length/2 + Field.SCALE_WIDTH/2));
     	addSequential(new Pivot(-90));
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
     	addSequential(new Drive(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR));

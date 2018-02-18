@@ -31,7 +31,6 @@ public class left_scale_opposite extends CommandGroup {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
-		addParallel(new Deploy(true));
 		addSequential(new Drive(Field.DS_TO_SWITCH + Field.SWITCH_WIDTH - Robot.length + 0.5*(Field.DS_TO_PLATFORM - Field.DS_TO_SWITCH - Field.SWITCH_WIDTH)));
 		addSequential(new Pivot(90));
 		addSequential(new Drive(Field.DRIVER_SIDE_LENGTH - 2 * Field.SIDE_TRIANGLE_WIDTH - Robot.width));

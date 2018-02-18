@@ -16,9 +16,9 @@ public class Pivot extends CommandGroup{
 	 * @param degrees Angle in degrees
 	 */
 	public Pivot(double degrees) {
-		if(Robot.sensors.isNavXConnected())
+		/*if(Robot.sensors != null && Robot.sensors.isNavXConnected())
 			addSequential(new NavX_Pivot(degrees));
-		else
+		else*/
 			addSequential(new Encoders_Pivot(degrees));
 	}
 }

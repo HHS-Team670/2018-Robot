@@ -32,11 +32,12 @@ import paths.right.right_switch_straight;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.AutoDropSwitchStraight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
-import org.usfirst.frc.team670.robot.commands.intake.CloseIntake;
+import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
@@ -61,7 +62,7 @@ public class Robot extends TimedRobot {
 	public static Aggregator sensors;
 	public static OI oi;
 	
-	Command m_autonomousCommand;
+	Command primaryCommand;
 	private SendableChooser<Double> autonomousDelay, CubePickup;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
 	/**
@@ -179,7 +180,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("LR", subMenuLR);
 		SmartDashboard.putData("RL", subMenuRL);
 		
-		new CloseIntake(true); //0 - off is hard, 0 - on is soft
+		new OpenIntake(true); //0 - off is hard, 0 - on is soft
 	}
 	
 	public Command parseCommand(String str) {		
@@ -266,7 +267,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {	
-		
 		Scheduler.getInstance().run();
 	}
 
@@ -298,7 +298,7 @@ public class Robot extends TimedRobot {
 		else if(data.equalsIgnoreCase("RL"))
 			cmd = subMenuRL.getSelected();
 		
-		m_autonomousCommand = parseCommand(cmd);
+		primaryCommand = parseCommand(cmd);
 		Boolean isL = isLeft(cmd);
 		double selectedCube = CubePickup.getSelected();
 		
@@ -306,12 +306,36 @@ public class Robot extends TimedRobot {
 		
 		CommandGroup combined = new CommandGroup(); 
 		
+		//Zero the elevators at the beggining of the match
 		combined.addParallel(new ZeroElevatorEncoders()); 
-		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
-		combined.addSequential(m_autonomousCommand);
 		
+		//Add whateer time delay the driver selected
+		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
+		
+		//Add the primary command sequence taken from the smartdashboard
+		combined.addSequential(primaryCommand);
+		
+		//Auto pickup the cube from the backside of the switch
 		if(selectedCube!=-1.0 && isL != null)
 			combined.addSequential(new AutoCube(isL, (int)selectedCube));
+		
+		//Check if you picked up cube from side of switch on your side
+		if((int)selectedCube == 1 || (int)selectedCube == 2)
+		{
+			if(data.charAt(0) == 'L')
+			{
+				//Drop cube into the switch right in front of you (add it to sequential)
+				combined.addSequential(new AutoDropSwitchStraight());
+			}
+		}
+		else if((int)selectedCube == 5 || (int)selectedCube == 6)
+		{
+			if(data.charAt(0) == 'R')
+			{
+				//Drop cube into the switch right in front of you (add it to sequential)
+				combined.addSequential(new AutoDropSwitchStraight());
+			}
+		}
 		
 		if (combined != null)
 			combined.start();
@@ -331,8 +355,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (primaryCommand != null) {
+			primaryCommand.cancel();
 		}
 	}
 

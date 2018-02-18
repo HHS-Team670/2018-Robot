@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Aggregator extends Thread{
 	
 	// Sensors
-	private AHRS navXMicro;
+	//private AHRS navXMicro;
 	private NetworkTable driverstation, knuckles;
 	private double angle = 0, x, y, w, h;
 	private AnalogInput aio;
@@ -42,14 +42,14 @@ public class Aggregator extends Thread{
 		knuckles = NetworkTable.getTable("knuckles_vision");
 		
 		//Check the navXMicro is plugged in
-	    try {
+	    /*try {
 			navXMicro = new AHRS(RobotMap.navXPort);
 			isNavXConnected = true;
 		} catch (RuntimeException ex) {
 			isNavXConnected = false;
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 			navXMicro = null;
-		}
+		}*/
 	    	    
 	    aio = new AnalogInput(0);
 	    	    
@@ -81,6 +81,11 @@ public class Aggregator extends Thread{
 	    }).start();
 	}
 	
+	public double getWidth()
+	{
+		return w;
+	}
+	
 	public double getDistanceIntakeInches()
 	{
 		return aio.getValue()/19.6;
@@ -92,12 +97,12 @@ public class Aggregator extends Thread{
 	}
 	
 	public void reset() {
-		if (isNavXConnected())
-			navXMicro.reset();
+		/*if (isNavXConnected())
+			navXMicro.reset();*/
 	}
 
 	public boolean isNavXConnected() {
-		try {
+		/*try {
 			navXMicro = new AHRS(RobotMap.navXPort);
 			isNavXConnected = true;
 		} catch (RuntimeException ex) {
@@ -105,62 +110,48 @@ public class Aggregator extends Thread{
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 			navXMicro = null;
 		}
-		return isNavXConnected;
+		return isNavXConnected;*/
+		return false;
 	}
 
 	public double getYaw() {
-		if (isNavXConnected())
-			return navXMicro.getYaw();
+		//if (isNavXConnected())
+			//return navXMicro.getYaw();
 		return -1;
 	}
 	
 	public void zeroYaw()
 	{
-		if(isNavXConnected())
-			navXMicro.zeroYaw();
+		//if(isNavXConnected())
+			//navXMicro.zeroYaw();
 	}
 
 	public double getTilt() {
-		if (isNavXConnected())
-			return navXMicro.getAngle();
+		/*if (isNavXConnected())
+			return navXMicro.getAngle();*/
 		return -1;	}
 
-	public double getVelocityY() {
+	public double getVelocityY() {/*
 		if (isNavXConnected())
-			return navXMicro.getVelocityY();
+			return navXMicro.getVelocityY();*/
 		return -1;	}
 
-	public double getDisplacementX() {
+	public double getDisplacementX() {/*
 		if (isNavXConnected())
-			return navXMicro.getDisplacementX();
+			return navXMicro.getDisplacementX();*/
 		return -1;
 	}
 	
-	public double getDisplacementY() {
+	public double getDisplacementY() {/*
 		if (isNavXConnected())
-			return navXMicro.getDisplacementY();
+			return navXMicro.getDisplacementY();*/
 		return -1;
 	}
 	
-	public double getDisplacementZ() {
+	public double getDisplacementZ() {/*
 		if (isNavXConnected())
-			return navXMicro.getDisplacementZ();
+			return navXMicro.getDisplacementZ();*/
 		return -1;
-	}
-	
-	public String getVal(String data) {
-
-		int lastLessThan = data.lastIndexOf('<');
-		int lastGreaterThan = data.lastIndexOf('>');
-
-		if (lastGreaterThan != -1 && lastLessThan != -1) {
-			if (lastLessThan < lastGreaterThan) {
-				return data.substring(lastLessThan + 1, lastGreaterThan);
-			} else if (data.lastIndexOf('<', lastGreaterThan) != -1) {
-				return data.substring(data.lastIndexOf('<', lastGreaterThan) + 1, data.lastIndexOf('>'));
-			}
-		}
-		return "-1";
 	}
 
 	public void areEncodersWorking(boolean b) {
@@ -169,6 +160,10 @@ public class Aggregator extends Thread{
 
 	public void areElevatorEncodersWorking(boolean b) {
 		elevatorEncoders = b;
+	}
+
+	public boolean isVisionConnected() {
+		return knuckles.isConnected();
 	}
 	
 }

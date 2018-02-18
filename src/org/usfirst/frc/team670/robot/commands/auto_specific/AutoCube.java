@@ -4,6 +4,7 @@ import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
+import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
@@ -24,13 +25,32 @@ public class AutoCube extends CommandGroup {
     	
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	//Drives to the specified cube
-    	addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH + Field.DIST_BETWEEN_CUBES * (cube - 1) + Field.CUBE_WIDTH * cube - Field.CUBE_WIDTH/2));
     	if(left)
+    	{
+        	addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH + Field.DIST_BETWEEN_CUBES * (cube - 1) + Field.CUBE_WIDTH * cube - Field.CUBE_WIDTH/2));
     		addSequential(new Pivot(90));
+    	}
     	else
+    	{
+    		cube = 6 - cube;
+        	addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH + Field.DIST_BETWEEN_CUBES * (cube) + Field.CUBE_WIDTH * cube + Field.CUBE_WIDTH/2));
     		addSequential(new Pivot(-90));
+    	}
     	
-    	addSequential(new Vision_PowerCube(0.4));
+    	if(Robot.sensors.isVisionConnected())
+    		addSequential(new Vision_PowerCube(0.3));
+    	else
+    	{
+    		//Just go in using pid and motor constants
+    		addSequential(new OpenIntake(true));
+    		addParallel(new Drive(51.825-(Field.CUBE_WIDTH/2)));
+    		addParallel(new SpinIntake(0.6, 5));
+    		addSequential(new Delay(1));
+    		addParallel(new OpenIntake(false));
+    		addSequential(new Delay(0.5));
+    		addSequential(new Drive(-Field.CUBE_WIDTH));
+    	}
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

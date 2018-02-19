@@ -51,7 +51,7 @@ public class OI {
 	private Button toggleIntake = new JoystickButton(operatorStick, 1);
 	private Button toggleClimber = new JoystickButton(operatorStick, 5);
 	
-	private Button CancelCommand = new JoystickButton(operatorStick, 10);
+	private Button pivot = new JoystickButton(operatorStick, 10);
 	private Button TestElevators = new JoystickButton(operatorStick, 11);
 	
 	private Button vision = new JoystickButton(operatorStick, 2);
@@ -73,7 +73,7 @@ public class OI {
 	private Button elevatorZero = new JoystickButton(arcadeStick, 7);
 
 	private Button PickupAuto = new JoystickButton(arcadeStick, 5);
-	private Button DropAuto = new JoystickButton(arcadeStick, 6);
+	private Button drive = new JoystickButton(arcadeStick, 6);
 
 	
 	public OI() {
@@ -97,9 +97,9 @@ public class OI {
 		//elevatorZero.whenPressed(new ZeroElevatorEncoders());
 		
 		PickupAuto.whenPressed(new PickupCube());
-		DropAuto.whenPressed(new DropCube());
+		drive.whenPressed(new Drive(12));
 		
-		CancelCommand.whenPressed(new CancelCommand());
+		pivot.whenPressed(new Pivot(90));
 		
 		vision.whenPressed(new Vision_PowerCube(0.4));
 		vision.whenReleased(new CancelCommand());

@@ -30,7 +30,8 @@ public class Field {
 	public static final double SWITCH_LENGTH = 152.88;
 	
 	public static final double DS_TO_CUBEPILE = 98.0;
-	public static final double CUBEPILE_WIDTH = 45.0;
+	public static final double CUBEPILE_WIDTH = 45.0; // parallel to width of the field
+	public static final double CUBEPILE_LENGTH = 42.0; // parallel to length of the field
 	public static final double SIDE_TO_CUBEPILE = SIDE_TO_SWITCH + SWITCH_LENGTH/2 - CUBEPILE_WIDTH/2;
 	
 	public static final double EDGE_TO_PLATFORM = 95.25;

@@ -188,7 +188,7 @@ public class DriveBase extends Subsystem {
 		 */
 		talon.configAllowableClosedloopError(0, RoboConstants.kPIDLoopIdx, RoboConstants.kTimeoutMs); /* always servo */
 		/* set closed loop gains in slot0 */
-		talon.config_kF(RoboConstants.kPIDLoopIdx, 0.0, RoboConstants.kTimeoutMs);
+		talon.config_kF(RoboConstants.kPIDLoopIdx, RoboConstants.f, RoboConstants.kTimeoutMs);
 		talon.config_kP(RoboConstants.kPIDLoopIdx, RoboConstants.PROPORTION, RoboConstants.kTimeoutMs);
 		talon.config_kI(RoboConstants.kPIDLoopIdx, RoboConstants.INTEGRAL, RoboConstants.kTimeoutMs);
 		talon.config_kD(RoboConstants.kPIDLoopIdx, RoboConstants.DERIVATIVE, RoboConstants.kTimeoutMs);

@@ -13,6 +13,7 @@ import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -37,10 +38,14 @@ public class right_switch_side extends CommandGroup {
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
 		addParallel(new Deploy(true));
+		SmartDashboard.putString("Command Running:", "deploy");
 		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length/2 + Field.SWITCH_WIDTH/2));
+		SmartDashboard.putString("Command Running:", "drive");
 		addSequential(new Pivot(-90));
+		SmartDashboard.putString("Command Running:", "pivot");
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
 		addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH));
+		SmartDashboard.putString("Command Running:", "drive");
     	addSequential(new DropCube());
     	addSequential(new Drive(-(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH)));
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));

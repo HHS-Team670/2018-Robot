@@ -96,10 +96,10 @@ public class OI {
 		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
 		//elevatorZero.whenPressed(new ZeroElevatorEncoders());
 		
-		PickupAuto.whenPressed(new PickupCube());
-		DropAuto.whenPressed(new DropCube());
+		PickupAuto.whenPressed(new Pivot(90));
+		DropAuto.whenPressed(new Drive(21.13));
 		
-		CancelCommand.whenPressed(new CancelCommand());
+		CancelCommand.whenPressed(new right_switch_side());
 		
 		vision.whenPressed(new Vision_PowerCube(0.4));
 		vision.whenReleased(new CancelCommand());

@@ -33,9 +33,11 @@ import paths.right.right_switch_straight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.AutoDropSwitchStraight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
+import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
+import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
@@ -287,7 +289,7 @@ public class Robot extends TimedRobot {
 		
 		int retries = 100;
 		
-		while(data.length() < 3 && retries > 0)
+		/*while(data.length() < 3 && retries > 0)
 		{
 			DriverStation.reportError("Game data is not valid", false);
 			try{
@@ -298,7 +300,7 @@ public class Robot extends TimedRobot {
 			}
 			catch(Exception e){}
 			retries--;
-		}
+		}*/
 		
 		if(data.equals("") || data == null)
 			data = "";
@@ -325,8 +327,9 @@ public class Robot extends TimedRobot {
 		combined = new CommandGroup(); 
 		
 		//Zero the elevators at the beggining of the match
-		combined.addParallel(new ZeroElevatorEncoders()); 
-		
+		combined.addSequential(new ZeroElevatorEncoders()); 
+		//combined.addParallel(new Encoders_Elevator(ElevatorState.SWITCH)); 
+
 		//Add whateer time delay the driver selected
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 		

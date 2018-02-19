@@ -25,7 +25,9 @@ public class Joystick_Elevator extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		double speed = Robot.elevator.calculateSpeed((int)Robot.elevator.getCurrentPosition(), Robot.oi.getOperatorStick().getY());
+		double speed = Robot.oi.getOperatorStick().getY();
+		boolean isGoingUp = speed >= 0;
+		speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(),Robot.oi.getOperatorStick().getY(), isGoingUp);
 		if (Robot.oi.getOS().equals(OperatorState.ELEVATOR))
 			Robot.elevator.moveElevator(speed);
 		else

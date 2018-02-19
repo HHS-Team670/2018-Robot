@@ -17,11 +17,12 @@ public class ZeroElevatorEncoders extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		Robot.elevator.toggleSoftLimits(false);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.elevator.moveElevator(0.25);
+		Robot.elevator.moveElevator(0.15);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -31,6 +32,7 @@ public class ZeroElevatorEncoders extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.elevator.toggleSoftLimits(true);
 		Robot.elevator.resetEncoder();
 		Robot.elevator.moveElevator(0);
 	}

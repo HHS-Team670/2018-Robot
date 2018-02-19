@@ -19,14 +19,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Encoders_Drive extends Command {
 
-	private double ticksToTravel, minVelocity = 0.05;
+	private double ticksToTravel, minVelocity = 100, inches;
 	private int numTimesMotorOutput;
-	private boolean reachedMinSpeed;
+	private boolean reachedMinSpeed, isWithinLimit;
 	private SensorCollection leftEncoder;
 	private SensorCollection rightEncoder;
 
 	public Encoders_Drive(double inches) {
 
+		this.inches = inches;
 		this.ticksToTravel = ((inches) / (Math.PI * RoboConstants.DRIVEBASE_WHEEL_DIAMETER))
 				* RoboConstants.DRIVEBASE_TICKS_PER_ROTATION;
 		requires(Robot.driveBase);
@@ -39,6 +40,16 @@ public class Encoders_Drive extends Command {
 	protected void initialize() {
 		Robot.driveBase.initPID(Robot.driveBase.getLeft());
 		Robot.driveBase.initPID(Robot.driveBase.getRight());
+		if(inches < 36)
+		{
+			Robot.driveBase.getLeft().config_kF(RoboConstants.kPIDLoopIdx, RoboConstants.f, RoboConstants.kTimeoutMs);
+			Robot.driveBase.getRight().config_kF(RoboConstants.kPIDLoopIdx, RoboConstants.f, RoboConstants.kTimeoutMs);
+		}
+		else
+		{
+			Robot.driveBase.getLeft().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
+			Robot.driveBase.getRight().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
+		}
 		leftEncoder.setQuadraturePosition(0, 0);
 		rightEncoder.setQuadraturePosition(0, 0);
 	}
@@ -50,6 +61,8 @@ public class Encoders_Drive extends Command {
 		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel);
 		if(!reachedMinSpeed)
 			reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
+		isWithinLimit = Math.abs(leftEncoder.getQuadraturePosition()/ticksToTravel) >= 0.9;
+		SmartDashboard.putBoolean("Min Speed _ Drive:", reachedMinSpeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -57,14 +70,21 @@ public class Encoders_Drive extends Command {
 		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
 				&& Math.abs(
 						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
-				&& reachedMinSpeed)
+				&& reachedMinSpeed && isWithinLimit)
 			numTimesMotorOutput++;
+		
+		SmartDashboard.putBoolean("IS Drive FINISHED:", (numTimesMotorOutput >= 2));
+		SmartDashboard.putBoolean("IS WITHIN LIMIT", isWithinLimit);
+		SmartDashboard.putNumber("LIMIT NUM:", Math.abs(leftEncoder.getQuadraturePosition()/ticksToTravel));
+
 		return (numTimesMotorOutput >= 2);
 	}
 	
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.driveBase.getLeft().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
+		Robot.driveBase.getRight().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
 		Robot.driveBase.drive(0, 0);
 	}
 

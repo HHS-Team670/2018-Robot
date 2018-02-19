@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Encoders_Pivot extends Command {
 
-	private double ticksToTravel, minVelocity = 0.05;
+	private double ticksToTravel, minVelocity = 500, finishedVelocity = 100;
 	private int numTimesMotorOutput;
 	private boolean reachedMinSpeed;
 
@@ -46,19 +46,23 @@ public class Encoders_Pivot extends Command {
 	protected void execute() {
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
 		Robot.driveBase.getRight().set(ControlMode.Position, ticksToTravel);
-		if(!reachedMinSpeed)
-			reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
-
+		if (!reachedMinSpeed)
+			reachedMinSpeed = Math
+					.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
+		SmartDashboard.putBoolean("Min Speed _ Pivot:", reachedMinSpeed);
+		SmartDashboard.putNumber("Velcoity",
+				Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()));
 		/* 50 rotations in either direction */
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
+		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= finishedVelocity
 				&& Math.abs(
-						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
+						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= finishedVelocity
 				&& reachedMinSpeed)
 			numTimesMotorOutput++;
+		SmartDashboard.putBoolean("IS PIVOT FINISHED:", (numTimesMotorOutput >= 2));
 		return (numTimesMotorOutput >= 2);
 	}
 

@@ -18,8 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Encoders_Elevator extends Command {
 
-	private double ticksToTravel, minPercentOutput = 0.05, targetPulseHeight, speed;
-	private int numTimesMotorOutput;
+	private double targetPulseHeight, speed;
 	private boolean isGoingUp;
 	
 	public Encoders_Elevator(ElevatorState state) {
@@ -27,6 +26,8 @@ public class Encoders_Elevator extends Command {
 		if (state == ElevatorState.EXCHANGE)
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;
 		else if (state.equals(ElevatorState.SWITCH))
+			//Caleb was here
+
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_SWITCH;
 		else if (state.equals(ElevatorState.HIGHSCALE))
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_HIGHSCALE;
@@ -36,24 +37,24 @@ public class Encoders_Elevator extends Command {
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_MIDSCALE;
 		else
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;
-		
-		isGoingUp = (targetPulseHeight <= Robot.elevator.getCurrentPosition());
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		isGoingUp = (targetPulseHeight <= Robot.elevator.getCurrentPosition());
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		SmartDashboard.putNumber("Target ticks", targetPulseHeight);
 		SmartDashboard.putBoolean("Is Going up:", isGoingUp);
+		//Caleb was here
 		if(isGoingUp)
 		{
-			speed = -Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5);
+			speed = -Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5, isGoingUp);
 		}
 		else
-			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5);
+			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5, isGoingUp);
 
 		SmartDashboard.putNumber("Speed", speed);
 		
@@ -70,6 +71,7 @@ public class Encoders_Elevator extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		//Ben too
 		Robot.elevator.moveElevator(0);
 	}
 

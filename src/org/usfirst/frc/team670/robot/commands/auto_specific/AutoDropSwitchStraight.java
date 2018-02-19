@@ -1,18 +1,28 @@
-package paths.left;
+package org.usfirst.frc.team670.robot.commands.auto_specific;
 
-import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
-import org.usfirst.frc.team670.robot.commands.drive.Drive;
-import org.usfirst.frc.team670.robot.commands.intake.Deploy;
-import org.usfirst.frc.team670.robot.constants.Field;
+import org.usfirst.frc.team670.robot.commands.drive.Time_Drive;
+import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
+import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class left_baseline extends CommandGroup {
+public class AutoDropSwitchStraight extends CommandGroup {
 
-    public left_baseline() {
+    public AutoDropSwitchStraight() {
+    	
+    	//Lift up the elevator to a point above the switch
+    	//Drive forward by time for 2 second at 50 percent speed
+    	//addParallel delay for 1 seconds
+    	//Drop the cube
+    	
+    	addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
+    	addParallel(new Time_Drive(2, 0.5));
+    	addSequential(new Delay(1));
+    	addSequential(new DropCube());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -29,10 +39,5 @@ public class left_baseline extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new Deploy(true));
-    	addSequential(new Drive(Field.DS_TO_BASELINE + Field.TOLERANCE));
-    	addSequential(new Delay(4));
-    	addSequential(new Drive(-Field.DS_TO_BASELINE));
-    	
     }
 }

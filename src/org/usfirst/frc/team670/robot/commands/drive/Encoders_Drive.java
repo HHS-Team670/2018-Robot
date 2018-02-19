@@ -39,10 +39,6 @@ public class Encoders_Drive extends Command {
 		Robot.driveBase.initPID(Robot.driveBase.getRight());
 		leftEncoder.setQuadraturePosition(0, 0);
 		rightEncoder.setQuadraturePosition(0, 0);
-		System.out.println("Beginning Left: " + leftEncoder.getQuadraturePosition());
-		System.out.println("Beginning Right: " + rightEncoder.getQuadraturePosition());
-		System.out.println("Left: " + leftEncoder.getQuadraturePosition());
-		System.out.println("Right: " + rightEncoder.getQuadraturePosition());
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -53,16 +49,16 @@ public class Encoders_Drive extends Command {
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		if (Math.abs(Robot.driveBase.getLeft().getMotorOutputPercent()) <= minPercentOutput
-				&& Math.abs(Robot.driveBase.getRight().getMotorOutputPercent()) <= minPercentOutput)
+	protected boolean isFinished() 
+	{	
+		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minPercentOutput && Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minPercentOutput)
 			numTimesMotorOutput++;
-
 		return (numTimesMotorOutput >= 50);
 	}
 
 	// Called once after isFinished returns true
-	protected void end() {
+	protected void end() 
+	{
 		Robot.driveBase.drive(0, 0);
 	}
 

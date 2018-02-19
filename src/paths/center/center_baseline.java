@@ -37,6 +37,7 @@ public class center_baseline extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+    	addParallel(new Deploy(true));
     	addSequential(new Drive(Robot.length));
     	addSequential(new Pivot(-90));
     	addSequential(new Drive(Field.EXCHANGE_WIDTH/2 + Field.CUBEPILE_WIDTH));

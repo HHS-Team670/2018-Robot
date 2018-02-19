@@ -41,6 +41,7 @@ public class right_switch_straight extends CommandGroup {
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
 		// arm.
+		addParallel(new Deploy(true));
 		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 18));
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
 		addSequential(new Drive(12));

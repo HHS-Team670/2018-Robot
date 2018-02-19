@@ -32,9 +32,12 @@ import paths.right.right_switch_straight;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.AutoDropSwitchStraight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
+import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
@@ -60,6 +63,7 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	
 	Command primaryCommand;
+	CommandGroup combined;
 	private SendableChooser<Double> autonomousDelay, CubePickup;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
 	/**
@@ -281,7 +285,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		/*String data = DriverStation.getInstance().getGameSpecificMessage(); 
+		String data = DriverStation.getInstance().getGameSpecificMessage(); 
 		data = data.substring(0, 2); 
 		
 		String cmd = "";
@@ -301,15 +305,12 @@ public class Robot extends TimedRobot {
 		
 		//RUN THE AUTONOMOUS COMMAND------------------------------
 		
-		CommandGroup combined = new CommandGroup(); 
+		combined = new CommandGroup(); 
 		
-<<<<<<< HEAD
 		//Zero the elevators at the beggining of the match
 		combined.addParallel(new ZeroElevatorEncoders()); 
 		
 		//Add whateer time delay the driver selected
-=======
->>>>>>> parent of 7485210... NAVX DOESNT WORK + GAME SPECIFIC STRING WAIT TIME
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 		
 		//Add the primary command sequence taken from the smartdashboard
@@ -338,7 +339,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		if (combined != null)
-			combined.start();*/
+			combined.start();
 	}
 
 	/**
@@ -355,9 +356,9 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		/*if (primaryCommand != null) {
-			primaryCommand.cancel();
-		}*/
+		if (combined != null) {
+			combined.cancel();
+		}
 	}
 
 	/**

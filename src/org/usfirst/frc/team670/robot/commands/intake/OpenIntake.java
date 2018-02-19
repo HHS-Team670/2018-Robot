@@ -26,6 +26,7 @@ public class OpenIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.intake.deployGrabber(isDeploy);
+    	SmartDashboard.putString("INTAKE OPEN?!", Robot.intake.isIntakeOpen()+"");
     }
 
     // Make this return true when this Command no longer needs to run execute()

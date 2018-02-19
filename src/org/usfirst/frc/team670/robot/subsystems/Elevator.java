@@ -28,13 +28,16 @@ public class Elevator extends Subsystem {
 	public Elevator()
 	{
 		elevator = new TalonSRX(RobotMap.elevatorMotor);
+		//elevator.setInverted(true);
+		elevator.setSensorPhase(false);
 		encoder = new SensorCollection(elevator);
 		encoder.setPulseWidthPosition(0, 0);
 		elevator.setNeutralMode(NeutralMode.Brake);
-		//elevator.configForwardSoftLimitThreshold(RoboConstants.MAX_ELEVATOR_TICKS, RoboConstants.kTimeoutMs);
-		//elevator.configReverseSoftLimitThreshold(RoboConstants.MIN_ELEVATOR_TICKS, RoboConstants.kTimeoutMs);
-		//elevator.configForwardSoftLimitEnable(true, RoboConstants.kTimeoutMs);
-		//elevator.configReverseSoftLimitEnable(true, RoboConstants.kTimeoutMs);
+		elevator.configForwardSoftLimitThreshold(RoboConstants.MAX_ELEVATOR_TICKS, RoboConstants.kTimeoutMs);//Higher absolute
+		elevator.configReverseSoftLimitThreshold(RoboConstants.MIN_ELEVATOR_TICKS, RoboConstants.kTimeoutMs);//Lower absolute
+		elevator.configForwardSoftLimitEnable(true, 0);
+		elevator.configReverseSoftLimitEnable(true, 0);
+		//toggleSoftLimits(true);
 	}
 	
 	
@@ -63,10 +66,10 @@ public class Elevator extends Subsystem {
 		return encoder.getQuadraturePosition();
 	}
 	
-	public void toggleSoftLimits(boolean limitOn) {
+	/*public void toggleSoftLimits(boolean limitOn) {
 		elevator.configForwardSoftLimitEnable(limitOn, 0);
 		elevator.configReverseSoftLimitEnable(limitOn, 0);
-	}
+	}*/
 	
 	public void resetEncoder() {
 		encoder.setPulseWidthPosition(0, 0);

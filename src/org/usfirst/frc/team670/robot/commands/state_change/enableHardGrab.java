@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class Toggle_HardSoft extends InstantCommand {
+public class enableHardGrab extends InstantCommand {
 
 	private boolean isHard;
 	
-    public Toggle_HardSoft(boolean isHard) {
+    public enableHardGrab(boolean isHard) {
         super();
     	this.isHard = isHard;
         // Use requires() here to declare subsystem dependencies

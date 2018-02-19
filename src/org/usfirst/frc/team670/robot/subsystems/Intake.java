@@ -81,7 +81,7 @@ public class Intake extends Subsystem {
 	}
 
 	public boolean isIntakeDeployed() {
-		return isIntakeDeployed;
+		return deployer.get();
 		//return false;
 	}
 }

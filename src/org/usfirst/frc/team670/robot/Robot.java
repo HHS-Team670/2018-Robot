@@ -30,22 +30,17 @@ import paths.right.right_scale_side;
 import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 
-import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.AutoDropSwitchStraight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
-import org.usfirst.frc.team670.robot.commands.drive.Drive;
-import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
-import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
+import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
 import org.usfirst.frc.team670.robot.subsystems.Elevator;
 import org.usfirst.frc.team670.robot.subsystems.Intake;
-
-import com.ctre.phoenix.motorcontrol.SensorCollection;
 
 /**
  * @author vsharma
@@ -352,6 +347,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		Robot.elevator.resetEncoder();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -359,6 +355,7 @@ public class Robot extends TimedRobot {
 		if (combined != null) {
 			combined.cancel();
 		}
+		
 	}
 
 	/**

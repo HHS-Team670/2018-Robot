@@ -92,9 +92,9 @@ public class OI {
 		soft.whenPressed(new Deploy(true));
 		
 		elevatorExchange.whenPressed(new Pivot(90));
-		elevatorSwitch.whenPressed(new Drive(12*2));
+		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
 		elevatorScale.whenPressed(new right_switch_side());
-		elevatorZero.whenPressed(new ZeroElevatorEncoders());
+		//elevatorZero.whenPressed(new ZeroElevatorEncoders());
 		
 		PickupAuto.whenPressed(new PickupCube());
 		DropAuto.whenPressed(new DropCube());

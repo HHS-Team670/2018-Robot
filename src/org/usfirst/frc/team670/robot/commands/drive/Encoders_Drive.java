@@ -48,7 +48,8 @@ public class Encoders_Drive extends Command {
 		System.out.println(ticksToTravel);
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
 		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel);
-		reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
+		if(!reachedMinSpeed)
+			reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -58,7 +59,7 @@ public class Encoders_Drive extends Command {
 						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
 				&& reachedMinSpeed)
 			numTimesMotorOutput++;
-		return (numTimesMotorOutput >= 5);
+		return (numTimesMotorOutput >= 2);
 	}
 	
 

@@ -46,7 +46,8 @@ public class Encoders_Pivot extends Command {
 	protected void execute() {
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
 		Robot.driveBase.getRight().set(ControlMode.Position, ticksToTravel);
-		reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
+		if(!reachedMinSpeed)
+			reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
 
 		/* 50 rotations in either direction */
 	}
@@ -58,7 +59,7 @@ public class Encoders_Pivot extends Command {
 						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
 				&& reachedMinSpeed)
 			numTimesMotorOutput++;
-		return (numTimesMotorOutput >= 5);
+		return (numTimesMotorOutput >= 2);
 	}
 
 	// Called once after isFinished returns true

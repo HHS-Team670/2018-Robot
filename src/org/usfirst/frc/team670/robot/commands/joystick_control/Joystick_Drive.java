@@ -11,6 +11,7 @@ public class Joystick_Drive extends Command {
 	private double rSpeed;
 	private double lSpeed;
 	private Joystick joy;
+	private double op;
 
 	public Joystick_Drive() {
 		requires(Robot.driveBase);

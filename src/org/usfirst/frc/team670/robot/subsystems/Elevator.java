@@ -94,8 +94,8 @@ public class Elevator extends Subsystem {
 		if (maxSpeed < minSpeed)
 			return maxSpeed;
 
-		if (currentTicks < RoboConstants.MIN_ELEVATOR_TICKS + tolerance) {
-			return ((currentTicks / (RoboConstants.MIN_ELEVATOR_TICKS + tolerance)) * maxSpeed);
+		if (currentTicks > RoboConstants.MIN_ELEVATOR_TICKS - tolerance) {
+			return ((currentTicks / (RoboConstants.MIN_ELEVATOR_TICKS - tolerance)) * maxSpeed);
 		}
 
 		else if (currentTicks > RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - tolerance
@@ -105,9 +105,9 @@ public class Elevator extends Subsystem {
 					+ minSpeed;
 		}
 
-		else if (currentTicks > RoboConstants.MAX_ELEVATOR_TICKS - tolerance) {
+		else if (currentTicks < RoboConstants.MAX_ELEVATOR_TICKS + tolerance) {
 
-			return ((RoboConstants.MAX_ELEVATOR_TICKS - currentTicks / tolerance) * maxSpeed);
+			return ((RoboConstants.MAX_ELEVATOR_TICKS + currentTicks / tolerance) * maxSpeed);
 
 		}
 

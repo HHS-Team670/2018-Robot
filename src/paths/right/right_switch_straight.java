@@ -45,15 +45,13 @@ public class right_switch_straight extends CommandGroup {
 		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 18));
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
 		addSequential(new Drive(12));
-		addSequential(new Time_Drive(1, 0.6));
-    	addSequential(new DropCube());
+		addSequential(new DropCube());
     	addSequential(new Drive(-Robot.length));
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Pivot(90));
-    	addSequential(new Drive(Field.SIDE_TO_SWITCH + Robot.width));
-    	addSequential(new Drive(Robot.length - Field.SIDE_TRIANGLE_WIDTH));
+    	addSequential(new Drive(Field.SIDE_TO_SWITCH + Robot.width + Robot.length - Field.SIDE_TRIANGLE_WIDTH));
     	addSequential(new Pivot(-90));
     	addSequential(new Drive(Robot.length + Field.SWITCH_WIDTH + (Field.DS_TO_PLATFORM - Field.DS_TO_SWITCH)/2));
-    	addSequential(new Pivot(90));
+    	addSequential(new Pivot(-90));
 	}
 }

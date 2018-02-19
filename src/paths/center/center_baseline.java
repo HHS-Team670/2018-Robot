@@ -37,6 +37,8 @@ public class center_baseline extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+    	
+    	//Goal here is to go to the left of the cube stack and pass the baseline, then place cube in exchange
     	addParallel(new Deploy(true));
     	addSequential(new Drive(Robot.length));
     	addSequential(new Pivot(-90));

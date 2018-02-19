@@ -57,6 +57,7 @@ public class RoboConstants {
 	*	    - Also do second stage
 	*	    - Full height
 	 */
+	//Raising the elevator as we move can cause the robot
 	// Elevator Heights
 	public static final double ELEVATOR_PULSE_FOR_EXCHANGE = -50; // SET THESE
 	public static final double ELEVATOR_PULSE_FOR_SWITCH = -3638;
@@ -66,7 +67,7 @@ public class RoboConstants {
 	public static final double ELEVATOR_AUTON_SPEED = 0.05; // Probably make this higher after testing
 
 	public static final int MIN_ELEVATOR_TICKS = -10390; // SET THIS
-	public static final int MAX_ELEVATOR_TICKS = -100; // SET THIS
+	public static final int MAX_ELEVATOR_TICKS = -50; // SET THIS
 
 	public static final double MAX_INTAKE_VOLTAGE = 10; //You're gonna want to set this, amde it nonzero to avoid repeatedly printing warning
 

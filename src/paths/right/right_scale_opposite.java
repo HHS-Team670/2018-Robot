@@ -14,6 +14,10 @@ import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
+ *Moves forward, turns left, moves forward, turns right, moves forward,
+ * turns right so lined up with scale, raises elevator to scale, drives up to scale, drops cube,
+ * backs up, drops elevator, and come back to start
+ *
  *
  */
 public class right_scale_opposite extends CommandGroup {
@@ -41,8 +45,8 @@ public class right_scale_opposite extends CommandGroup {
 		addSequential(new Drive(Field.DRIVER_SIDE_LENGTH - 2 * Field.SIDE_TRIANGLE_WIDTH - Robot.width));
 		addSequential(new Pivot(90));
 		addSequential(new Drive(Field.DS_TO_SCALE - (Field.DS_TO_SWITCH + Field.SWITCH_WIDTH - Robot.length) + Robot.width));
-		addParallel(new Encoders_Elevator(ElevatorState.HIGHSCALE)); //Raise Elevator
 		addSequential(new Pivot(90));
+		addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE)); //Raise Elevator
 		addSequential(new Drive(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.length + RoboConstants.FRONT_TO_ELEVATOR)); // DRIVE distance from front of robot to elevator arm
     	addSequential(new DropCube());
     	addSequential(new Drive(-(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.length + RoboConstants.FRONT_TO_ELEVATOR)));
@@ -50,6 +54,5 @@ public class right_scale_opposite extends CommandGroup {
     	addSequential(new Pivot(90));
     	addSequential(new Drive(Field.DS_TO_SCALE - (Field.DS_TO_SWITCH + Field.SWITCH_WIDTH - Robot.length) + Robot.width));
     	addSequential(new Pivot(-90));
-    	addSequential(new Time_Drive(1.5, -0.75));
 	}
 }

@@ -37,6 +37,7 @@ public class left_switch_side extends CommandGroup {
 		addParallel(new Deploy(true));
 		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length/2 + Field.SWITCH_WIDTH/2));
 		addSequential(new Pivot(90));
+		//Put this in parallel if you are confident in speed
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
 		addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH));
     	addSequential(new DropCube());

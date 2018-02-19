@@ -175,7 +175,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("RR", subMenuRR);
 		SmartDashboard.putData("LR", subMenuLR);
 		SmartDashboard.putData("RL", subMenuRL);
-		
+	
 		//new OpenIntake(true); //0 - off is hard, 0 - on is soft
 	}
 	
@@ -281,6 +281,25 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		String data = DriverStation.getInstance().getGameSpecificMessage(); 
+		
+		if(data == null)
+			data = "";
+		
+		int retries = 100;
+		
+		while(data.length() < 3 && retries > 0)
+		{
+			DriverStation.reportError("Game data is not valid", false);
+			try{
+				Thread.sleep(5);
+				data = DriverStation.getInstance().getGameSpecificMessage();
+				if(data == null)
+					data = "";
+			}
+			catch(Exception e){}
+			retries--;
+		}
+		
 		data = data.substring(0, 2); 
 		
 		String cmd = "";

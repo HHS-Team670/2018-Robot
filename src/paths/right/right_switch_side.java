@@ -39,11 +39,11 @@ public class right_switch_side extends CommandGroup {
 		addParallel(new Deploy(true));
 		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length/2 + Field.SWITCH_WIDTH/2));
 		addSequential(new Pivot(-90));
-		//addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
+		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
 		addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH));
     	addSequential(new DropCube());
     	addSequential(new Drive(-(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH)));
-    	//addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
+    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Pivot(90));
     	addSequential(new Drive((Field.DS_TO_PLATFORM - (Field.DS_TO_SWITCH + Field.SWITCH_WIDTH))/2 + Robot.length/2 ));
     	addSequential(new Pivot(-90));

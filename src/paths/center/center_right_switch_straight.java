@@ -35,6 +35,8 @@ public class center_right_switch_straight extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	
+    	//Kishore needs to check it, this will not work
     	addParallel(new Deploy(true));
     	addSequential(new Drive(Robot.length));
     	addSequential(new Pivot(Math.atan((Field.DS_TO_SWITCH-1.5*Robot.length)/(0.5*(Field.SWITCH_LENGTH-Robot.width-Field.EXCHANGE_WIDTH)))));

@@ -36,9 +36,7 @@ public class Encoders_Elevator extends Command {
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_MIDSCALE;
 		else
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;
-
-		targetPulseHeight = targetPulseHeight - Robot.elevator.getCurrentPosition();
-
+		
 		isGoingUp = (targetPulseHeight <= Robot.elevator.getCurrentPosition());
 	}
 
@@ -52,10 +50,12 @@ public class Encoders_Elevator extends Command {
 		SmartDashboard.putBoolean("Is Going up:", isGoingUp);
 		if(isGoingUp)
 		{
-			speed = -Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 300, 0.3, 0.1);
+			speed = -Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5);
 		}
 		else
-			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 300, 0.3, 0.1);
+			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5);
+
+		SmartDashboard.putNumber("Speed", speed);
 		
 		Robot.elevator.moveElevator(speed);
 	}

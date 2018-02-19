@@ -91,9 +91,9 @@ public class OI {
 		hard.whenPressed(new Deploy(false));
 		soft.whenPressed(new Deploy(true));
 		
-		elevatorExchange.whenPressed(new Pivot(90));
+		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
 		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
-		elevatorScale.whenPressed(new right_switch_side());
+		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
 		//elevatorZero.whenPressed(new ZeroElevatorEncoders());
 		
 		PickupAuto.whenPressed(new PickupCube());

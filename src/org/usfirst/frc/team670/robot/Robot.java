@@ -300,7 +300,10 @@ public class Robot extends TimedRobot {
 			retries--;
 		}
 		
-		data = data.substring(0, 2); 
+		if(data.equals("") || data == null)
+			data = "";
+		else
+			data = data.substring(0, 2); 
 		
 		String cmd = "";
 		

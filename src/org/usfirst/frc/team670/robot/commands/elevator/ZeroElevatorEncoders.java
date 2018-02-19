@@ -17,7 +17,6 @@ public class ZeroElevatorEncoders extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.elevator.toggleConstants(false);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -34,7 +33,6 @@ public class ZeroElevatorEncoders extends Command {
 	protected void end() {
 		Robot.elevator.resetEncoder();
 		Robot.elevator.moveElevator(0);
-		Robot.elevator.toggleConstants(true);
 	}
 
 	// Called when another command which requires one or more of the same

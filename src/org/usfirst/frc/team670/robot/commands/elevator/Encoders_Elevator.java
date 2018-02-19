@@ -40,21 +40,22 @@ public class Encoders_Elevator extends Command{
 	
 	// Called just before this Command runs the first time
 		protected void initialize() {
-			Robot.elevator.initPID(Robot.elevator.getTalon());
+			//Robot.elevator.initPID(Robot.elevator.getTalon());
 		}
 
 		// Called repeatedly when this Command is scheduled to run
 		protected void execute() {
-			Robot.elevator.getTalon().set(ControlMode.Position, ticksToTravel); 
+			//Robot.elevator.getTalon().set(ControlMode.Position, ticksToTravel); 
 		}
 
 		// Make this return true when this Command no longer needs to run execute()
 		protected boolean isFinished() 
 		{
-			if (Math.abs(Robot.elevator.getTalon().getMotorOutputPercent()) <= minPercentOutput)
+			/*if (Math.abs(Robot.elevator.getTalon().getMotorOutputPercent()) <= minPercentOutput)
 				numTimesMotorOutput++;
 
-			return (numTimesMotorOutput >= 100);
+			return (numTimesMotorOutput >= 100);*/
+			return true;
 		}
 
 		// Called once after isFinished returns true

@@ -19,8 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Encoders_Drive extends Command {
 
-	private double ticksToTravel, minPercentOutput = 0.05;
+	private double ticksToTravel, minVelocity = 0.05;
 	private int numTimesMotorOutput;
+	private boolean reachedMinSpeed;
 	private SensorCollection leftEncoder;
 	private SensorCollection rightEncoder;
 
@@ -31,6 +32,7 @@ public class Encoders_Drive extends Command {
 		requires(Robot.driveBase);
 		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
 		rightEncoder = Robot.driveBase.getRight().getSensorCollection();
+		reachedMinSpeed = false;
 	}
 
 	// Called just before this Command runs the first time
@@ -46,19 +48,22 @@ public class Encoders_Drive extends Command {
 		System.out.println(ticksToTravel);
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
 		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel);
+		reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() 
-	{	
-		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minPercentOutput && Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minPercentOutput)
+	protected boolean isFinished() {
+		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
+				&& Math.abs(
+						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
+				&& reachedMinSpeed)
 			numTimesMotorOutput++;
-		return (numTimesMotorOutput >= 50);
+		return (numTimesMotorOutput >= 5);
 	}
+	
 
 	// Called once after isFinished returns true
-	protected void end() 
-	{
+	protected void end() {
 		Robot.driveBase.drive(0, 0);
 	}
 

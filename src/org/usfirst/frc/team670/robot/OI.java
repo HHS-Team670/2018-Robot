@@ -29,7 +29,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import paths.right.right_switch_side;
-import testing.PrintElevator;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -89,8 +88,8 @@ public class OI {
 		open.whenPressed(new OpenIntake(true));
 		close.whenPressed(new OpenIntake(false));
 		
-		hard.whenPressed(new enableHardGrab(false));
-		soft.whenPressed(new enableHardGrab(true));
+		hard.whenPressed(new Deploy(false));
+		soft.whenPressed(new Deploy(true));
 		
 		elevatorExchange.whenPressed(new Pivot(90));
 		elevatorSwitch.whenPressed(new Drive(12*2));
@@ -101,7 +100,6 @@ public class OI {
 		DropAuto.whenPressed(new DropCube());
 		
 		CancelCommand.whenPressed(new CancelCommand());
-		TestElevators.whenPressed(new PrintElevator());
 		
 		vision.whenPressed(new Vision_PowerCube(0.4));
 		vision.whenReleased(new CancelCommand());

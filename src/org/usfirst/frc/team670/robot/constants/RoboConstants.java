@@ -68,7 +68,7 @@ public class RoboConstants {
 	public static final double ELEVATOR_AUTON_SPEED = 0.05; // Probably make this higher after testing
 
 	public static final int TOP_ELEVATOR_TICKS = -10090; // SET THIS
-	public static final int BOTTOM_ELEVATOR_TICKS = -500; // SET THIS
+	public static final int BOTTOM_ELEVATOR_TICKS = -300; // SET THIS
 	
 	public static final int ELEVATOR_TOLERANCE = 1000;
 	public static final double ELEVATOR_MIN_SPEED = 0.3;

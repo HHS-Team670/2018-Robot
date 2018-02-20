@@ -75,11 +75,20 @@ public class Elevator extends Subsystem {
 			if (toggle) {
 				// Limit is on
 				if (getCurrentPosition() > RoboConstants.BOTTOM_ELEVATOR_TICKS) {
-					elevator.set(ControlMode.PercentOutput, -.2);
+					//Speed is negative, so going up
+					if (speed > 0)
+						elevator.set(ControlMode.PercentOutput, 0);
+					else
+						elevator.set(ControlMode.PercentOutput, speed);
+
 					SmartDashboard.putString("Is hit Top", "Hit bottom");
 
 				} else if (getCurrentPosition() < RoboConstants.TOP_ELEVATOR_TICKS) {
-					elevator.set(ControlMode.PercentOutput, .2);
+					//Speed is positive, so going down
+					if (speed < 0)
+						elevator.set(ControlMode.PercentOutput, 0);
+					else
+						elevator.set(ControlMode.PercentOutput, speed);
 					SmartDashboard.putString("Is hit Top", "Hit top");
 				}
 
@@ -119,7 +128,7 @@ public class Elevator extends Subsystem {
 		// it's
 		// the most negative value
 		if (currentTicks > RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance && !goingUp) {
-			speed = ((currentTicks / (RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance)) * maxSpeed);
+			speed = ((currentTicks / (RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance)) * maxSpeed) / 2;
 		}
 
 		else if (currentTicks > RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - tolerance
@@ -131,7 +140,7 @@ public class Elevator extends Subsystem {
 		// MAX_ELEVATOR_TICKS is the lowest physical point on the elevator, so
 		// it's the most positive value
 		else if (currentTicks < RoboConstants.TOP_ELEVATOR_TICKS + tolerance && goingUp) {
-			speed = ((RoboConstants.TOP_ELEVATOR_TICKS + currentTicks / tolerance) * maxSpeed);
+			speed = ((RoboConstants.TOP_ELEVATOR_TICKS + currentTicks / tolerance) * maxSpeed) / 2;
 
 		} else
 			speed = maxSpeed;

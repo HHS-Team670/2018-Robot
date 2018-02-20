@@ -1,6 +1,9 @@
 package org.usfirst.frc.team670.robot.commands.drive;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -15,15 +18,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author vsharma8363
  *
  */
-public class Encoders_Pivot extends Command {
+public class Encoders_Pivot extends LoggingCommand {
 
 	private double ticksToTravel, minVelocity = 500, finishedVelocity = 100;
 	private int numTimesMotorOutput;
 	private boolean reachedMinSpeed;
+	private final double TICKS_PER_DEGREE = 4711 / 90;
 
 	public Encoders_Pivot(double angle) {
-		double ticksPerDegree = 4711 / 90;
-		ticksToTravel = ticksPerDegree * angle;
+		ticksToTravel = TICKS_PER_DEGREE * angle;
 		numTimesMotorOutput = 0;
 		reachedMinSpeed = false;
 		/*
@@ -40,6 +43,12 @@ public class Encoders_Pivot extends Command {
 		numTimesMotorOutput = 0;
 		Robot.driveBase.initPIDPivoting(Robot.driveBase.getLeft());
 		Robot.driveBase.initPIDPivoting(Robot.driveBase.getRight());
+		logInitialize(new HashMap<String, Object>() {{
+		    put("TicksToTravel", ticksToTravel);
+		    put("DegreesToTravel", ticksToTravel * TICKS_PER_DEGREE);
+		    put("LeftEncoderTicks", Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition());
+		    put("RightEncoderTicks", Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
+		}});
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -53,6 +62,14 @@ public class Encoders_Pivot extends Command {
 		SmartDashboard.putNumber("Velcoity",
 				Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()));
 		/* 50 rotations in either direction */
+		logExecute(new HashMap<String, Object>() {{
+		    put("DegreesToTravel", ticksToTravel * TICKS_PER_DEGREE);
+		    put("ReachedMinSpeed", reachedMinSpeed);
+		    put("LeftEncoderTicks", Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition());
+		    put("RightEncoderTicks", Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
+		    put("LeftEncoderVelocity", Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity());
+		    put("RightEncoderVelocity", Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity());
+		}});
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -69,6 +86,14 @@ public class Encoders_Pivot extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.driveBase.drive(0, 0);
+		logExecute(new HashMap<String, Object>() {{
+		    put("DegreesToTravel", ticksToTravel * TICKS_PER_DEGREE);
+		    put("ReachedMinSpeed", reachedMinSpeed);
+		    put("LeftEncoderTicks", Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition());
+		    put("RightEncoderTicks", Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
+		    put("LeftEncoderTicks", Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity());
+		    put("RightEncoderTicks", Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity());
+		}});
 	}
 
 	// Called when another command which requires one or more of the same

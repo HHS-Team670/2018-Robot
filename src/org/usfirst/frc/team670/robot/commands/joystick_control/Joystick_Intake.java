@@ -1,15 +1,17 @@
 package org.usfirst.frc.team670.robot.commands.joystick_control;
 
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Joystick_Intake extends Command {
+public class Joystick_Intake extends LoggingCommand {
 
 	public Joystick_Intake() {
 		requires(Robot.intake);
@@ -20,6 +22,8 @@ public class Joystick_Intake extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.intake.driveIntake(0);
+		logInitialize(new HashMap<String, Object>() {{
+		}});
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -28,7 +32,9 @@ public class Joystick_Intake extends Command {
 			Robot.intake.driveIntake(-Robot.oi.getOperatorStick().getY());
 		else
 			Robot.intake.driveIntake(0);
-
+		logExecute(new HashMap<String, Object>() {{
+			put("OperatorStickPos", Robot.oi.getOperatorStick());
+		}});
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -46,6 +52,8 @@ public class Joystick_Intake extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.intake.driveIntake(0);
+		logFinished(new HashMap<String, Object>() {{
+		}});
 	}
 	
 //	public static boolean isWorking()
@@ -56,6 +64,6 @@ public class Joystick_Intake extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.intake.driveIntake(0);
+		end();
 	}
 }

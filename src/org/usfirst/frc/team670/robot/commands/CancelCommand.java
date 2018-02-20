@@ -1,14 +1,15 @@
 package org.usfirst.frc.team670.robot.commands;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team670.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
 
 
 /**
  *@author vsharma
  */
-public class CancelCommand extends Command {
+public class CancelCommand extends LoggingCommand {
 
     public CancelCommand() {
         requires(Robot.driveBase);
@@ -18,6 +19,8 @@ public class CancelCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	logInitialize(new HashMap<String, Object>() {{
+		}});
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,6 +28,8 @@ public class CancelCommand extends Command {
     	Robot.driveBase.drive(0, 0);
     	Robot.intake.driveIntake(0);
     	Robot.elevator.moveElevator(0);
+    	logExecute(new HashMap<String, Object>() {{
+		}});
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,10 +42,13 @@ public class CancelCommand extends Command {
     	Robot.driveBase.drive(0, 0);
     	Robot.intake.driveIntake(0);
     	Robot.elevator.moveElevator(0);
+    	logFinished(new HashMap<String, Object>() {{
+		}});
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

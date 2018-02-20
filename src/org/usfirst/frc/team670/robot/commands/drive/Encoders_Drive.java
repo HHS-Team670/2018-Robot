@@ -1,6 +1,9 @@
 package org.usfirst.frc.team670.robot.commands.drive;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -17,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author vsharma8363AZ
  *
  */
-public class Encoders_Drive extends Command {
+public class Encoders_Drive extends LoggingCommand {
 
 	private double ticksToTravel, minVelocity = 100, inches;
 	private int numTimesMotorOutput;
@@ -34,6 +37,7 @@ public class Encoders_Drive extends Command {
 		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
 		rightEncoder = Robot.driveBase.getRight().getSensorCollection();
 		reachedMinSpeed = false;
+
 	}
 
 	// Called just before this Command runs the first time
@@ -52,6 +56,12 @@ public class Encoders_Drive extends Command {
 		}
 		leftEncoder.setQuadraturePosition(0, 0);
 		rightEncoder.setQuadraturePosition(0, 0);
+		logInitialize(new HashMap<String, Object>() {{
+		    put("TicksToTravel", ticksToTravel);
+		    put("InchesToTravel", inches);
+		    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
+		    put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
+		}});
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -62,6 +72,14 @@ public class Encoders_Drive extends Command {
 		if(!reachedMinSpeed)
 			reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
 		isWithinLimit = Math.abs(leftEncoder.getQuadraturePosition()/ticksToTravel) >= 0.9;
+		logExecute(new HashMap<String, Object>() {{
+		    put("ReachedMinSpeed", reachedMinSpeed);
+		    put("IsWithinLimit", isWithinLimit);
+		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
+		    put("RightEncoderVelocity", leftEncoder.getQuadratureVelocity());
+		    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
+		    put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
+		}});
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -83,6 +101,14 @@ public class Encoders_Drive extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		System.out.println("PID Drive is finished");
+		logFinished(new HashMap<String, Object>() {{
+		    put("ReachedMinSpeed", reachedMinSpeed);
+		    put("IsWithinLimit", isWithinLimit);
+		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
+		    put("RightEncoderVelocity", leftEncoder.getQuadratureVelocity());
+		    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
+		    put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
+		}});
 		Robot.driveBase.getLeft().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
 		Robot.driveBase.getRight().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
 		Robot.driveBase.drive(0, 0);

@@ -1,13 +1,15 @@
 package org.usfirst.frc.team670.robot.commands.auto_specific;
 
-import org.usfirst.frc.team670.robot.Robot;
+import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
+
 
 /**
  *
  */
-public class SpinIntake extends Command {
+public class SpinIntake extends LoggingCommand {
 
 	private double speed, seconds;
 	
@@ -20,11 +22,19 @@ public class SpinIntake extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         setTimeout(seconds);
+		logInitialize(new HashMap<String, Object>() {{
+			put("Speed", speed);
+			put("Seconds", seconds);
+		}});
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.intake.driveIntake(speed);
+		logExecute(new HashMap<String, Object>() {{
+			put("Speed", speed);
+			put("Seconds", seconds);
+		}});
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,6 +45,10 @@ public class SpinIntake extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.intake.driveIntake(0);
+    	logFinished(new HashMap<String, Object>() {{
+			put("Speed", speed);
+			put("Seconds", seconds);
+		}});
     }
 
     // Called when another command which requires one or more of the same

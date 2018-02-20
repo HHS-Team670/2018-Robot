@@ -31,6 +31,7 @@ import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
+import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
@@ -268,8 +269,10 @@ public class Robot extends TimedRobot {
 		
 		//Zero the elevators at the beggining of the match
 		combined.addSequential(new ZeroElevatorEncoders()); 
-		//combined.addParallel(new Encoders_Elevator(ElevatorState.SWITCH)); 
 
+		//Deploy the intake
+		combined.addSequential(new Deploy(true));
+		
 		//Add whateer time delay the driver selected
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 		

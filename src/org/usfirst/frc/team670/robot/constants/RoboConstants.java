@@ -1,7 +1,5 @@
 package org.usfirst.frc.team670.robot.constants;
 
-import edu.wpi.first.wpilibj.Preferences;
-
 public class RoboConstants {
 
 	// Gear ratio from motor to shaft = 10.71

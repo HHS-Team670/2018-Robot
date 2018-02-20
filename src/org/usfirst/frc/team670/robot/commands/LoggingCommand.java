@@ -52,6 +52,7 @@ public abstract class LoggingCommand extends Command {
 				writer.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
 			}
 			writer.println('}');
+			writer.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch(IOException e) {

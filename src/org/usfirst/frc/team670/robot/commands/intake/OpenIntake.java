@@ -1,14 +1,16 @@
 package org.usfirst.frc.team670.robot.commands.intake;
 
-import org.usfirst.frc.team670.robot.Robot;
+import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class OpenIntake extends Command {
+public class OpenIntake extends LoggingCommand {
 
 	private boolean isDeploy;
 	
@@ -21,12 +23,18 @@ public class OpenIntake extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	logInitialize(new HashMap<String, Object>() {{
+    		put("IsDeploy", isDeploy);
+		}});
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.intake.deployGrabber(isDeploy);
     	SmartDashboard.putString("INTAKE OPEN?!", Robot.intake.isIntakeOpen()+"");
+    	logExecute(new HashMap<String, Object>() {{
+    		put("IsDeploy", isDeploy);
+		}});
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,10 +44,14 @@ public class OpenIntake extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	logFinished(new HashMap<String, Object>() {{
+    		put("IsDeploy", isDeploy);
+		}});
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

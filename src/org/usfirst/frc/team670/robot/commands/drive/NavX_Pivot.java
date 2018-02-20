@@ -1,14 +1,16 @@
 package org.usfirst.frc.team670.robot.commands.drive;
 
-import org.usfirst.frc.team670.robot.Robot;
+import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class NavX_Pivot extends Command {
+public class NavX_Pivot extends LoggingCommand {
 
 	private double finalAngle, startAngle, angle;
 	private double percentComplete;
@@ -33,6 +35,12 @@ public class NavX_Pivot extends Command {
 		this.numTimesIsFinished = 0;
 		Robot.driveBase.getLeft().configOpenloopRamp(0.2, 0);
 		Robot.driveBase.getRight().configOpenloopRamp(0.2, 0);
+		logInitialize(new HashMap<String, Object>() {{
+		    put("StartAngle", startAngle);
+		    put("FinalAngle", finalAngle);
+		    put("DegreesToTravel", finalAngle - startAngle);
+		    put("PercentComplete", percentComplete);
+		}});
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -72,6 +80,11 @@ public class NavX_Pivot extends Command {
 			Robot.driveBase.drive(speed, -speed);
 		}
 		
+		logExecute(new HashMap<String, Object>() {{
+		    put("DegreesToTravel", yawRemaining());
+		    put("CurrentAngle", getYaw());
+		    put("PercentComplete", percentComplete);
+		}});
 		
 	}
 
@@ -93,6 +106,11 @@ public class NavX_Pivot extends Command {
 		Robot.driveBase.getLeft().configOpenloopRamp(0.0, 0);
 		Robot.driveBase.getRight().configOpenloopRamp(0.0, 0);
 		Robot.driveBase.drive(0, 0);
+		logFinished(new HashMap<String, Object>() {{
+		    put("DegreesToTravel", yawRemaining());
+		    put("CurrentAngle", getYaw());
+		    put("PercentComplete", percentComplete);
+		}});
 	}
 
 	// Called when another command which requires one or more of the same

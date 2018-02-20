@@ -1,6 +1,9 @@
 package org.usfirst.frc.team670.robot.commands.elevator;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
@@ -16,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author vsharma8363
  *
  */
-public class Encoders_Elevator extends Command {
+public class Encoders_Elevator extends LoggingCommand {
 
 	private double targetPulseHeight, speed;
 	private boolean isGoingUp;
@@ -42,6 +45,11 @@ public class Encoders_Elevator extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		isGoingUp = (targetPulseHeight <= Robot.elevator.getCurrentPosition());
+		logInitialize(new HashMap<String, Object>() {{
+			put("Speed", speed);
+			put("TargetPulseHeight", targetPulseHeight);
+			put("IsGoingUp", isGoingUp);
+		}});
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -63,6 +71,11 @@ public class Encoders_Elevator extends Command {
 		SmartDashboard.putNumber("Speed", speed);
 		
 		Robot.elevator.moveElevator(speed);
+		
+		logExecute(new HashMap<String, Object>() {{
+			put("Speed", speed);
+			put("IsGoingUp", isGoingUp);
+		}});
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -77,6 +90,11 @@ public class Encoders_Elevator extends Command {
 	protected void end() {
 		//Ben too
 		Robot.elevator.moveElevator(0);
+		
+		logFinished(new HashMap<String, Object>() {{
+			put("Speed", speed);
+			put("IsGoingUp", isGoingUp);
+		}});
 	}
 
 	// Called when another command which requires one or more of the same

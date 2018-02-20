@@ -1,19 +1,16 @@
 package org.usfirst.frc.team670.robot.commands.joystick_control;
 
 import org.usfirst.frc.team670.robot.Robot;
-import org.usfirst.frc.team670.robot.constants.RoboConstants;
-
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Joystick_Drive extends Command {
 	
 	private double opL, opR, d = 0.05;
-
+	
 	public Joystick_Drive() {
 		requires(Robot.driveBase);
 	}
-
+	
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.driveBase.initJoystickDrive();

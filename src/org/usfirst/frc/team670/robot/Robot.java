@@ -290,6 +290,7 @@ public class Robot extends TimedRobot {
 	 * chooser code above (like the commented example) or additional comparisons to
 	 * the switch structure below with additional strings & commands.
 	 */
+	
 	@Override
 	public void autonomousInit() {
 		String data = DriverStation.getInstance().getGameSpecificMessage(); 
@@ -299,7 +300,7 @@ public class Robot extends TimedRobot {
 		
 		int retries = 100;
 		
-		/*while(data.length() < 3 && retries > 0)
+		while(data.length() < 3 && retries > 0)
 		{
 			DriverStation.reportError("Game data is not valid", false);
 			try{
@@ -310,7 +311,7 @@ public class Robot extends TimedRobot {
 			}
 			catch(Exception e){}
 			retries--;
-		}*/
+		}
 		
 		if(data.equals("") || data == null)
 			data = "";

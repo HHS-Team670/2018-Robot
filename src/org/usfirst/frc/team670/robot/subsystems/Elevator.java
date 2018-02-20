@@ -75,7 +75,7 @@ public class Elevator extends Subsystem {
 			if (toggle) {
 				// Limit is on
 				if (getCurrentPosition() > RoboConstants.BOTTOM_ELEVATOR_TICKS) {
-					//Speed is negative, so going up
+					// Speed is negative, so going up
 					if (speed > 0)
 						elevator.set(ControlMode.PercentOutput, 0);
 					else
@@ -84,7 +84,7 @@ public class Elevator extends Subsystem {
 					SmartDashboard.putString("Is hit Top", "Hit bottom");
 
 				} else if (getCurrentPosition() < RoboConstants.TOP_ELEVATOR_TICKS) {
-					//Speed is positive, so going down
+					// Speed is positive, so going down
 					if (speed < 0)
 						elevator.set(ControlMode.PercentOutput, 0);
 					else
@@ -101,6 +101,7 @@ public class Elevator extends Subsystem {
 		} else
 			elevator.set(ControlMode.PercentOutput, 0);
 		SmartDashboard.putNumber("Ticks", getCurrentPosition());
+
 	}
 
 	public void initDefaultCommand() {
@@ -116,19 +117,18 @@ public class Elevator extends Subsystem {
 	 * @return
 	 */
 	public double calculateSpeed(int currentTicks, double maxSpeed, boolean goingUp) {
-
 		int tolerance = RoboConstants.ELEVATOR_TOLERANCE;
-		double minSpeed = RoboConstants.ELEVATOR_MIN_SPEED;
+		double minSpeed = goingUp ? -RoboConstants.ELEVATOR_MIN_SPEED : RoboConstants.ELEVATOR_MIN_SPEED;
 		double speed = 0;
-
-		if (maxSpeed < minSpeed)
-			return maxSpeed;
+		
+		// if (maxSpeed < minSpeed)
+		// return minSpeed;
 
 		// MIN_ELEVATOR_TICKS is the top physical point on the elevator, so
 		// it's
 		// the most negative value
 		if (currentTicks > RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance && !goingUp) {
-			speed = ((currentTicks / (RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance)) * maxSpeed) / 2;
+			speed = ((currentTicks / (RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance)) * maxSpeed) / 3;
 		}
 
 		else if (currentTicks > RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - tolerance
@@ -139,14 +139,20 @@ public class Elevator extends Subsystem {
 
 		// MAX_ELEVATOR_TICKS is the lowest physical point on the elevator, so
 		// it's the most positive value
-		else if (currentTicks < RoboConstants.TOP_ELEVATOR_TICKS + tolerance && goingUp) {
-			speed = ((RoboConstants.TOP_ELEVATOR_TICKS + currentTicks / tolerance) * maxSpeed) / 2;
-
-		} else
+		else if (currentTicks < RoboConstants.TOP_ELEVATOR_TICKS + tolerance && goingUp) 
+		{	
+			speed = (((RoboConstants.TOP_ELEVATOR_TICKS - currentTicks) / tolerance) * maxSpeed) / 3;
+		} 
+		else
 			speed = maxSpeed;
 
-		if (speed < minSpeed)
+		if (Math.abs(speed) < Math.abs(minSpeed))
 			speed = minSpeed;
+		System.out.print(" " + speed);
+		System.out.print(", "+ goingUp);
+		System.out.print(", " + maxSpeed);
+		System.out.println(", " + currentTicks);
+		SmartDashboard.putNumber("Elevator Speed", speed);
 
 		return speed;
 

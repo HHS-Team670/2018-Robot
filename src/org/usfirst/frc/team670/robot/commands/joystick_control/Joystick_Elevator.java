@@ -26,10 +26,15 @@ public class Joystick_Elevator extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double speed = Robot.oi.getOperatorStick().getY();
-		boolean isGoingUp = speed >= 0;
+		
+		//Speed is negative meaning it goes up
+		boolean isGoingUp = speed <= 0;
 		speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(),Robot.oi.getOperatorStick().getY(), isGoingUp);
 		if (Robot.oi.getOS().equals(OperatorState.ELEVATOR))
+		{
+			SmartDashboard.putNumber("ELEVAOTR-ROHIT", speed);
 			Robot.elevator.moveElevator(speed);
+		}
 		else
 			Robot.elevator.moveElevator(0);
 

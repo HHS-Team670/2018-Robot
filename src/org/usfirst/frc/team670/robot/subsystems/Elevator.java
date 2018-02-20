@@ -144,7 +144,8 @@ public class Elevator extends Subsystem {
 		// it's the most positive value
 		else if (currentTicks < RoboConstants.TOP_ELEVATOR_TICKS + tolerance && goingUp) 
 		{	
-			speed = ((Math.abs(RoboConstants.TOP_ELEVATOR_TICKS - currentTicks) / tolerance) * maxSpeed) / 3;
+			//speed = ((Math.abs(RoboConstants.TOP_ELEVATOR_TICKS - currentTicks) / tolerance) * maxSpeed) / 3;
+			speed = 0.1;
 		} 
 		else
 			speed = maxSpeed;

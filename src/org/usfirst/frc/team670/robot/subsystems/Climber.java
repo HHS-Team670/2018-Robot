@@ -17,7 +17,7 @@ public class Climber extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private TalonSRX climbMotor;
-	private double currentLimit = 0;
+	private double currentLimit = 14;
 	
 	public Climber()
 	{
@@ -30,12 +30,12 @@ public class Climber extends Subsystem {
 	 */
 	public void climb(double speed)
 	{
-		System.out.print("Current:" + climbMotor.getOutputCurrent());
+		System.out.print("(CANNOT GO HIGHER THAN 14) Current:" + climbMotor.getOutputCurrent());
 		System.out.print(" | Voltage:" + climbMotor.getMotorOutputVoltage());
-		//if(climbMotor.getOutputCurrent() <= currentLimit)
+		if(climbMotor.getOutputCurrent() <= currentLimit)
 			climbMotor.set(ControlMode.PercentOutput, speed);
-		//else
-			//climbMotor.set(ControlMode.PercentOutput, 0);
+		else
+			climbMotor.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public TalonSRX getTalon()

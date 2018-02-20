@@ -44,6 +44,8 @@ import org.usfirst.frc.team670.robot.subsystems.DriveBase;
 import org.usfirst.frc.team670.robot.subsystems.Elevator;
 import org.usfirst.frc.team670.robot.subsystems.Intake;
 
+import com.kauailabs.navx.frc.AHRS;
+
 /**
  * @author vsharma
  */
@@ -58,6 +60,7 @@ public class Robot extends TimedRobot {
 
 	public static Aggregator sensors;
 	public static OI oi;
+	private static AHRS navXMicro;
 	
 	Command primaryCommand;
 	CommandGroup combined;
@@ -71,6 +74,13 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		oi = new OI();
 		sensors = new Aggregator();
+		
+		try {
+			navXMicro = new AHRS(RobotMap.navXPort);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+			navXMicro = null;
+		}
 		
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();
@@ -264,7 +274,7 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
-	public void disabledPeriodic() {	
+	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
@@ -396,5 +406,24 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+
+	public static void resetNavX() {
+		if(navXMicro != null)
+			navXMicro.reset();
+	}
+	
+	public static double getYaw()
+	{
+		if(navXMicro != null)
+			return navXMicro.getYaw();
+		else
+			return -1;
+	}
+
+	public static boolean isNavXConnected() {
+		if(navXMicro != null)
+			return navXMicro.isConnected();
+		return false;
 	}
 }

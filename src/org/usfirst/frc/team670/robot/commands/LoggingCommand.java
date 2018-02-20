@@ -1,9 +1,17 @@
 package org.usfirst.frc.team670.robot.commands;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.usfirst.frc.team670.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class LoggingCommand extends Command {
@@ -28,16 +36,36 @@ public abstract class LoggingCommand extends Command {
 	}
 
 	private void log(String stage, Map<String, Object> data) {
-		System.out.print(sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {");
-		for (Map.Entry<String, Object> entry : data.entrySet()) {
-			System.out.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
+		//This would print to command line
+		// System.out.print(sdf.format(new Date()) + " command=" +
+		// this.getClass().getName() + " stage=" + stage + " {");
+		// for (Map.Entry<String, Object> entry : data.entrySet()) {
+		// System.out.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
+		// }
+		//		System.out.println("}");
+
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(new FileWriter(Robot.log));
+			writer.print(sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {");
+			for (Map.Entry<String, Object> entry : data.entrySet()) {
+				writer.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
+			}
+			writer.println('}');
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch(IOException e) {
+			e.printStackTrace();
 		}
-		System.out.println("}");
+
 	}
-	
+
 	protected void interrupted() {
-		logFinished(new HashMap<String, Object>() {{
-    		put("Interrupted", "interrupted");
-		}});	}
+		logFinished(new HashMap<String, Object>() {
+			{
+				put("Interrupted", "interrupted");
+			}
+		});
+	}
 
 }

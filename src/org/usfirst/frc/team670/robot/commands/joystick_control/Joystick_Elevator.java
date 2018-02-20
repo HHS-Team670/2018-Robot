@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.LoggingCommand;
+import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,6 +49,12 @@ public class Joystick_Elevator extends LoggingCommand {
 			put("OperatorStickPos", Robot.oi.getOperatorStick().getY());
 			put("Speed", speed);
 			put("IsGoingUp", isGoingUp);
+			if(Robot.elevator.getCurrentPosition() > RoboConstants.BOTTOM_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.BOTTOM_ELEVATOR_TICKS);
+			}
+			else if(Robot.elevator.getCurrentPosition() < RoboConstants.TOP_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.TOP_ELEVATOR_TICKS);
+			}
 		}});
 	}
 
@@ -60,6 +67,12 @@ public class Joystick_Elevator extends LoggingCommand {
 	protected void end() {
 		Robot.elevator.moveElevator(0);
 		logFinished(new HashMap<String, Object>() {{
+			if(Robot.elevator.getCurrentPosition() > RoboConstants.BOTTOM_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.BOTTOM_ELEVATOR_TICKS);
+			}
+			else if(Robot.elevator.getCurrentPosition() < RoboConstants.TOP_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.TOP_ELEVATOR_TICKS);
+			}
 		}});	}
 
 	// Called when another command which requires one or more of the same

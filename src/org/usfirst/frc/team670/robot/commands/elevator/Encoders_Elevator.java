@@ -74,7 +74,14 @@ public class Encoders_Elevator extends LoggingCommand {
 		
 		logExecute(new HashMap<String, Object>() {{
 			put("Speed", speed);
+			put("Velocity", Robot.elevator.getCurrentVelocity());
 			put("IsGoingUp", isGoingUp);
+			if(Robot.elevator.getCurrentPosition() > RoboConstants.BOTTOM_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.BOTTOM_ELEVATOR_TICKS);
+			}
+			else if(Robot.elevator.getCurrentPosition() < RoboConstants.TOP_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.TOP_ELEVATOR_TICKS);
+			}
 		}});
 	}
 
@@ -83,7 +90,6 @@ public class Encoders_Elevator extends LoggingCommand {
 		boolean isFinished = (isGoingUp && Robot.elevator.getCurrentPosition() <= targetPulseHeight)
 				|| (!isGoingUp && Robot.elevator.getCurrentPosition() >= targetPulseHeight);
 		return isFinished;
-
 	}
 
 	// Called once after isFinished returns true
@@ -94,6 +100,12 @@ public class Encoders_Elevator extends LoggingCommand {
 		logFinished(new HashMap<String, Object>() {{
 			put("Speed", speed);
 			put("IsGoingUp", isGoingUp);
+			if(Robot.elevator.getCurrentPosition() > RoboConstants.BOTTOM_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.BOTTOM_ELEVATOR_TICKS);
+			}
+			else if(Robot.elevator.getCurrentPosition() < RoboConstants.TOP_ELEVATOR_TICKS) {
+				put("TicksPastSoftLimit", Robot.elevator.getCurrentPosition() + RoboConstants.TOP_ELEVATOR_TICKS);
+			}
 		}});
 	}
 

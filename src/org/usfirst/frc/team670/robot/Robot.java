@@ -29,6 +29,9 @@ import paths.right.right_scale_opposite;
 import paths.right.right_scale_side;
 import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
+
+import java.io.File;
+
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
@@ -56,6 +59,9 @@ public class Robot extends TimedRobot {
 	public static Aggregator sensors;
 	public static OI oi;
 	private static AHRS navXMicro;
+	
+	public static File log = new File("/Logs/" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
+
 	
 	CommandGroup combined;
 	private SendableChooser<Double> autonomousDelay;

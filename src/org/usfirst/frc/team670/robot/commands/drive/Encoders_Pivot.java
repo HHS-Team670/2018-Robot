@@ -26,7 +26,7 @@ public class Encoders_Pivot extends LoggingCommand {
 	private final double TICKS_PER_DEGREE = 4711 / 90;
 
 	public Encoders_Pivot(double angle) {
-		ticksToTravel = ticksPerDegree * angle;
+		ticksToTravel = TICKS_PER_DEGREE * angle;
 		numTimesMotorOutput = 0;
 		reachedMinSpeed = false;
 		/*

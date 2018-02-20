@@ -120,6 +120,7 @@ public class Encoders_Drive extends LoggingCommand {
 		logFinished(new HashMap<String, Object>() {{
 		    put("ReachedMinSpeed", reachedMinSpeed);
 		    put("IsWithinLimit", isWithinLimit);
+		    put("FinalYaw", Robot.sensors.getYaw());
 		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
 		    put("RightEncoderVelocity", leftEncoder.getQuadratureVelocity());
 		    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());

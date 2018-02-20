@@ -10,7 +10,6 @@ package org.usfirst.frc.team670.robot;
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
-import org.usfirst.frc.team670.robot.commands.auto_specific.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
@@ -104,9 +103,6 @@ public class OI {
 		DropAuto.whenPressed(new Drive(21.13));
 		
 		CancelCommand.whenPressed(new right_switch_straight());
-		
-		vision.whenPressed(new Vision_PowerCube(0.4));
-		vision.whenReleased(new CancelCommand());
 	}
 
 	public Joystick getLeftStick() {

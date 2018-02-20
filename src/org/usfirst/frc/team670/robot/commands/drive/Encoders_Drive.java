@@ -56,13 +56,12 @@ public class Encoders_Drive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println(ticksToTravel);
+		System.out.println("Ticks to Travel: " + ticksToTravel + " | Left Ticks: " + Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition() + " | Right Ticks: " + Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
 		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel);
 		if(!reachedMinSpeed)
 			reachedMinSpeed = Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
 		isWithinLimit = Math.abs(leftEncoder.getQuadraturePosition()/ticksToTravel) >= 0.9;
-		SmartDashboard.putBoolean("Min Speed _ Drive:", reachedMinSpeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -83,6 +82,7 @@ public class Encoders_Drive extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		System.out.println("PID Drive is finished");
 		Robot.driveBase.getLeft().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
 		Robot.driveBase.getRight().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
 		Robot.driveBase.drive(0, 0);

@@ -29,15 +29,9 @@ import paths.right.right_scale_opposite;
 import paths.right.right_scale_side;
 import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
-
-import org.usfirst.frc.team670.robot.commands.auto_specific.AutoCube;
-import org.usfirst.frc.team670.robot.commands.auto_specific.AutoDropSwitchStraight;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
-import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
-import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
-import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
@@ -62,9 +56,8 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	private static AHRS navXMicro;
 	
-	Command primaryCommand;
 	CommandGroup combined;
-	private SendableChooser<Double> autonomousDelay, CubePickup;
+	private SendableChooser<Double> autonomousDelay;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -87,8 +80,7 @@ public class Robot extends TimedRobot {
 		subMenuRL = new SendableChooser<String>();
 		subMenuLR = new SendableChooser<String>();
 		autonomousDelay = new SendableChooser<Double>();
-		CubePickup = new SendableChooser<Double>();
-
+		
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
 		autonomousDelay.addObject("2 Second", 2.0);
@@ -96,19 +88,9 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
 		
-		CubePickup.addDefault("No Cube Pickup", -1.0);
-		CubePickup.addObject("Cube 1", 1.0);
-		CubePickup.addObject("Cube 2", 2.0);
-		CubePickup.addObject("Cube 3", 3.0);
-		CubePickup.addObject("Cube 4", 4.0);
-		CubePickup.addObject("Cube 5", 5.0);
-		CubePickup.addObject("Cube 6", 6.0);
-		
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----LEFT----", "left_baseline");
 		subMenuLL.addObject("left_baseline", "left_baseline");
-		subMenuLL.addObject("left_scale_opposite", "left_scale_opposite");
-		subMenuLL.addObject("left_scale_side", "left_scale_side");
 		subMenuLL.addObject("left_switch_side", "left_switch_side");
 		subMenuLL.addObject("----CENTER----", "center_baseline");
 		subMenuLL.addObject("center_baseline", "center_baseline");
@@ -118,16 +100,12 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("center_right_switch_side", "center_right_switch_side");
 		subMenuLL.addObject("----RIGHT----", "left_baseline");
 		subMenuLL.addObject("right_baseline", "right_baseline");
-		subMenuLL.addObject("right_scale_opposite", "right_scale_opposite");
-		subMenuLL.addObject("right_scale_side", "right_scale_side");
 		subMenuLL.addObject("right_switch_side", "right_switch_side");
 		subMenuLL.addObject("right_switch_straight", "right_switch_straight");
 		
 		subMenuRR.addDefault("RR (KEY ONLY)", "left_baseline");
 		subMenuRR.addObject("----LEFT----", "left_baseline");
 		subMenuRR.addObject("left_baseline", "left_baseline");
-		subMenuRR.addObject("left_scale_opposite", "left_scale_opposite");
-		subMenuRR.addObject("left_scale_side", "left_scale_side");
 		subMenuRR.addObject("left_switch_side", "left_switch_side");
 		subMenuRR.addObject("----CENTER----", "center_baseline");
 		subMenuRR.addObject("center_baseline", "center_baseline");
@@ -137,35 +115,12 @@ public class Robot extends TimedRobot {
 		subMenuRR.addObject("center_right_switch_side", "center_right_switch_side");
 		subMenuRR.addObject("----RIGHT----", "left_baseline");
 		subMenuRR.addObject("right_baseline", "right_baseline");
-		subMenuRR.addObject("right_scale_opposite", "right_scale_opposite");
-		subMenuRR.addObject("right_scale_side", "right_scale_side");
 		subMenuRR.addObject("right_switch_side", "right_switch_side");
 		subMenuRR.addObject("right_switch_straight", "right_switch_straight");
-		
-		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
-		subMenuLR.addObject("----LEFT----", "left_baseline");
-		subMenuLR.addObject("left_baseline", "left_baseline");
-		subMenuLR.addObject("left_scale_opposite", "left_scale_opposite");
-		subMenuLR.addObject("left_scale_side", "left_scale_side");
-		subMenuLR.addObject("left_switch_side", "left_switch_side");
-		subMenuLR.addObject("----CENTER----", "center_baseline");
-		subMenuLR.addObject("center_baseline", "center_baseline");
-		subMenuLR.addObject("center_left_switch_side", "center_left_switch_side");
-		subMenuLR.addObject("center_left_switch_straight", "center_left_switch_straight");
-		subMenuLR.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuLR.addObject("center_right_switch_side", "center_right_switch_side");
-		subMenuLR.addObject("----RIGHT----", "left_baseline");
-		subMenuLR.addObject("right_baseline", "right_baseline");
-		subMenuLR.addObject("right_scale_opposite", "right_scale_opposite");
-		subMenuLR.addObject("right_scale_side", "right_scale_side");
-		subMenuLR.addObject("right_switch_side", "right_switch_side");
-		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
 		
 		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
 		subMenuRL.addObject("----LEFT----", "left_baseline");
 		subMenuRL.addObject("left_baseline", "left_baseline");
-		subMenuRL.addObject("left_scale_opposite", "left_scale_opposite");
-		subMenuRL.addObject("left_scale_side", "left_scale_side");
 		subMenuRL.addObject("left_switch_side", "left_switch_side");
 		subMenuRL.addObject("----CENTER----", "center_baseline");
 		subMenuRL.addObject("center_baseline", "center_baseline");
@@ -175,20 +130,29 @@ public class Robot extends TimedRobot {
 		subMenuRL.addObject("center_right_switch_side", "center_right_switch_side");
 		subMenuRL.addObject("----RIGHT----", "left_baseline");
 		subMenuRL.addObject("right_baseline", "right_baseline");
-		subMenuRL.addObject("right_scale_opposite", "right_scale_opposite");
-		subMenuRL.addObject("right_scale_side", "right_scale_side");
 		subMenuRL.addObject("right_switch_side", "right_switch_side");
 		subMenuRL.addObject("right_switch_straight", "right_switch_straight");
-		
 
+		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
+		subMenuLR.addObject("----LEFT----", "left_baseline");
+		subMenuLR.addObject("left_baseline", "left_baseline");
+		subMenuLR.addObject("left_switch_side", "left_switch_side");
+		subMenuLR.addObject("----CENTER----", "center_baseline");
+		subMenuLR.addObject("center_baseline", "center_baseline");
+		subMenuLR.addObject("center_left_switch_side", "center_left_switch_side");
+		subMenuLR.addObject("center_left_switch_straight", "center_left_switch_straight");
+		subMenuLR.addObject("center_right_switch_straight", "center_right_switch_straight");
+		subMenuLR.addObject("center_right_switch_side", "center_right_switch_side");
+		subMenuLR.addObject("----RIGHT----", "left_baseline");
+		subMenuLR.addObject("right_baseline", "right_baseline");
+		subMenuLR.addObject("right_switch_side", "right_switch_side");
+		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
+		
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
-		SmartDashboard.putData("Cube Pickup", CubePickup);
 		SmartDashboard.putData("LL", subMenuLL);
 		SmartDashboard.putData("RR", subMenuRR);
 		SmartDashboard.putData("LR", subMenuLR);
 		SmartDashboard.putData("RL", subMenuRL);
-	
-		//new OpenIntake(true); //0 - off is hard, 0 - on is soft
 	}
 	
 	public Command parseCommand(String str) {		
@@ -226,42 +190,6 @@ public class Robot extends TimedRobot {
 		}
 	}
 	
-	public Boolean isLeft(String str)
-	{
-		switch(str.toLowerCase()){
-		case "left_baseline":
-				return null;	
-		case "left_scale_opposite":
-			return false;
-		case "left_scale_side":
-			return true;
-		case "left_switch_side":
-			return true;
-		case "center_baseline":
-			return null;
-		case "center_left_switch_side":
-			return null;
-		case "center_left_switch_straight":
-			return null;
-		case "center_right_switch_straight":
-			return null;
-		case "center_right_swtich_side":
-			return null;
-		case "right_baseline":
-			return null;
-		case "right_scale_opposite":
-			return true;
-		case "right_scale_side":
-			return false;
-		case "right_switch_side":
-			return false;
-		case "right_switch_straight":
-			return false;
-		default: 
-			return null;		
-	}	}
-	
-	
 	
 	/**
 	 * This function is called once each time the robot enters Disabled mode. You
@@ -295,6 +223,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		String data = DriverStation.getInstance().getGameSpecificMessage(); 
 		
+		//If the string data is invalid, then keep checking for valid data-----------------------------------
 		if(data == null)
 			data = "";
 		
@@ -318,6 +247,8 @@ public class Robot extends TimedRobot {
 		else
 			data = data.substring(0, 2); 
 		
+		//Find the primary command for autonomous-----------------------------------
+		
 		String cmd = "";
 		
 		if(data.equalsIgnoreCase("RR")) 
@@ -329,11 +260,9 @@ public class Robot extends TimedRobot {
 		else if(data.equalsIgnoreCase("RL"))
 			cmd = subMenuRL.getSelected();
 		
-		primaryCommand = parseCommand(cmd);
-		Boolean isL = isLeft(cmd);
-		double selectedCube = CubePickup.getSelected();
+		Command primaryCommand = parseCommand(cmd);
 		
-		//RUN THE AUTONOMOUS COMMAND------------------------------
+		//Build the command sequence------------------------------
 		
 		combined = new CommandGroup(); 
 		
@@ -345,30 +274,10 @@ public class Robot extends TimedRobot {
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 		
 		//Add the primary command sequence taken from the smartdashboard
-		combined.addSequential(primaryCommand);
+		if(primaryCommand != null)
+			combined.addSequential(primaryCommand);
 		
-		//Auto pickup the cube from the backside of the switch
-		if(selectedCube!=-1.0 && isL != null)
-			combined.addSequential(new AutoCube(isL, (int)selectedCube));
-		
-		//Check if you picked up cube from side of switch on your side
-		if((int)selectedCube == 1 || (int)selectedCube == 2)
-		{
-			if(data.charAt(0) == 'L')
-			{
-				//Drop cube into the switch right in front of you (add it to sequential)
-				combined.addSequential(new AutoDropSwitchStraight());
-			}
-		}
-		else if((int)selectedCube == 5 || (int)selectedCube == 6)
-		{
-			if(data.charAt(0) == 'R')
-			{
-				//Drop cube into the switch right in front of you (add it to sequential)
-				combined.addSequential(new AutoDropSwitchStraight());
-			}
-		}
-		
+		//Start running the command sequence----------------------------
 		if (combined != null)
 			combined.start();
 	}
@@ -383,11 +292,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		Robot.elevator.resetEncoder();
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		if (combined != null) {
 			combined.cancel();
 		}

@@ -23,8 +23,6 @@ public class NavX_Pivot extends Command {
 	public NavX_Pivot(double angle) {
 		this.angle = angle;
 		numTimesIsFinished = 0;
-		Robot.driveBase.getLeft().configOpenloopRamp(0.2, 0);
-		Robot.driveBase.getRight().configOpenloopRamp(0.2, 0);
 		requires(Robot.driveBase);
 	}
 
@@ -33,6 +31,8 @@ public class NavX_Pivot extends Command {
 		this.startAngle = getYaw();
 		this.finalAngle = startAngle + angle;
 		this.numTimesIsFinished = 0;
+		Robot.driveBase.getLeft().configOpenloopRamp(0.2, 0);
+		Robot.driveBase.getRight().configOpenloopRamp(0.2, 0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

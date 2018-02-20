@@ -2,7 +2,6 @@ package paths.right;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
-import org.usfirst.frc.team670.robot.commands.auto_specific.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
@@ -38,11 +37,12 @@ public class right_scale_side extends CommandGroup {
 		addParallel(new Deploy(true));
     	addSequential(new Drive(Field.DS_TO_SCALE - Robot.length/2 + Field.SCALE_WIDTH/2));
     	addSequential(new Pivot(-90));
+    	addParallel(new Drive(-Field.SCALE_SIDE_BACKUP));
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
-    	addSequential(new Drive(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR));
+    	addSequential(new Drive(Field.SCALE_SIDE_BACKUP + Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR));
     	addSequential(new DropCube());
+    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Drive(-(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR)));
-    	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Pivot(-90));
     	addSequential(new Drive(Field.DS_TO_SCALE - (Field.DS_TO_SWITCH + Field.SWITCH_WIDTH - Robot.length) + Robot.width));
     	addSequential(new Pivot(90));

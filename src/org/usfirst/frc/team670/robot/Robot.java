@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	private static AHRS navXMicro;
 	
-	public static File log = new File("/home/lvuser/" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
+	public static File log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
 	public static PrintWriter writer;
 	
 	CommandGroup combined;

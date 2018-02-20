@@ -54,30 +54,14 @@ public class OI {
 	private Button toggleIntake = new JoystickButton(operatorStick, 1);
 	private Button toggleClimber = new JoystickButton(operatorStick, 5);
 	
-	private Button CancelCommand = new JoystickButton(operatorStick, 10);
-	private Button TestElevators = new JoystickButton(operatorStick, 11);
+	private Button grab = new JoystickButton(arcadeStick, 1);
+	private Button release = new JoystickButton(arcadeStick, 10);
 	
-	private Button vision = new JoystickButton(operatorStick, 2);
+	private Button deploy = new JoystickButton(arcadeStick, 2);
+	private Button retract = new JoystickButton(arcadeStick, 9);
 	
-	// Driver Controls
-	/*private Button tankDrive = new JoystickButton(leftDriveStick, 3);
-	private Button reverseTankDrive = new JoystickButton(leftDriveStick, 4);
-	private Button singleStickDrive = new JoystickButton(leftDriveStick, 5);*/
-	private Button open = new JoystickButton(arcadeStick, 1);
-	private Button close = new JoystickButton(arcadeStick, 10);
-	
-	private Button hard = new JoystickButton(arcadeStick, 2);
-	private Button soft = new JoystickButton(arcadeStick, 9);
-	
-	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
-	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
-	
-	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
-	private Button elevatorZero = new JoystickButton(arcadeStick, 7);
-
-	private Button navXPivot1 = new JoystickButton(arcadeStick, 5);
-	private Button DropAuto = new JoystickButton(arcadeStick, 6);
-
+	private Button hard = new JoystickButton(arcadeStick, 3);
+	private Button soft = new JoystickButton(arcadeStick, 8);
 	
 	public OI() {
 		// Operator buttons
@@ -88,21 +72,14 @@ public class OI {
 		toggleIntake.whenPressed(new Set_OperatorControl(OperatorState.INTAKE));
 		toggleIntake.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		
-		open.whenPressed(new OpenIntake(true));
-		close.whenPressed(new OpenIntake(false));
+		grab.whenPressed(new OpenIntake(false));
+		release.whenPressed(new OpenIntake(true));
 		
-		hard.whenPressed(new Deploy(false));
-		soft.whenPressed(new Deploy(true));
+		deploy.whenPressed(new Deploy(false));
+		retract.whenPressed(new Deploy(true));
 		
-		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
-		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
-		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
-		//elevatorZero.whenPressed(new ZeroElevatorEncoders());
-		
-		navXPivot1.whenPressed(new NavX_Pivot(90));
-		DropAuto.whenPressed(new Drive(21.13));
-		
-		CancelCommand.whenPressed(new right_switch_straight());
+		hard.whenPressed(new enableHardGrab(true));
+		soft.whenPressed(new enableHardGrab(false));
 	}
 
 	public Joystick getLeftStick() {

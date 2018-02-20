@@ -28,6 +28,7 @@ public class Encoders_Drive extends LoggingCommand {
 	private double startYaw;
 	private SensorCollection leftEncoder;
 	private SensorCollection rightEncoder;
+	private double currentYaw = 0;
 
 	public Encoders_Drive(double inches) {
 
@@ -72,7 +73,7 @@ public class Encoders_Drive extends LoggingCommand {
 	protected void execute() {
 		System.out.println("Ticks to Travel: " + ticksToTravel + " | Left Ticks: " + Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition() + " | Right Ticks: " + Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
 		
-		double currentYaw = Robot.sensors.getYaw();
+		currentYaw = Robot.sensors.getYaw();
 		double yawDiff = startYaw - currentYaw;
 		if(Math.abs(yawDiff) > tolerance) {
 			if(currentYaw > startYaw)

@@ -3,6 +3,7 @@ package org.usfirst.frc.team670.robot.commands.drive;
 import org.usfirst.frc.team670.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -22,6 +23,8 @@ public class NavX_Pivot extends Command {
 	public NavX_Pivot(double angle) {
 		this.angle = angle;
 		numTimesIsFinished = 0;
+		Robot.driveBase.getLeft().configOpenloopRamp(0.2, 0);
+		Robot.driveBase.getRight().configOpenloopRamp(0.2, 0);
 		requires(Robot.driveBase);
 	}
 
@@ -34,6 +37,7 @@ public class NavX_Pivot extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		SmartDashboard.putNumber("Percent Complete (NavX)", percentComplete);
 		double speed = 0;
 		percentComplete = Math.abs((angle - yawRemaining()) / (angle));
 
@@ -41,15 +45,18 @@ public class NavX_Pivot extends Command {
 //			speed = -2.3 * 2.3 * (percentComplete * percentComplete) + 0.8;
 			speed = 1.0 - percentComplete;
 		} 
-		else if(Math.abs(1.0-percentComplete) < 0.05){
-			speed = 0.12;
+		else if(Math.abs(1.0-percentComplete) < 0.15){
+			speed = 0.25;
 		}
 		else {
-			speed = 0.15;
-		} 
-		if (percentComplete > 1.0){
-			speed = -1.2 * speed;
+			speed = 0.35;
 		}
+		
+		if(1.0 < percentComplete)
+			speed = -speed;
+		
+		//if(Math.abs(speed) <= 0.)
+		
 		System.out.println("PercentComplete: " + percentComplete);
 		System.out.println("YawRemaining: " + yawRemaining());
 		System.out.println("Yaw: " + getYaw());
@@ -57,28 +64,22 @@ public class NavX_Pivot extends Command {
 //		if(checkOverRotation()){
 //			speed = -speed; //Changing speed to reverse if it is over
 //		}
-		System.out.println("Speed: " + speed);
+		SmartDashboard.putNumber("Speed (NavX)", speed);
 		if (angle > 0){
-			Robot.driveBase.drive(-speed, -speed);
+			Robot.driveBase.drive(-speed, speed);
 		}
 		else{
-			Robot.driveBase.drive(speed, speed);
+			Robot.driveBase.drive(speed, -speed);
 		}
 
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (isInThreshold()) {
-			numTimesIsFinished++;
-			if (numTimesIsFinished > 4) {
-				System.out.println("Finished");
-				return true;
-			}
-		} else if (numTimesIsFinished > 0) {
-			numTimesIsFinished = 0;
-		}
-		return false;
+		if (Math.abs(1.0 - percentComplete) <= 0.015) 
+			return true;
+		else
+			return false;
 	}
 
 	private boolean isInThreshold(){
@@ -88,6 +89,8 @@ public class NavX_Pivot extends Command {
 	
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.driveBase.getLeft().configOpenloopRamp(0.0, 0);
+		Robot.driveBase.getRight().configOpenloopRamp(0.0, 0);
 		Robot.driveBase.drive(0, 0);
 	}
 

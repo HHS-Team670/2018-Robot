@@ -37,7 +37,7 @@ public class Elevator extends Subsystem {
 		// absolute
 		// elevator.configReverseSoftLimitThreshold(RoboConstants.MIN_ELEVATOR_TICKS,
 		// RoboConstants.kTimeoutMs);// Lower
-		elevator.configOpenloopRamp(1, 0);
+		elevator.configOpenloopRamp(0.25, 0);
 		// absolute
 		elevator.configForwardSoftLimitEnable(false, 0);
 		elevator.configReverseSoftLimitEnable(false, 0);

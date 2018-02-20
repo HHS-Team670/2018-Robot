@@ -37,9 +37,9 @@ public class right_scale_side extends CommandGroup {
 		addParallel(new Deploy(true));
     	addSequential(new Drive(Field.DS_TO_SCALE - Robot.length/2 + Field.SCALE_WIDTH/2));
     	addSequential(new Pivot(-90));
-    	addParallel(new Drive(-Field.SCALE_SIDE_BACKUP));
+    	addParallel(new Drive(-Field.SCALE_SIDE_BACKUP+3));
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
-    	addSequential(new Drive(Field.SCALE_SIDE_BACKUP + Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR));
+    	//DONT DRIVE TOO CLOSE addSequential(new Drive(Field.SCALE_SIDE_BACKUP + Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR));
     	addSequential(new DropCube());
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Drive(-(Field.SIDE_TO_SCALE - Field.SIDE_TRIANGLE_WIDTH - Robot.width + RoboConstants.FRONT_TO_ELEVATOR)));

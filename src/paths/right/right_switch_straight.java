@@ -40,7 +40,9 @@ public class right_switch_straight extends CommandGroup {
 		// would require.
 		// e.g. if Command1 requires chassis, and Command2 requires arm,
 		// a CommandGroup containing them would require both the chassis and the
-		// arm.
+		// arm.]
+		
+		//Figure out why the drop cube takes so long, and then that is it
 		addParallel(new Deploy(true));
 		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 18));
 		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));

@@ -30,12 +30,17 @@ public class Climber extends Subsystem {
 	 */
 	public void climb(double speed)
 	{
-		SmartDashboard.putString("Motor climber limit - Current:", ""+climbMotor.getOutputCurrent());
-		SmartDashboard.putString("Motor climber output - Voltage:", ""+climbMotor.getMotorOutputVoltage());
+		System.out.print("Current:" + climbMotor.getOutputCurrent());
+		System.out.print(" | Voltage:" + climbMotor.getMotorOutputVoltage());
 		//if(climbMotor.getOutputCurrent() <= currentLimit)
 			climbMotor.set(ControlMode.PercentOutput, speed);
 		//else
 			//climbMotor.set(ControlMode.PercentOutput, 0);
+	}
+	
+	public TalonSRX getTalon()
+	{
+		return climbMotor;
 	}
 	
     public void initDefaultCommand() {

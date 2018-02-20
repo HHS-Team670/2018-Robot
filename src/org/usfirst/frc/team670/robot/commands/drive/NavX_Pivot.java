@@ -43,7 +43,7 @@ public class NavX_Pivot extends Command {
 
 		if (percentComplete <= 0.6) {
 //			speed = -2.3 * 2.3 * (percentComplete * percentComplete) + 0.8;
-			speed = 1.0 - percentComplete;
+			speed = 0.8 - percentComplete;
 		} 
 		else if(Math.abs(1.0-percentComplete) < 0.15){
 			speed = 0.25;
@@ -71,7 +71,8 @@ public class NavX_Pivot extends Command {
 		else{
 			Robot.driveBase.drive(speed, -speed);
 		}
-
+		
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

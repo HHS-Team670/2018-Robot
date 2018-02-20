@@ -116,8 +116,9 @@ public class Elevator extends Subsystem {
 	 * @param goingUp
 	 * @return
 	 */
-	public double calculateSpeed(int currentTicks, double maxSpeed, boolean goingUp) {
-		int tolerance = RoboConstants.ELEVATOR_TOLERANCE;
+	public double calculateSpeed(double currentTicks, double maxSpeed, boolean goingUp) {
+		
+		double tolerance = RoboConstants.ELEVATOR_TOLERANCE;
 		double minSpeed = goingUp ? -RoboConstants.ELEVATOR_MIN_SPEED : RoboConstants.ELEVATOR_MIN_SPEED;
 		double speed = 0;
 		
@@ -135,24 +136,21 @@ public class Elevator extends Subsystem {
 				&& currentTicks < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE + tolerance) {
 
 			speed = ((Math.abs(RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - currentTicks) / tolerance) * maxSpeed);
+			if (Math.abs(speed) < Math.abs(minSpeed))
+				speed = minSpeed;
 		}
 
 		// MAX_ELEVATOR_TICKS is the lowest physical point on the elevator, so
 		// it's the most positive value
 		else if (currentTicks < RoboConstants.TOP_ELEVATOR_TICKS + tolerance && goingUp) 
 		{	
-			speed = (((RoboConstants.TOP_ELEVATOR_TICKS - currentTicks) / tolerance) * maxSpeed) / 3;
+			speed = ((Math.abs(RoboConstants.TOP_ELEVATOR_TICKS - currentTicks) / tolerance) * maxSpeed) / 3;
 		} 
 		else
 			speed = maxSpeed;
 
-		if (Math.abs(speed) < Math.abs(minSpeed))
-			speed = minSpeed;
-		System.out.print(" " + speed);
-		System.out.print(", "+ goingUp);
-		System.out.print(", " + maxSpeed);
-		System.out.println(", " + currentTicks);
-		SmartDashboard.putNumber("Elevator Speed", speed);
+		//if (Math.abs(speed) < Math.abs(minSpeed))
+			//speed = minSpeed;
 
 		return speed;
 

@@ -52,9 +52,13 @@ public class Encoders_Elevator extends Command {
 		if(isGoingUp)
 		{
 			speed = -Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5, isGoingUp);
+			speed = -0.3;
 		}
 		else
+		{
 			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5, isGoingUp);
+			speed = 0.3;
+		}
 
 		SmartDashboard.putNumber("Speed", speed);
 		

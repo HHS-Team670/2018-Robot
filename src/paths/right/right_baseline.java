@@ -1,5 +1,6 @@
 package paths.right;
 
+import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
@@ -37,6 +38,7 @@ public class right_baseline extends CommandGroup {
 		addParallel(new Deploy(true));
 		addSequential(new Drive(Field.DS_TO_BASELINE + Field.TOLERANCE));
 		addSequential(new Delay(4));
-		addSequential(new Drive(-Field.DS_TO_BASELINE));
+		//It was waaay overshooting this (going back too far)
+		addSequential(new Drive(-Field.DS_TO_BASELINE + Robot.length));
 	}
 }

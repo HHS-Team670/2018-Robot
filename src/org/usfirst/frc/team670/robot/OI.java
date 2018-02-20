@@ -29,7 +29,10 @@ import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import paths.right.right_baseline;
+import paths.right.right_scale_side;
 import paths.right.right_switch_side;
+import paths.right.right_switch_straight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -100,7 +103,7 @@ public class OI {
 		navXPivot1.whenPressed(new NavX_Pivot(90));
 		DropAuto.whenPressed(new Drive(21.13));
 		
-		CancelCommand.whenPressed(new right_switch_side());
+		CancelCommand.whenPressed(new right_switch_straight());
 		
 		vision.whenPressed(new Vision_PowerCube(0.4));
 		vision.whenReleased(new CancelCommand());

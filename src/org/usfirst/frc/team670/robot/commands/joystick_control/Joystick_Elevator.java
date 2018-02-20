@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Joystick_Elevator extends LoggingCommand {
 
 	private double speed;
+	private boolean isGoingUp;
 	
 	public Joystick_Elevator() {
 		// Use requires() here to declare subsystem dependencies
@@ -35,7 +36,7 @@ public class Joystick_Elevator extends LoggingCommand {
 		speed = Robot.oi.getOperatorStick().getY();
 		
 		//Speed is negative meaning it goes up
-		boolean isGoingUp = speed <= 0;
+		isGoingUp = speed <= 0;
 		speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(),Robot.oi.getOperatorStick().getY(), isGoingUp);
 		if (Robot.oi.getOS().equals(OperatorState.ELEVATOR))
 		{

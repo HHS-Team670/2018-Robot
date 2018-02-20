@@ -89,6 +89,14 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
 		
+//		CubePickup.addDefault("No Cube Pickup", -1.0);
+//		CubePickup.addObject("Cube 1", 1.0);
+//		CubePickup.addObject("Cube 2", 2.0);
+//		CubePickup.addObject("Cube 3", 3.0);
+//		CubePickup.addObject("Cube 4", 4.0);
+//		CubePickup.addObject("Cube 5", 5.0);
+//		CubePickup.addObject("Cube 6", 6.0);
+		
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----LEFT----", "left_baseline");
 		subMenuLL.addObject("left_baseline", "left_baseline");
@@ -220,6 +228,42 @@ public class Robot extends TimedRobot {
 	 * the switch structure below with additional strings & commands.
 	 */
 	
+	public Boolean isLeft(String str)
+	{
+		switch(str.toLowerCase()){
+		case "left_baseline":
+				return null;	
+		case "left_scale_opposite":
+			return false;
+		case "left_scale_side":
+			return true;
+		case "left_switch_side":
+			return true;
+		case "center_baseline":
+			return null;
+		case "center_left_switch_side":
+			return null;
+		case "center_left_switch_straight":
+			return null;
+		case "center_right_switch_straight":
+			return null;
+		case "center_right_swtich_side":
+			return null;
+		case "right_baseline":
+			return null;
+		case "right_scale_opposite":
+			return true;
+		case "right_scale_side":
+			return false;
+		case "right_switch_side":
+			return false;
+		case "right_switch_straight":
+			return false;
+		default: 
+			return null;		
+	}	}
+	
+	
 	@Override
 	public void autonomousInit() {
 		String data = DriverStation.getInstance().getGameSpecificMessage(); 
@@ -279,6 +323,28 @@ public class Robot extends TimedRobot {
 		//Add the primary command sequence taken from the smartdashboard
 		if(primaryCommand != null)
 			combined.addSequential(primaryCommand);
+		
+		//If veering was fixed--------------------------------------------
+//		if(selectedCube!=-1.0 && isL != null)
+//			combined.addSequential(new AutoCube(isL, (int)selectedCube));
+//		
+//		//Check if you picked up cube from side of switch on your side
+//		if((int)selectedCube == 1 || (int)selectedCube == 2)
+//		{
+//			if(data.charAt(0) == 'L')
+//			{
+//				//Drop cube into the switch right in front of you (add it to sequential)
+//				combined.addSequential(new AutoDropSwitchStraight());
+//			}
+//		}
+//		else if((int)selectedCube == 5 || (int)selectedCube == 6)
+//		{
+//			if(data.charAt(0) == 'R')
+//			{
+//				//Drop cube into the switch right in front of you (add it to sequential)
+//				combined.addSequential(new AutoDropSwitchStraight());
+//			}
+//		}
 		
 		//Start running the command sequence----------------------------
 		if (combined != null)

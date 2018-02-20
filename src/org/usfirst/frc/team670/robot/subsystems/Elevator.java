@@ -37,7 +37,7 @@ public class Elevator extends Subsystem {
 		// absolute
 		// elevator.configReverseSoftLimitThreshold(RoboConstants.MIN_ELEVATOR_TICKS,
 		// RoboConstants.kTimeoutMs);// Lower
-		elevator.configOpenloopRamp(3, 0);
+		elevator.configOpenloopRamp(1, 0);
 		// absolute
 		elevator.configForwardSoftLimitEnable(false, 0);
 		elevator.configReverseSoftLimitEnable(false, 0);
@@ -45,11 +45,10 @@ public class Elevator extends Subsystem {
 		toggleSoftLimits(true);
 	}
 
-	public void toggleSoftLimits(boolean b)
-	{
+	public void toggleSoftLimits(boolean b) {
 		this.toggle = b;
 	}
-	
+
 	public double getCurrentPosition() {
 		return encoder.getQuadraturePosition();
 	}
@@ -100,7 +99,6 @@ public class Elevator extends Subsystem {
 		setDefaultCommand(new Joystick_Elevator());
 	}
 
-	
 	/**
 	 * 
 	 * @param currentTicks

@@ -23,7 +23,7 @@ public class Joystick_Drive extends Command {
 	protected void execute() {
 		double left = Robot.oi.getLeftStick().getY();
 		double right = Robot.oi.getRightStick().getY();
-		if(right > opR+right)
+		/*if(right > opR+right)
 			right = opR+d;
 		else if(right < opR-d)
 			right = opR-d;
@@ -33,7 +33,7 @@ public class Joystick_Drive extends Command {
 			left = opL+d;
 		else if(left < opL-d)
 			left = opL-d;
-		opL = left;
+		opL = left;*/
 		
 		Robot.driveBase.drive(left, right);
 	}

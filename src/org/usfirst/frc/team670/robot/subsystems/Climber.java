@@ -30,8 +30,8 @@ public class Climber extends Subsystem {
 	 */
 	public void climb(double speed)
 	{
-		System.out.print("(CANNOT GO HIGHER THAN 14) Current:" + climbMotor.getOutputCurrent());
-		System.out.print(" | Voltage:" + climbMotor.getMotorOutputVoltage());
+		//System.out.print("(CANNOT GO HIGHER THAN 14) Current:" + climbMotor.getOutputCurrent());
+		//System.out.print(" | Voltage:" + climbMotor.getMotorOutputVoltage());
 		if(climbMotor.getOutputCurrent() <= currentLimit)
 			climbMotor.set(ControlMode.PercentOutput, speed);
 		else

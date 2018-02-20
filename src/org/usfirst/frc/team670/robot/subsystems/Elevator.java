@@ -118,9 +118,27 @@ public class Elevator extends Subsystem {
 	 */
 	public double calculateSpeed(double currentTicks, double maxSpeed, boolean goingUp) {
 		
-		double tolerance = RoboConstants.ELEVATOR_TOLERANCE;
+		double RATIO_TICKS_COVERED_TO_VELOCITY_UP = 220.0/136.0;
+		double RATIO_TICKS_COVERED_TO_VELOCITY_DOWN = 540.0/350.0;
+		double ACCELERATION_TOLERANCE_UP = 0.5;
+		double ACCELERATION_TOLERANCE_DOWN = 0.75;
+		double MAX_VELOCITY_UP = 280;
+		double MAX_VELOCITY_DOWN = 350;
+		double COAST_DISTANCE_MAX_SPEED_UP = 450; //When the 0.1 braking speed changes, the value for coasting at max speed changes
+		double COAST_DISTANCE_MAX_SPEED_DOWN = 800; //When the 0.1 braking speed changes, the value for coasting at max speed changes
+		double currentVelocity = Robot.elevator.getCurrentVelocity();
+		
+		double tolerance = 0;
+		
+		if(goingUp)
+			tolerance = Math.abs(currentVelocity)*RATIO_TICKS_COVERED_TO_VELOCITY_UP*ACCELERATION_TOLERANCE_UP + (Math.abs(currentVelocity)/MAX_VELOCITY_UP) * COAST_DISTANCE_MAX_SPEED_UP;
+		else
+			tolerance = Math.abs(currentVelocity)*RATIO_TICKS_COVERED_TO_VELOCITY_DOWN*ACCELERATION_TOLERANCE_DOWN + (Math.abs(currentVelocity)/MAX_VELOCITY_DOWN) * COAST_DISTANCE_MAX_SPEED_DOWN;
+		
 		double minSpeed = goingUp ? -RoboConstants.ELEVATOR_MIN_SPEED : RoboConstants.ELEVATOR_MIN_SPEED;
 		double speed = 0;
+		
+		double MIDDLE_TOLERANCE = RoboConstants.ELEVATOR_TOLERANCE; //Tolerance constant for the second stage and bottom
 		
 		// if (maxSpeed < minSpeed)
 		// return minSpeed;
@@ -129,13 +147,14 @@ public class Elevator extends Subsystem {
 		// it's
 		// the most negative value
 		if (currentTicks > RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance && !goingUp) {
-			speed = ((currentTicks / (RoboConstants.BOTTOM_ELEVATOR_TICKS - tolerance)) * maxSpeed) / 3;
+			//speed = ((currentTicks / (RoboConstants.BOTTOM_ELEVATOR_TICKS - MIDDLE_TOLERANCE)) * maxSpeed) / 3;
+			speed = 0.1;
 		}
 
-		else if (currentTicks > RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - tolerance
-				&& currentTicks < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE + tolerance) {
+		else if (currentTicks > RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - MIDDLE_TOLERANCE
+				&& currentTicks < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE + MIDDLE_TOLERANCE) {
 
-			speed = ((Math.abs(RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - currentTicks) / tolerance) * maxSpeed);
+			speed = ((Math.abs(RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - currentTicks) / MIDDLE_TOLERANCE) * maxSpeed);
 			if (Math.abs(speed) < Math.abs(minSpeed))
 				speed = minSpeed;
 		}
@@ -143,16 +162,27 @@ public class Elevator extends Subsystem {
 		// MAX_ELEVATOR_TICKS is the lowest physical point on the elevator, so
 		// it's the most positive value
 		else if (currentTicks < RoboConstants.TOP_ELEVATOR_TICKS + tolerance && goingUp) 
-		{	
+		{
 			//speed = ((Math.abs(RoboConstants.TOP_ELEVATOR_TICKS - currentTicks) / tolerance) * maxSpeed) / 3;
-			speed = 0.1;
+			speed = -0.1;
 		} 
 		else
 			speed = maxSpeed;
 
+		if(Math.abs(speed) > 0.2 && ((goingUp && currentTicks <= RoboConstants.TOP_ELEVATOR_TICKS + 200) || (!goingUp && currentTicks >= RoboConstants.BOTTOM_ELEVATOR_TICKS -  400)))
+		{
+			speed = (goingUp)? -0.2 : 0.2;			
+		}
+		
 		//if (Math.abs(speed) < Math.abs(minSpeed))
 			//speed = minSpeed;
-
+		System.out.print(" " + speed);
+		System.out.print(", "+ goingUp);
+		System.out.print(", " + maxSpeed);
+		System.out.print(", " + currentTicks);
+		System.out.print(", " + currentVelocity);
+		System.out.println(", " + tolerance);
+		
 		return speed;
 
 	}

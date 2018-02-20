@@ -44,19 +44,13 @@ public abstract class LoggingCommand extends Command {
 		// }
 		//		System.out.println("}");
 
-		PrintWriter writer = null;
-		try {
-			writer = new PrintWriter(new FileWriter(Robot.log));
-			writer.print(sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {");
+		if(Robot.writer != null) {
+			Robot.writer.print(sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {");
 			for (Map.Entry<String, Object> entry : data.entrySet()) {
-				writer.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
+				Robot.writer.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
 			}
-			writer.println('}');
-			writer.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch(IOException e) {
-			e.printStackTrace();
+			Robot.writer.println('}');
+			Robot.writer.flush();
 		}
 
 	}

@@ -30,7 +30,11 @@ import paths.right.right_scale_side;
 import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
@@ -61,7 +65,7 @@ public class Robot extends TimedRobot {
 	private static AHRS navXMicro;
 	
 	public static File log = new File("/home/lvuser" + "/Logs/" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
-
+	public static PrintWriter writer;
 	
 	CommandGroup combined;
 	private SendableChooser<Double> autonomousDelay;
@@ -80,6 +84,12 @@ public class Robot extends TimedRobot {
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 			navXMicro = null;
+		}
+		
+		try {
+			writer = new PrintWriter(new BufferedWriter(new FileWriter(log)));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		subMenuRR = new SendableChooser<String>();

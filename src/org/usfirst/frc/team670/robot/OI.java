@@ -12,6 +12,7 @@ import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Vision_PowerCube;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
+import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
@@ -72,7 +73,7 @@ public class OI {
 	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
 	private Button elevatorZero = new JoystickButton(arcadeStick, 7);
 
-	private Button PickupAuto = new JoystickButton(arcadeStick, 5);
+	private Button navXPivot1 = new JoystickButton(arcadeStick, 5);
 	private Button DropAuto = new JoystickButton(arcadeStick, 6);
 
 	
@@ -96,7 +97,7 @@ public class OI {
 		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
 		//elevatorZero.whenPressed(new ZeroElevatorEncoders());
 		
-		PickupAuto.whenPressed(new Pivot(90));
+		navXPivot1.whenPressed(new NavX_Pivot(90));
 		DropAuto.whenPressed(new Drive(21.13));
 		
 		CancelCommand.whenPressed(new right_switch_side());

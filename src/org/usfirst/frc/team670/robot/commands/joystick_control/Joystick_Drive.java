@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.LoggingCommand;
+import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 public class Joystick_Drive extends LoggingCommand {
 
@@ -27,6 +28,7 @@ public class Joystick_Drive extends LoggingCommand {
 	protected void execute() {
 		left = Robot.oi.getLeftStick().getY();
 		right = Robot.oi.getRightStick().getY();
+		
 		/*if(right > opR+right)
 		left = Robot.oi.getLeftStick().getY();
 		right = Robot.oi.getRightStick().getY();
@@ -41,8 +43,15 @@ public class Joystick_Drive extends LoggingCommand {
 		else if(left < opL-d)
 			left = opL-d;
 		opL = left;*/
-			opL = left;
-
+		
+		double currentPosition = Robot.elevator.getCurrentPosition();
+		
+		if(currentPosition < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - 500)
+		{
+			left*=0.5;
+			right*=0.5;
+		}
+		
 		Robot.driveBase.drive(left, right);
 
 		logExecute(new HashMap<String, Object>() {{

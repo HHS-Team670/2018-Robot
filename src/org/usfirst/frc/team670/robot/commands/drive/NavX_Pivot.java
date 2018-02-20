@@ -33,8 +33,8 @@ public class NavX_Pivot extends LoggingCommand {
 		this.startAngle = getYaw();
 		this.finalAngle = startAngle + angle;
 		this.numTimesIsFinished = 0;
-		Robot.driveBase.getLeft().configOpenloopRamp(0.2, 0);
-		Robot.driveBase.getRight().configOpenloopRamp(0.2, 0);
+		Robot.driveBase.getLeft().configOpenloopRamp(0, 0);
+		Robot.driveBase.getRight().configOpenloopRamp(0, 0);
 		logInitialize(new HashMap<String, Object>() {{
 		    put("StartAngle", startAngle);
 		    put("FinalAngle", finalAngle);
@@ -51,10 +51,10 @@ public class NavX_Pivot extends LoggingCommand {
 
 		if (percentComplete <= 0.6) {
 //			speed = -2.3 * 2.3 * (percentComplete * percentComplete) + 0.8;
-			speed = 0.8 - percentComplete;
+			speed = 0.7 - percentComplete;
 		} 
 		else if(Math.abs(1.0-percentComplete) < 0.15){
-			speed = 0.25;
+			speed = 0.30;
 		}
 		else {
 			speed = 0.35;
@@ -68,6 +68,7 @@ public class NavX_Pivot extends LoggingCommand {
 		System.out.println("PercentComplete: " + percentComplete);
 		System.out.println("YawRemaining: " + yawRemaining());
 		System.out.println("Yaw: " + getYaw());
+		System.out.println("Final Angle: " + finalAngle);
 		System.out.println("Final Angle: " + finalAngle);
 //		if(checkOverRotation()){
 //			speed = -speed; //Changing speed to reverse if it is over
@@ -90,7 +91,7 @@ public class NavX_Pivot extends LoggingCommand {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (Math.abs(1.0 - percentComplete) <= 0.015) 
+		if (Math.abs(1.0 - percentComplete) <= 0.015 && Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) <= 100) 
 			return true;
 		else
 			return false;

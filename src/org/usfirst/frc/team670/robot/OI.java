@@ -63,6 +63,12 @@ public class OI {
 	private Button hard = new JoystickButton(arcadeStick, 3);
 	private Button soft = new JoystickButton(arcadeStick, 8);
 	
+	private Button pivot_test = new JoystickButton(arcadeStick, 4);
+
+	private Button rightBaseline = new JoystickButton(arcadeStick, 5);
+	private Button rightSwitchSide = new JoystickButton(arcadeStick, 6);
+	private Button rightSwitchStraight = new JoystickButton(arcadeStick, 7);
+	
 	public OI() {
 		// Operator buttons
 		toggleClimber.whenPressed(new Set_OperatorControl(OperatorState.CLIMBER));
@@ -80,6 +86,12 @@ public class OI {
 		
 		hard.whenPressed(new enableHardGrab(true));
 		soft.whenPressed(new enableHardGrab(false));
+		
+		pivot_test.whenPressed(new Pivot(90));
+		
+		rightBaseline.whenPressed(new right_baseline());
+		rightSwitchSide.whenPressed(new right_switch_side());
+		rightSwitchStraight.whenPressed(new right_switch_straight());
 	}
 
 	public Joystick getLeftStick() {

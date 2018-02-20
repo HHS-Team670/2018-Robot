@@ -60,8 +60,8 @@ public class RoboConstants {
 	// Elevator Heights
 	public static final double ELEVATOR_PULSE_FOR_EXCHANGE = -1000; // SET THESE
 	public static final double ELEVATOR_PULSE_FOR_SWITCH = -3638;
-	public static final double ELEVATOR_PULSE_FOR_HIGHSCALE = -10000;
-	public static final double ELEVATOR_PULSE_FOR_MIDSCALE = -8341;
+	public static final double ELEVATOR_PULSE_FOR_HIGHSCALE = -9600;
+	public static final double ELEVATOR_PULSE_FOR_MIDSCALE = -8349;
 	public static final double ELEVATOR_PULSE_FOR_SECONDSTAGE = -5430; //In ticks
 	public static final double ELEVATOR_AUTON_SPEED = 0.05; // Probably make this higher after testing
 

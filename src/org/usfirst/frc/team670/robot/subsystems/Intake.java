@@ -33,6 +33,8 @@ public class Intake extends Subsystem {
 		deployer = new Solenoid(RobotMap.PCModule,RobotMap.deployer);
 		claw = new Solenoid(RobotMap.PCModule, RobotMap.claw);
 		clawMode = new Solenoid(RobotMap.PCModule, RobotMap.clawMode);
+		leftIntake.configOpenloopRamp(0.25, 0);
+		rightIntake.configOpenloopRamp(0.25, 0);
 	}
 	
 	public void driveIntake(double speed)

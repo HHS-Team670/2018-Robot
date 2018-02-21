@@ -52,8 +52,6 @@ public class center_left_switch_straight extends CommandGroup {
     	addSequential(new Drive(Field.CUBEPILE_LENGTH + Robot.length/2 + Field.TOLERANCE));
 //    	addParallel(new Drive(Field.TOLERANCE));
     	addSequential(new DropCube());
-    	addSequential(new Drive(-0.5*Robot.length));    
-		addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
 
     }
 }

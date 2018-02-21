@@ -29,20 +29,14 @@ public class Joystick_Drive extends LoggingCommand {
 		left = Robot.oi.getLeftStick().getY();
 		right = Robot.oi.getRightStick().getY();
 		
-		/*if(right > opR+right)
-		left = Robot.oi.getLeftStick().getY();
-		right = Robot.oi.getRightStick().getY();
-		if(right > opR+right)
-			right = opR+d;
-		else if(right < opR-d)
-			right = opR-d;
-		opR = right;
-
-		if(left > opL+left)
-			left = opL+d;
-		else if(left < opL-d)
-			left = opL-d;
-		opL = left;*/
+		//Elevator limiting code---------------------------------------------------------
+		/*if(currentPosition < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - 500)
+		{
+			left *= (.0001  * (currentPosition - RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE) + 1);
+			right *= (.0001 * (currentPosition - RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE) + 1);
+		}*/
+		//Elevator limiting code end-----------------------------------------------------
+		
 		
 		double currentPosition = Robot.elevator.getCurrentPosition();
 		

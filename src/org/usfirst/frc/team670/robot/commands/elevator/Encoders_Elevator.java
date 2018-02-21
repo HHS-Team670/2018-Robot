@@ -36,7 +36,7 @@ public class Encoders_Elevator extends LoggingCommand {
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_HIGHSCALE;
 		else if (state.equals(ElevatorState.EXCHANGE))
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;
-		else if (state.equals(ElevatorState.MIDSCALE))
+		else if (state.equals(ElevatorState.CLEARANCE))
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_MIDSCALE;
 		else
 			targetPulseHeight = RoboConstants.ELEVATOR_PULSE_FOR_EXCHANGE;

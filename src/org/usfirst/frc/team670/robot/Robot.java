@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("----CENTER----", "center_baseline");
 		subMenuLL.addObject("center_baseline", "center_baseline");
 		subMenuLL.addObject("center_left_switch_straight", "center_left_switch_straight");
-		subMenuLL.addObject("center_right_switch_straight", "center_right_switch_straight");
+		subMenuLL.addObject("center_right_switch_straight (Place in front of switch)", "center_right_switch_straight");
 		subMenuLL.addObject("----RIGHT----", "left_baseline");
 		subMenuLL.addObject("right_baseline", "right_baseline");
 		subMenuLL.addObject("right_switch_side", "right_switch_side");
@@ -316,7 +316,7 @@ public class Robot extends TimedRobot {
 		combined = new CommandGroup(); 	
 		
 		//Deploy the intake
-		combined.addSequential(new Deploy(true));
+		combined.addParallel(new Deploy(true));
 		
 		//Add whateer time delay the driver selected
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 

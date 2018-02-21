@@ -25,10 +25,9 @@ public class right_switch_straight extends CommandGroup {
 	 * @pre Line up Robot with the switch
 	 */
 	public right_switch_straight() {
-		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 18));
-		addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
-		addSequential(new Drive(12));
+		addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
+		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 6));
 		addSequential(new DropCube());
-    	addSequential(new Drive(-Robot.length));
+    	addSequential(new Drive(-Robot.length/2));
 	}
 }

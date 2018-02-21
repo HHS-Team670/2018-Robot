@@ -75,6 +75,8 @@ public class Encoders_Drive extends LoggingCommand {
 		
 		currentYaw = Robot.sensors.getYaw();
 		double yawDiff = startYaw - currentYaw;
+		System.out.println("yawDiff: " + yawDiff);
+
 		if(Math.abs(yawDiff) > tolerance) {
 			if(currentYaw > startYaw)
 				Robot.driveBase.getRight().configClosedloopRamp(0.8, 0);

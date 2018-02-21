@@ -39,13 +39,13 @@ public class Intake extends Subsystem {
 	
 	public void driveIntake(double speed)
 	{
-		double batteryVoltage = Robot.pdp.getVoltage();
-		double currentLimit = RoboConstants.MAX_INTAKE_VOLTAGE/batteryVoltage;
-		double current = Robot.pdp.getCurrent(RobotMap.intakeLeftTalon);
-		current += Robot.pdp.getCurrent(RobotMap.intakeRightTalon);
-		if(current >= currentLimit){
+		//double batteryVoltage = Robot.pdp.getVoltage();
+		//double currentLimit = RoboConstants.MAX_INTAKE_VOLTAGE/batteryVoltage;
+		//double current = Robot.pdp.getCurrent(RobotMap.intakeLeftTalon);
+		//current += Robot.pdp.getCurrent(RobotMap.intakeRightTalon);
+		/*if(current >= currentLimit){
 			//System.out.println("Intake is under stress");
-		}
+		}*/
 		leftIntake.set(ControlMode.PercentOutput, speed);
 		rightIntake.set(ControlMode.PercentOutput, -speed);
 	}

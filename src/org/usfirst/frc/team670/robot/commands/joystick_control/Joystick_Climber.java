@@ -28,7 +28,6 @@ public class Joystick_Climber extends LoggingCommand {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		//System.out.println("V: " + Robot.climber.getTalon().getMotorOutputVoltage() + " | C: " + Robot.climber.getTalon().getOutputCurrent());
 		if(Robot.oi.getOS().equals(OperatorState.CLIMBER))
 			Robot.climber.climb(Robot.oi.getOperatorStick().getY());
 		else

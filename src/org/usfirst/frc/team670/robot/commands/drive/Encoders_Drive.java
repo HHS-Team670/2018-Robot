@@ -70,13 +70,9 @@ public class Encoders_Drive extends LoggingCommand {
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() {
-		System.out.println("Ticks to Travel: " + ticksToTravel + " | Left Ticks: " + Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition() + " | Right Ticks: " + Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
-		
+	protected void execute() {		
 		currentYaw = Robot.sensors.getYaw();
 		double yawDiff = startYaw - currentYaw;
-		System.out.println("yawDiff: " + yawDiff);
-
 		if(Math.abs(yawDiff) > tolerance) {
 			if(currentYaw > startYaw)
 				Robot.driveBase.getRight().configClosedloopRamp(0.8, 0);
@@ -107,18 +103,11 @@ public class Encoders_Drive extends LoggingCommand {
 						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
 				&& reachedMinSpeed && isWithinLimit)
 			numTimesMotorOutput++;
-		
-		SmartDashboard.putBoolean("IS Drive FINISHED:", (numTimesMotorOutput >= 2));
-		SmartDashboard.putBoolean("IS WITHIN LIMIT", isWithinLimit);
-		SmartDashboard.putNumber("LIMIT NUM:", Math.abs(leftEncoder.getQuadraturePosition()/ticksToTravel));
-
 		return (numTimesMotorOutput >= 2);
 	}
 	
-
 	// Called once after isFinished returns true
 	protected void end() {
-		System.out.println("PID Drive is finished");
 		logFinished(new HashMap<String, Object>() {{
 		    put("ReachedMinSpeed", reachedMinSpeed);
 		    put("IsWithinLimit", isWithinLimit);

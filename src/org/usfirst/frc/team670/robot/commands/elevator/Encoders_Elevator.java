@@ -54,9 +54,6 @@ public class Encoders_Elevator extends LoggingCommand {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		SmartDashboard.putNumber("Target ticks", targetPulseHeight);
-		SmartDashboard.putBoolean("Is Going up:", isGoingUp);
-		//Caleb was here
 		if(isGoingUp)
 		{
 			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), -1.0, isGoingUp);
@@ -64,10 +61,7 @@ public class Encoders_Elevator extends LoggingCommand {
 		else
 		{
 			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 1.0, isGoingUp);
-		}
-
-		SmartDashboard.putNumber("Speed", speed);
-		
+		}		
 		Robot.elevator.moveElevator(speed);
 		
 		logExecute(new HashMap<String, Object>() {{

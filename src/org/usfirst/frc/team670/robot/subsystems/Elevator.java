@@ -27,18 +27,10 @@ public class Elevator extends Subsystem {
 
 	public Elevator() {
 		elevator = new TalonSRX(RobotMap.elevatorMotor);
-		// elevator.setInverted(true);
-		// elevator.setSensorPhase(false);
 		encoder = new SensorCollection(elevator);
 		encoder.setPulseWidthPosition(0, 0);
 		elevator.setNeutralMode(NeutralMode.Brake);
-		// elevator.configForwardSoftLimitThreshold(RoboConstants.MAX_ELEVATOR_TICKS,
-		// RoboConstants.kTimeoutMs);// Higher
-		// absolute
-		// elevator.configReverseSoftLimitThreshold(RoboConstants.MIN_ELEVATOR_TICKS,
-		// RoboConstants.kTimeoutMs);// Lower
 		elevator.configOpenloopRamp(0.25, 0);
-		// absolute
 		elevator.configForwardSoftLimitEnable(false, 0);
 		elevator.configReverseSoftLimitEnable(false, 0);
 		toggle = true;
@@ -57,12 +49,6 @@ public class Elevator extends Subsystem {
 		return encoder.getQuadratureVelocity();
 	}
 
-	/*
-	 * public void toggleSoftLimits(boolean limitOn) {
-	 * elevator.configForwardSoftLimitEnable(limitOn, 0);
-	 * elevator.configReverseSoftLimitEnable(limitOn, 0); }
-	 */
-
 	public void resetEncoder() {
 		encoder.setPulseWidthPosition(0, 0);
 		encoder.setAnalogPosition(0, 0);
@@ -70,7 +56,6 @@ public class Elevator extends Subsystem {
 	}
 
 	public void moveElevator(double speed) {
-		SmartDashboard.putNumber("SPEED Asking to Elevator", speed);
 		if (Robot.intake.isIntakeDeployed()) {
 			if (toggle) {
 				// Limit is on
@@ -80,28 +65,21 @@ public class Elevator extends Subsystem {
 						elevator.set(ControlMode.PercentOutput, 0);
 					else
 						elevator.set(ControlMode.PercentOutput, speed);
-
-					SmartDashboard.putString("Is hit Top", "Hit bottom");
-
 				} else if (getCurrentPosition() < RoboConstants.TOP_ELEVATOR_TICKS) {
 					// Speed is positive, so going down
 					if (speed < 0)
 						elevator.set(ControlMode.PercentOutput, 0);
 					else
 						elevator.set(ControlMode.PercentOutput, speed);
-					SmartDashboard.putString("Is hit Top", "Hit top");
 				}
 
 				else {
 					elevator.set(ControlMode.PercentOutput, speed);
-					SmartDashboard.putString("Is hit Top", "In range");
 				}
 			} else
 				elevator.set(ControlMode.PercentOutput, speed);
 		} else
 			elevator.set(ControlMode.PercentOutput, 0);
-		SmartDashboard.putNumber("Ticks", getCurrentPosition());
-
 	}
 
 	public void initDefaultCommand() {
@@ -174,15 +152,15 @@ public class Elevator extends Subsystem {
 			speed = (goingUp)? -0.2 : 0.2;			
 		}
 		
-		//if (Math.abs(speed) < Math.abs(minSpeed))
-			//speed = minSpeed;
-		System.out.print(" " + speed);
-		System.out.print(", "+ goingUp);
-		System.out.print(", " + maxSpeed);
-		System.out.print(", " + currentTicks);
-		System.out.print(", " + currentVelocity);
-		System.out.println(", " + tolerance);
-		
+//		//if (Math.abs(speed) < Math.abs(minSpeed))
+//			//speed = minSpeed;
+//		System.out.print(" " + speed);
+//		System.out.print(", "+ goingUp);
+//		System.out.print(", " + maxSpeed);
+//		System.out.print(", " + currentTicks);
+//		System.out.print(", " + currentVelocity);
+//		System.out.println(", " + tolerance);
+//		
 		return speed;
 
 	}

@@ -40,7 +40,6 @@ public class Joystick_Elevator extends LoggingCommand {
 		speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(),Robot.oi.getOperatorStick().getY(), isGoingUp);
 		if (Robot.oi.getOS().equals(OperatorState.ELEVATOR))
 		{
-			SmartDashboard.putNumber("ELEVATOR-ROHIT", speed);
 			Robot.elevator.moveElevator(speed);
 		}
 		else

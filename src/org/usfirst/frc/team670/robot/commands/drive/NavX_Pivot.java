@@ -46,7 +46,6 @@ public class NavX_Pivot extends LoggingCommand {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		SmartDashboard.putNumber("Percent Complete (NavX)", percentComplete);
 		double speed = 0;
 		percentComplete = Math.abs((angle - yawRemaining()) / (angle));
 
@@ -64,17 +63,6 @@ public class NavX_Pivot extends LoggingCommand {
 		if(1.0 < percentComplete)
 			speed = -speed;
 		
-		//if(Math.abs(speed) <= 0.)
-		
-		System.out.println("PercentComplete: " + percentComplete);
-		System.out.println("YawRemaining: " + yawRemaining());
-		System.out.println("Yaw: " + getYaw());
-		System.out.println("Final Angle: " + finalAngle);
-		System.out.println("Final Angle: " + finalAngle);
-//		if(checkOverRotation()){
-//			speed = -speed; //Changing speed to reverse if it is over
-//		}
-		SmartDashboard.putNumber("Speed (NavX)", speed);
 		if (angle > 0){
 			Robot.driveBase.drive(-speed, speed);
 		}

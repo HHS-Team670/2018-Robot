@@ -31,8 +31,7 @@ public class OpenIntake extends LoggingCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.intake.deployGrabber(isDeploy);
-    	SmartDashboard.putString("INTAKE OPEN?!", Robot.intake.isIntakeOpen()+"");
-    	logExecute(new HashMap<String, Object>() {{
+    		logExecute(new HashMap<String, Object>() {{
     		put("IsDeploy", isDeploy);
 		}});
     }

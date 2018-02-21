@@ -13,8 +13,8 @@ public class PickupCube extends CommandGroup {
     	setTimeout(0.25);
     	
     	addSequential(new OpenIntake(true));
-    	addParallel(new SpinIntake(-0.3, 10));
-    	addSequential(new Delay(0.2));
+    	addParallel(new SpinIntake(-0.7, 10));
+    	addSequential(new Delay(0.4));
 		addParallel(new OpenIntake(false));
     }
     

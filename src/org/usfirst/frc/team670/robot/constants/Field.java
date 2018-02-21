@@ -16,7 +16,7 @@ public class Field {
 
 	public static final double DS_TO_BASELINE = 120.0;
 	
-	public static final double SCALE_SIDE_BACKUP = 8;
+	public static final double SCALE_SIDE_BACKUP = 18;
 	
 	public static final double SIDE_TO_SWITCH = 85.25;
 	

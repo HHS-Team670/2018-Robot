@@ -59,13 +59,11 @@ public class Encoders_Elevator extends LoggingCommand {
 		//Caleb was here
 		if(isGoingUp)
 		{
-			speed = -Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5, isGoingUp);
-			speed = -0.3;
+			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), -1.0, isGoingUp);
 		}
 		else
 		{
-			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 0.5, isGoingUp);
-			speed = 0.3;
+			speed = Robot.elevator.calculateSpeed((int) Robot.elevator.getCurrentPosition(), 1.0, isGoingUp);
 		}
 
 		SmartDashboard.putNumber("Speed", speed);

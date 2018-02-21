@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
 	public static final DriveBase driveBase = new DriveBase();
 	public static final Intake intake = new Intake();
 	public static final Climber climber = new Climber();
-	public static PowerDistributionPanel pdp = new PowerDistributionPanel(RobotMap.pdp);
+	//public static PowerDistributionPanel pdp = new PowerDistributionPanel(RobotMap.pdp);
 
 	public static Aggregator sensors;
 	public static OI oi;
@@ -105,24 +105,15 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
 		
-//		CubePickup.addDefault("No Cube Pickup", -1.0);
-//		CubePickup.addObject("Cube 1", 1.0);
-//		CubePickup.addObject("Cube 2", 2.0);
-//		CubePickup.addObject("Cube 3", 3.0);
-//		CubePickup.addObject("Cube 4", 4.0);
-//		CubePickup.addObject("Cube 5", 5.0);
-//		CubePickup.addObject("Cube 6", 6.0);
-		
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----LEFT----", "left_baseline");
 		subMenuLL.addObject("left_baseline", "left_baseline");
 		subMenuLL.addObject("left_switch_side", "left_switch_side");
+		subMenuLL.addObject("left_scale_side", "left_switch_side");
 		subMenuLL.addObject("----CENTER----", "center_baseline");
 		subMenuLL.addObject("center_baseline", "center_baseline");
-		subMenuLL.addObject("center_left_switch_side", "center_left_switch_side");
 		subMenuLL.addObject("center_left_switch_straight", "center_left_switch_straight");
 		subMenuLL.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuLL.addObject("center_right_switch_side", "center_right_switch_side");
 		subMenuLL.addObject("----RIGHT----", "left_baseline");
 		subMenuLL.addObject("right_baseline", "right_baseline");
 		subMenuLL.addObject("right_switch_side", "right_switch_side");
@@ -132,46 +123,43 @@ public class Robot extends TimedRobot {
 		subMenuRR.addObject("----LEFT----", "left_baseline");
 		subMenuRR.addObject("left_baseline", "left_baseline");
 		subMenuRR.addObject("left_switch_side", "left_switch_side");
+		subMenuRR.addObject("left_scale_side", "left_switch_side");
 		subMenuRR.addObject("----CENTER----", "center_baseline");
 		subMenuRR.addObject("center_baseline", "center_baseline");
-		subMenuRR.addObject("center_left_switch_side", "center_left_switch_side");
 		subMenuRR.addObject("center_left_switch_straight", "center_left_switch_straight");
 		subMenuRR.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuRR.addObject("center_right_switch_side", "center_right_switch_side");
 		subMenuRR.addObject("----RIGHT----", "left_baseline");
 		subMenuRR.addObject("right_baseline", "right_baseline");
 		subMenuRR.addObject("right_switch_side", "right_switch_side");
 		subMenuRR.addObject("right_switch_straight", "right_switch_straight");
 		
-		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
-		subMenuRL.addObject("----LEFT----", "left_baseline");
-		subMenuRL.addObject("left_baseline", "left_baseline");
-		subMenuRL.addObject("left_switch_side", "left_switch_side");
-		subMenuRL.addObject("----CENTER----", "center_baseline");
-		subMenuRL.addObject("center_baseline", "center_baseline");
-		subMenuRL.addObject("center_left_switch_side", "center_left_switch_side");
-		subMenuRL.addObject("center_left_switch_straight", "center_left_switch_straight");
-		subMenuRL.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuRL.addObject("center_right_switch_side", "center_right_switch_side");
-		subMenuRL.addObject("----RIGHT----", "left_baseline");
-		subMenuRL.addObject("right_baseline", "right_baseline");
-		subMenuRL.addObject("right_switch_side", "right_switch_side");
-		subMenuRL.addObject("right_switch_straight", "right_switch_straight");
-
 		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
 		subMenuLR.addObject("----LEFT----", "left_baseline");
 		subMenuLR.addObject("left_baseline", "left_baseline");
 		subMenuLR.addObject("left_switch_side", "left_switch_side");
+		subMenuLR.addObject("left_scale_side", "left_switch_side");
 		subMenuLR.addObject("----CENTER----", "center_baseline");
 		subMenuLR.addObject("center_baseline", "center_baseline");
-		subMenuLR.addObject("center_left_switch_side", "center_left_switch_side");
 		subMenuLR.addObject("center_left_switch_straight", "center_left_switch_straight");
 		subMenuLR.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuLR.addObject("center_right_switch_side", "center_right_switch_side");
 		subMenuLR.addObject("----RIGHT----", "left_baseline");
 		subMenuLR.addObject("right_baseline", "right_baseline");
 		subMenuLR.addObject("right_switch_side", "right_switch_side");
 		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
+		
+		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
+		subMenuRL.addObject("----LEFT----", "left_baseline");
+		subMenuRL.addObject("left_baseline", "left_baseline");
+		subMenuRL.addObject("left_switch_side", "left_switch_side");
+		subMenuRL.addObject("left_scale_side", "left_switch_side");
+		subMenuRL.addObject("----CENTER----", "center_baseline");
+		subMenuRL.addObject("center_baseline", "center_baseline");
+		subMenuRL.addObject("center_left_switch_straight", "center_left_switch_straight");
+		subMenuRL.addObject("center_right_switch_straight", "center_right_switch_straight");
+		subMenuRL.addObject("----RIGHT----", "left_baseline");
+		subMenuRL.addObject("right_baseline", "right_baseline");
+		subMenuRL.addObject("right_switch_side", "right_switch_side");
+		subMenuRL.addObject("right_switch_straight", "right_switch_straight");
 		
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
 		SmartDashboard.putData("LL", subMenuLL);
@@ -325,11 +313,8 @@ public class Robot extends TimedRobot {
 		
 		//Build the command sequence------------------------------
 		
-		combined = new CommandGroup(); 
+		combined = new CommandGroup(); 	
 		
-		//Zero the elevators at the beggining of the match
-		combined.addSequential(new ZeroElevatorEncoders()); 
-
 		//Deploy the intake
 		combined.addSequential(new Deploy(true));
 		

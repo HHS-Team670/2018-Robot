@@ -13,7 +13,7 @@ public class DropCube extends CommandGroup {
     	setTimeout(0.25);
 
 		addParallel(new OpenIntake(false));
-    	addParallel(new SpinIntake(0.70, 10));
+    	addParallel(new SpinIntake(0.40, 10));
     	addSequential(new Delay(0.2));
     	addSequential(new OpenIntake(true));
     }

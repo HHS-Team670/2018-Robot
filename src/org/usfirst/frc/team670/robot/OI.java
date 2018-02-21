@@ -14,6 +14,7 @@ import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
+import org.usfirst.frc.team670.robot.commands.elevator.Hold_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
@@ -86,9 +87,10 @@ public class OI {
 		retract.whenPressed(new Deploy(true));
 		
 		hard.whenPressed(new enableHardGrab(true));
+		hard.whenReleased(new enableHardGrab(false));
 	//	soft.whenPressed(new enableHardGrab(false));
 		
-		pivot_test.whenPressed(new Pivot(90));
+		pivot_test.whenPressed(new Hold_Elevator(true));
 		
 		rightBaseline.whenPressed(new right_baseline());
 		rightSwitchSide.whenPressed(new right_switch_side());

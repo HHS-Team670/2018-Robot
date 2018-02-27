@@ -38,6 +38,7 @@ import java.io.PrintWriter;
 import java.nio.CharBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeoutException;
 
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
@@ -93,6 +94,9 @@ public class Robot extends TimedRobot {
 
 		try {
 			writer = new PrintWriter(new BufferedWriter(new FileWriter(log)), false);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 			new Thread(new Runnable(){
 
@@ -101,23 +105,27 @@ public class Robot extends TimedRobot {
 					Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 					while(!Thread.interrupted()) {
 						String msg;
-						do {
-							msg = queuedMessages.poll();
-							if (msg != null) {
-								writer.write(msg);
+						try {
+							do {
+								msg = queuedMessages.poll();
+								if (msg != null) {
+									writer.write(msg);
+								}
+							} while (msg != null);
+							if(writer != null) {
+								writer.flush();
 							}
-						} while (msg != null);
-						if(writer != null) {
-							writer.flush();
-							queuedMessages.clear();
+							Thread.sleep(1000);
 						}
-						Thread.sleep(1000);
+						catch(IOException e){
+							e.printStackTrace();
+						}
+						catch(TimeoutException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}).start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();

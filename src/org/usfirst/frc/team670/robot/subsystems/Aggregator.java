@@ -35,33 +35,8 @@ public class Aggregator extends Thread{
 	private boolean sendDataToDS;
 	
 	public Aggregator(){
-		sendDataToDS = true;
-		
-	    driverstation = NetworkTable.getTable("driverstation");
-	    
+		sendDataToDS = true;	    
 	    aio = new AnalogInput(0);
-	    	    
-	    new Thread(new Runnable() {
-	        @Override
-	        public void run() {
-	        	while(true)
-	        	{
-	        		if(sendDataToDS)
-	        		{
-	        			driverstation.putString("operator_state", Robot.oi.getOS().toString());
-	        			driverstation.putString("driver_state", Robot.oi.getDS().toString());
-			        	driverstation.putDouble("time_left", DriverStation.getInstance().getMatchTime());
-			        	driverstation.putString("alliance", DriverStation.getInstance().getAlliance().toString());
-			        	driverstation.putDouble("voltage", DriverStation.getInstance().getBatteryVoltage());
-			        	driverstation.putBoolean("navX", isNavXConnected);
-			        	driverstation.putBoolean("encoders", encodersConnected);
-			        	driverstation.putBoolean("elevator_encoders", elevatorEncoders);
-			        	driverstation.putBoolean("isIntakeOpen", Robot.intake.isIntakeOpen());
-			        	driverstation.putBoolean("isIntakeDeployed", Robot.intake.isIntakeDeployed());
-	        		}
-	        	}
-	        }
-	    }).start();
 	}
 	
 	public double getDistanceIntakeInches()

@@ -88,6 +88,18 @@ public class Robot extends TimedRobot {
 		
 		try {
 			writer = new PrintWriter(new BufferedWriter(new FileWriter(log)));
+			new Thread(new Runnable(){
+				
+				@Override
+				public void run() {
+					Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+					while(true) {
+						writer.flush();
+						Thread.sleep(1000); //Make sleep time higher to conserve RAM, lower to conserve CPU
+					}
+				}
+				
+			}).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

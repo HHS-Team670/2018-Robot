@@ -44,12 +44,21 @@ public abstract class LoggingCommand extends Command {
 		// }
 		//		System.out.println("}");
 
-		if(Robot.writer != null) {
-			Robot.writer.print(sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {");
+//		if(Robot.writer != null) {
+//			Robot.writer.print(sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {");
+//			for (Map.Entry<String, Object> entry : data.entrySet()) {
+//				Robot.writer.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
+//			}
+//			Robot.writer.println('}');
+//		}
+		
+		if(Robot.queuedMessages != null) {
+			String str = sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {";
 			for (Map.Entry<String, Object> entry : data.entrySet()) {
-				Robot.writer.print(entry.getKey() + "=" + entry.getValue().toString() + " ");
+				str += entry.getKey() + "=" + entry.getValue().toString() + " ";
 			}
-			Robot.writer.println('}');
+			str += '}';
+			Robot.queuedMessages.add(str);
 		}
 
 	}

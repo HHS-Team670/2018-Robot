@@ -1,1 +1,0 @@
-- [ ] Reset elevator at beginning of match

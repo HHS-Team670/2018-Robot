@@ -32,13 +32,12 @@ import paths.right.right_switch_straight;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.CharBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.TimeoutException;
 
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
@@ -68,9 +67,9 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	private static AHRS navXMicro;
 
-	public static File log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
+	public static File log;
 	private PrintWriter writer;
-	public static ConcurrentLinkedQueue<String> queuedMessages = new ConcurrentLinkedQueue<String>();
+	public static Queue<String> queuedMessages = new ConcurrentLinkedQueue<String>();
 
 	CommandGroup combined;
 	private SendableChooser<Double> autonomousDelay;
@@ -81,6 +80,15 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
+		try {
+			log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
+		}
+		catch(FileNotFoundException e) {
+			log = null;
+			e.printStackTrace();
+		}
+		
 		oi = new OI();
 		sensors = new Aggregator();
 		queuedMessages = new ConcurrentLinkedQueue();
@@ -98,6 +106,7 @@ public class Robot extends TimedRobot {
 			e.printStackTrace();
 		}
 
+		if(writer != null && log != null) {
 			new Thread(new Runnable(){
 
 				@Override
@@ -112,20 +121,19 @@ public class Robot extends TimedRobot {
 									writer.write(msg);
 								}
 							} while (msg != null);
-							if(writer != null) {
-								writer.flush();
-							}
+							writer.flush();
 							Thread.sleep(1000);
 						}
 						catch(IOException e){
 							e.printStackTrace();
 						}
-						catch(TimeoutException e) {
+						catch(InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
 				}
 			}).start();
+		}
 
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();

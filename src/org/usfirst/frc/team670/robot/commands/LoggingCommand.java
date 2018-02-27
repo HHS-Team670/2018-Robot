@@ -52,7 +52,7 @@ public abstract class LoggingCommand extends Command {
 //			Robot.writer.println('}');
 //		}
 		
-		if(Robot.queuedMessages != null) {
+		if(Robot.log != null) {
 			String str = sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {";
 			for (Map.Entry<String, Object> entry : data.entrySet()) {
 				str += entry.getKey() + "=" + entry.getValue().toString() + " ";

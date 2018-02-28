@@ -52,7 +52,7 @@ public abstract class LoggingCommand extends Command {
 //			Robot.writer.println('}');
 //		}
 		
-		if(Robot.log != null) {
+		if(Robot.log != null) { //If this is too slow, can try using a StringBuffer instead of a String
 			String str = sdf.format(new Date()) + " command=" + this.getClass().getName() + " stage=" + stage + " {";
 			for (Map.Entry<String, Object> entry : data.entrySet()) {
 				str += entry.getKey() + "=" + entry.getValue().toString() + " ";

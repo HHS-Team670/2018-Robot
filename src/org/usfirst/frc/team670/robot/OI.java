@@ -56,21 +56,24 @@ public class OI {
 	private Button toggleIntake = new JoystickButton(operatorStick, 1);
 	private Button toggleClimber = new JoystickButton(operatorStick, 5);
 	
-	private Button grab = new JoystickButton(arcadeStick, 1);
-	private Button release = new JoystickButton(arcadeStick, 10);
+	private Button deploy = new JoystickButton(arcadeStick, 1);
+	private Button retract = new JoystickButton(arcadeStick, 10);
 	
-	private Button deploy = new JoystickButton(arcadeStick, 2);
-	private Button retract = new JoystickButton(arcadeStick, 9);
+	private Button grab = new JoystickButton(arcadeStick, 2);
+	private Button release = new JoystickButton(arcadeStick, 9);
 	
-	private Button hard = new JoystickButton(arcadeStick, 3);
-	private Button soft = new JoystickButton(arcadeStick, 8);
+	/*
+	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
+	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
+	
+	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
+	 */
 	
 	private Button driveCenterTestOne = new JoystickButton(arcadeStick, 4);
 	private Button driveCenterTestTwo = new JoystickButton(arcadeStick, 7);
-	
-	private Button driveCenterTestThree = new JoystickButton(arcadeStick, 5);
-	
-	private Button CancelCommand = new JoystickButton(operatorStick, 10);
+		
+	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
+	private Button driveCenterTestThree = new JoystickButton(arcadeStick, 6);
 	
 	public OI() {
 		// Operator buttons
@@ -87,12 +90,15 @@ public class OI {
 		deploy.whenPressed(new Deploy(false));
 		retract.whenPressed(new Deploy(true));
 		
-		hard.whenPressed(new enableHardGrab(true));
-		soft.whenPressed(new enableHardGrab(false));
-		
 		driveCenterTestOne.whenPressed(new Drive(Robot.length+6));
 		driveCenterTestTwo.whenPressed(new Drive(Field.SWITCH_LENGTH - 35.8));
 		driveCenterTestThree.whenPressed(new Drive(Field.DS_TO_BASELINE - Robot.length -6));
+		
+		/*
+		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
+		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
+		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
+		*/
 		
 		CancelCommand.whenPressed(new CancelCommand());
 	}

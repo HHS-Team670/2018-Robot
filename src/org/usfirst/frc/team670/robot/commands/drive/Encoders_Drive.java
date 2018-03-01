@@ -44,7 +44,6 @@ public class Encoders_Drive extends LoggingCommand {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		SmartDashboard.putBoolean("IsDriveFinished", false);
 		Robot.driveBase.initPID(Robot.driveBase.getLeft());
 		Robot.driveBase.initPID(Robot.driveBase.getRight());
 		if(inches < 36)
@@ -99,7 +98,6 @@ public class Encoders_Drive extends LoggingCommand {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		SmartDashboard.putBoolean("IsDriveFinished", true);
 		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
 				&& Math.abs(
 						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity

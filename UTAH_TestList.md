@@ -2,6 +2,7 @@
 
 - Thursday morning (Once we have a chance to use the Robot after pit setup prior to practice matches)
   - [ ] Test CancelCommand with PID movement
+  - [ ] Pivot ticks per degree calculation using Encoders_Calibration
   - [ ] NavX Hooked up properly, check RoboRIO port
   - [ ] Logging (Shaylan can test that out on his branch)
   

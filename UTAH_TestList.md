@@ -1,6 +1,7 @@
 # List of Items to test on Day 0 (Thursday prior to competition at Utah Regional)
 
 - Thursday morning (Once we have a chance to use the Robot after pit setup prior to practice matches)
+  - [ ] Test CancelCommand with PID movement
   - [ ] NavX Hooked up properly, check RoboRIO port
   - [ ] Logging (Shaylan can test that out on his branch)
   

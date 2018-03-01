@@ -23,7 +23,7 @@ public class Encoders_Pivot extends LoggingCommand {
 	private double ticksToTravel, minVelocity = 500, finishedVelocity = 100;
 	private int numTimesMotorOutput;
 	private boolean reachedMinSpeed;
-	private final double TICKS_PER_DEGREE = 4711 / 90;
+	private final double TICKS_PER_DEGREE = 4600 / 90;
 
 	public Encoders_Pivot(double angle) {
 		ticksToTravel = TICKS_PER_DEGREE * angle;
@@ -58,9 +58,6 @@ public class Encoders_Pivot extends LoggingCommand {
 		if (!reachedMinSpeed)
 			reachedMinSpeed = Math
 					.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
-		SmartDashboard.putBoolean("Min Speed _ Pivot:", reachedMinSpeed);
-		SmartDashboard.putNumber("Velcoity",
-				Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()));
 		/* 50 rotations in either direction */
 		logExecute(new HashMap<String, Object>() {{
 		    put("DegreesToTravel", ticksToTravel * TICKS_PER_DEGREE);
@@ -79,7 +76,6 @@ public class Encoders_Pivot extends LoggingCommand {
 						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= finishedVelocity
 				&& reachedMinSpeed)
 			numTimesMotorOutput++;
-		SmartDashboard.putBoolean("IS PIVOT FINISHED:", (numTimesMotorOutput >= 2));
 		return (numTimesMotorOutput >= 2);
 	}
 

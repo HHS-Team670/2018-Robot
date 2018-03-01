@@ -40,6 +40,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
+import org.usfirst.frc.team670.robot.commands.auto_specific.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
@@ -374,6 +375,8 @@ public class Robot extends TimedRobot {
 		//Add whateer time delay the driver selected
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 
+		combined.addParallel(new SpinIntake(-0.15, 10));
+		
 		//Add the primary command sequence taken from the smartdashboard
 		if(primaryCommand != null)
 			combined.addSequential(primaryCommand);

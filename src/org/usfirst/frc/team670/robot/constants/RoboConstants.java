@@ -58,7 +58,7 @@ public class RoboConstants {
 	 */
 	//Raising the elevator as we move can cause the robot
 	// Elevator Heights
-	public static final double ELEVATOR_PULSE_FOR_EXCHANGE = -1000; // SET THESE
+	public static final double ELEVATOR_PULSE_FOR_EXCHANGE = -500; // SET THESE
 	public static final double ELEVATOR_PULSE_FOR_SWITCH = -3638;
 	public static final double ELEVATOR_PULSE_FOR_HIGHSCALE = -9600;
 	public static final double ELEVATOR_PULSE_FOR_MIDSCALE = -6000;

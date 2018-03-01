@@ -32,9 +32,12 @@ import paths.right.right_switch_straight;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
@@ -63,10 +66,11 @@ public class Robot extends TimedRobot {
 	public static Aggregator sensors;
 	public static OI oi;
 	private static AHRS navXMicro;
-	
-	public static File log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
-	public static PrintWriter writer;
-	
+
+	public static File log;
+	private PrintWriter writer;
+	public static Queue<String> queuedMessages = new ConcurrentLinkedQueue<String>();
+
 	CommandGroup combined;
 	private SendableChooser<Double> autonomousDelay;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
@@ -76,35 +80,74 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
+		try {
+			log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
+		}
+		catch(RuntimeException e) {
+			log = null;
+			e.printStackTrace();
+		}
+		
 		oi = new OI();
 		sensors = new Aggregator();
-		
+		queuedMessages = new ConcurrentLinkedQueue();
+
 		try {
 			navXMicro = new AHRS(RobotMap.navXPort);
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 			navXMicro = null;
 		}
-		
+
 		try {
-			writer = new PrintWriter(new BufferedWriter(new FileWriter(log)));
+			writer = new PrintWriter(new BufferedWriter(new FileWriter(log)), false);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
+		if(writer != null && log != null) {
+			new Thread(new Runnable(){
+
+				@Override
+				public void run() {
+					Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+					while(!Thread.interrupted()) {
+						String msg;
+						try {
+							do {
+								msg = queuedMessages.poll();
+								if (msg != null) {
+									writer.write(msg);
+								}
+							} while (msg != null);
+							writer.flush();
+							Thread.sleep(1000);
+						}
+						catch(RuntimeException e){
+							e.printStackTrace();
+						}
+						catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}).start();
+		}
+
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();
 		subMenuRL = new SendableChooser<String>();
 		subMenuLR = new SendableChooser<String>();
 		autonomousDelay = new SendableChooser<Double>();
-		
+
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
 		autonomousDelay.addObject("2 Second", 2.0);
 		autonomousDelay.addObject("3 Second", 3.0);
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
-		
+
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----LEFT----", "left_baseline");
 		subMenuLL.addObject("left_baseline", "left_baseline");
@@ -118,7 +161,7 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("right_baseline", "right_baseline");
 		subMenuLL.addObject("right_switch_side", "right_switch_side");
 		subMenuLL.addObject("right_switch_straight", "right_switch_straight");
-		
+
 		subMenuRR.addDefault("RR (KEY ONLY)", "left_baseline");
 		subMenuRR.addObject("----LEFT----", "left_baseline");
 		subMenuRR.addObject("left_baseline", "left_baseline");
@@ -132,7 +175,7 @@ public class Robot extends TimedRobot {
 		subMenuRR.addObject("right_baseline", "right_baseline");
 		subMenuRR.addObject("right_switch_side", "right_switch_side");
 		subMenuRR.addObject("right_switch_straight", "right_switch_straight");
-		
+
 		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
 		subMenuLR.addObject("----LEFT----", "left_baseline");
 		subMenuLR.addObject("left_baseline", "left_baseline");
@@ -146,7 +189,7 @@ public class Robot extends TimedRobot {
 		subMenuLR.addObject("right_baseline", "right_baseline");
 		subMenuLR.addObject("right_switch_side", "right_switch_side");
 		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
-		
+
 		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
 		subMenuRL.addObject("----LEFT----", "left_baseline");
 		subMenuRL.addObject("left_baseline", "left_baseline");
@@ -160,50 +203,50 @@ public class Robot extends TimedRobot {
 		subMenuRL.addObject("right_baseline", "right_baseline");
 		subMenuRL.addObject("right_switch_side", "right_switch_side");
 		subMenuRL.addObject("right_switch_straight", "right_switch_straight");
-		
+
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
 		SmartDashboard.putData("LL", subMenuLL);
 		SmartDashboard.putData("RR", subMenuRR);
 		SmartDashboard.putData("LR", subMenuLR);
 		SmartDashboard.putData("RL", subMenuRL);
 	}
-	
+
 	public Command parseCommand(String str) {		
 		switch(str.toLowerCase()){
-			case "left_baseline":
-					return new left_baseline();	
-			case "left_scale_opposite":
-				return new left_scale_opposite();
-			case "left_scale_side":
-				return new left_scale_side();
-			case "left_switch_side":
-				return new left_switch_side();
-			case "center_baseline":
-				return new center_baseline();
-			case "center_left_switch_side":
-				return new center_left_switch_side();
-			case "center_left_switch_straight":
-				return new center_left_switch_straight();
-			case "center_right_switch_straight":
-				return new center_right_switch_straight();
-			case "center_right_swtich_side":
-				return new center_right_switch_side();
-			case "right_baseline":
-				return new right_baseline();
-			case "right_scale_opposite":
-				return new right_scale_opposite();
-			case "right_scale_side":
-				return new right_scale_side();
-			case "right_switch_side":
-				return new right_switch_side();
-			case "right_switch_straight":
-				return new right_switch_straight();
-			default: 
-				return new left_baseline();		
+		case "left_baseline":
+			return new left_baseline();	
+		case "left_scale_opposite":
+			return new left_scale_opposite();
+		case "left_scale_side":
+			return new left_scale_side();
+		case "left_switch_side":
+			return new left_switch_side();
+		case "center_baseline":
+			return new center_baseline();
+		case "center_left_switch_side":
+			return new center_left_switch_side();
+		case "center_left_switch_straight":
+			return new center_left_switch_straight();
+		case "center_right_switch_straight":
+			return new center_right_switch_straight();
+		case "center_right_swtich_side":
+			return new center_right_switch_side();
+		case "right_baseline":
+			return new right_baseline();
+		case "right_scale_opposite":
+			return new right_scale_opposite();
+		case "right_scale_side":
+			return new right_scale_side();
+		case "right_switch_side":
+			return new right_switch_side();
+		case "right_switch_straight":
+			return new right_switch_straight();
+		default: 
+			return new left_baseline();		
 		}
 	}
-	
-	
+
+
 	/**
 	 * This function is called once each time the robot enters Disabled mode. You
 	 * can use it to reset any subsystem information you want to clear when the
@@ -212,11 +255,21 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 
+		String msg;
+		try {
+			msg = queuedMessages.poll();
+			if (msg != null) {
+				writer.write(msg);
+			}
+			writer.flush();
+		}
+		catch(RuntimeException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		SmartDashboard.putBoolean("NavX", isNavXConnected());
 	}
 
 	/**
@@ -231,12 +284,12 @@ public class Robot extends TimedRobot {
 	 * chooser code above (like the commented example) or additional comparisons to
 	 * the switch structure below with additional strings & commands.
 	 */
-	
+
 	public Boolean isLeft(String str)
 	{
 		switch(str.toLowerCase()){
 		case "left_baseline":
-				return null;	
+			return null;	
 		case "left_scale_opposite":
 			return false;
 		case "left_scale_side":
@@ -265,19 +318,19 @@ public class Robot extends TimedRobot {
 			return false;
 		default: 
 			return null;		
-	}	}
-	
-	
+		}	}
+
+
 	@Override
 	public void autonomousInit() {
 		String data = DriverStation.getInstance().getGameSpecificMessage(); 
-		
+
 		//If the string data is invalid, then keep checking for valid data-----------------------------------
 		if(data == null)
 			data = "";
-		
+
 		int retries = 100;
-		
+
 		while(data.length() < 3 && retries > 0)
 		{
 			DriverStation.reportError("Game data is not valid", false);
@@ -290,16 +343,16 @@ public class Robot extends TimedRobot {
 			catch(Exception e){}
 			retries--;
 		}
-		
+
 		if(data.equals("") || data == null)
 			data = "";
 		else
 			data = data.substring(0, 2); 
-		
+
 		//Find the primary command for autonomous-----------------------------------
-		
+
 		String cmd = "";
-		
+
 		if(data.equalsIgnoreCase("RR")) 
 			cmd = subMenuRR.getSelected();
 		else if(data.equalsIgnoreCase("LL"))
@@ -308,45 +361,45 @@ public class Robot extends TimedRobot {
 			cmd = subMenuLR.getSelected();
 		else if(data.equalsIgnoreCase("RL"))
 			cmd = subMenuRL.getSelected();
-		
+
 		Command primaryCommand = parseCommand(cmd);
-		
+
 		//Build the command sequence------------------------------
-		
+
 		combined = new CommandGroup(); 	
-		
+
 		//Deploy the intake
 		combined.addParallel(new Deploy(true));
-		
+
 		//Add whateer time delay the driver selected
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
-		
+
 		//Add the primary command sequence taken from the smartdashboard
 		if(primaryCommand != null)
 			combined.addSequential(primaryCommand);
-		
+
 		//If veering was fixed--------------------------------------------
-//		if(selectedCube!=-1.0 && isL != null)
-//			combined.addSequential(new AutoCube(isL, (int)selectedCube));
-//		
-//		//Check if you picked up cube from side of switch on your side
-//		if((int)selectedCube == 1 || (int)selectedCube == 2)
-//		{
-//			if(data.charAt(0) == 'L')
-//			{
-//				//Drop cube into the switch right in front of you (add it to sequential)
-//				combined.addSequential(new AutoDropSwitchStraight());
-//			}
-//		}
-//		else if((int)selectedCube == 5 || (int)selectedCube == 6)
-//		{
-//			if(data.charAt(0) == 'R')
-//			{
-//				//Drop cube into the switch right in front of you (add it to sequential)
-//				combined.addSequential(new AutoDropSwitchStraight());
-//			}
-//		}
-		
+		//		if(selectedCube!=-1.0 && isL != null)
+		//			combined.addSequential(new AutoCube(isL, (int)selectedCube));
+		//		
+		//		//Check if you picked up cube from side of switch on your side
+		//		if((int)selectedCube == 1 || (int)selectedCube == 2)
+		//		{
+		//			if(data.charAt(0) == 'L')
+		//			{
+		//				//Drop cube into the switch right in front of you (add it to sequential)
+		//				combined.addSequential(new AutoDropSwitchStraight());
+		//			}
+		//		}
+		//		else if((int)selectedCube == 5 || (int)selectedCube == 6)
+		//		{
+		//			if(data.charAt(0) == 'R')
+		//			{
+		//				//Drop cube into the switch right in front of you (add it to sequential)
+		//				combined.addSequential(new AutoDropSwitchStraight());
+		//			}
+		//		}
+
 		//Start running the command sequence----------------------------
 		if (combined != null)
 			combined.start();
@@ -365,7 +418,7 @@ public class Robot extends TimedRobot {
 		if (combined != null) {
 			combined.cancel();
 		}
-		
+
 	}
 
 	/**
@@ -387,7 +440,7 @@ public class Robot extends TimedRobot {
 		if(navXMicro != null)
 			navXMicro.reset();
 	}
-	
+
 	public static double getYaw()
 	{
 		if(navXMicro != null)

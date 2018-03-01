@@ -134,7 +134,7 @@ public class Elevator extends Subsystem {
 
 			speed = ((Math.abs(RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - currentTicks) / MIDDLE_TOLERANCE) * maxSpeed);
 			if (Math.abs(speed) < Math.abs(minSpeed))
-				speed = minSpeed;
+				speed = (1.75*minSpeed);
 		}
 
 		// MAX_ELEVATOR_TICKS is the lowest physical point on the elevator, so

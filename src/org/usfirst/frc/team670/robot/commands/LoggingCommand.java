@@ -57,7 +57,7 @@ public abstract class LoggingCommand extends Command {
 			for (Map.Entry<String, Object> entry : data.entrySet()) {
 				str += entry.getKey() + "=" + entry.getValue().toString() + " ";
 			}
-			str += '}';
+			str += "}\n";
 			Robot.queuedMessages.add(str);
 		}
 

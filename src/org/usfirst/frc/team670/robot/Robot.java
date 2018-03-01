@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
 		try {
 			log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
 		}
-		catch(FileNotFoundException e) {
+		catch(RuntimeException e) {
 			log = null;
 			e.printStackTrace();
 		}
@@ -124,7 +124,7 @@ public class Robot extends TimedRobot {
 							writer.flush();
 							Thread.sleep(1000);
 						}
-						catch(IOException e){
+						catch(RuntimeException e){
 							e.printStackTrace();
 						}
 						catch(InterruptedException e) {
@@ -255,11 +255,21 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 
+		String msg;
+		try {
+			msg = queuedMessages.poll();
+			if (msg != null) {
+				writer.write(msg);
+			}
+			writer.flush();
+		}
+		catch(RuntimeException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		SmartDashboard.putBoolean("NavX", isNavXConnected());
 	}
 
 	/**

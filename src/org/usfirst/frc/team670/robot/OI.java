@@ -69,7 +69,6 @@ public class OI {
 	
 	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
 	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
-	
 	//private Button Encoders_Calibration = new JoystickButton(operatorStick, 7);
 
 	

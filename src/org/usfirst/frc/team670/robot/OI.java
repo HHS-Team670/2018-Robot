@@ -26,6 +26,7 @@ import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.constants.enums.DriverState;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
+import org.usfirst.frc.team670.robot.commands.drive.Encoders_Calibration;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -75,6 +76,9 @@ public class OI {
 	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
 	private Button driveCenterTestThree = new JoystickButton(arcadeStick, 6);
 	
+	private Button Encoders_Calibration = new JoystickButton(operatorStick, 7);
+
+	
 	public OI() {
 		// Operator buttons
 		toggleClimber.whenPressed(new Set_OperatorControl(OperatorState.CLIMBER));
@@ -101,6 +105,8 @@ public class OI {
 		*/
 		
 		CancelCommand.whenPressed(new CancelCommand());
+		
+		Encoders_Calibration.whenPressed(new Encoders_Calibration());
 	}
 
 	public Joystick getLeftStick() {

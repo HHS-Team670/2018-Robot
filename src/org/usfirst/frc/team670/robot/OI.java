@@ -21,6 +21,7 @@ import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
 import org.usfirst.frc.team670.robot.commands.state_change.enableHardGrab;
+import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.constants.enums.DriverState;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
@@ -64,7 +65,12 @@ public class OI {
 	private Button hard = new JoystickButton(arcadeStick, 3);
 	private Button soft = new JoystickButton(arcadeStick, 8);
 	
-	private Button test = new JoystickButton(arcadeStick, 4);
+	private Button driveCenterTestOne = new JoystickButton(arcadeStick, 4);
+	private Button driveCenterTestTwo = new JoystickButton(arcadeStick, 7);
+	
+	private Button driveCenterTestThree = new JoystickButton(arcadeStick, 5);
+	
+	private Button CancelCommand = new JoystickButton(operatorStick, 10);
 	
 	public OI() {
 		// Operator buttons
@@ -84,7 +90,11 @@ public class OI {
 		hard.whenPressed(new enableHardGrab(true));
 		soft.whenPressed(new enableHardGrab(false));
 		
-		test.whenPressed(new Pivot(90));
+		driveCenterTestOne.whenPressed(new Drive(Robot.length+6));
+		driveCenterTestTwo.whenPressed(new Drive(Field.SWITCH_LENGTH - 35.8));
+		driveCenterTestThree.whenPressed(new Drive(Field.DS_TO_BASELINE - Robot.length -6));
+		
+		CancelCommand.whenPressed(new CancelCommand());
 	}
 
 	public Joystick getLeftStick() {

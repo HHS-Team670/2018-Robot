@@ -19,8 +19,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class center_right_switch_straight extends CommandGroup {
 
     public center_right_switch_straight() {
-		addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
-		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 6));
+		addSequential(new center_baseline());
 		addSequential(new DropCube());
     	addSequential(new Drive(-Robot.length/2));
     }

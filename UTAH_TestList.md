@@ -1,9 +1,13 @@
 # List of Items to test on Day 0 (Thursday prior to competition at Utah Regional)
 
 - Thursday morning (Once we have a chance to use the Robot after pit setup prior to practice matches)
-  - [ ] Go through opposite scale command, ensure that the measurements are correct, and approach is correct (Can be done during the pivot command auto-select)
-  - [ ] Test out Pivot command auto-select (Checking if NavX connected, and then choosing which pivot command to use)
+  - [ ] NavX Hooked up properly, check RoboRIO port
+  - [ ] Logging (Shaylan can test that out on his branch)
   
 - Thursday afternoon (During matches)
-  - [ ] Run the center commands for left, right and center during the practice matches
-  - [ ] If time remains after we ensure that center commands work properly, we can test out the opposite scale command
+  - [ ] Run center_switch_left during auto  
+  - [ ] Test out the Drive Button commands if there is an issue with center_switch_left
+  - [ ] Test right_switch_side + two_cube
+  - [ ] Test scale left & right
+  - [ ] Test switch left & right
+  

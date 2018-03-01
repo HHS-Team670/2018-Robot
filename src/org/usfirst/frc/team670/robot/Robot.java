@@ -69,6 +69,7 @@ public class Robot extends TimedRobot {
 	private static AHRS navXMicro;
 
 	public static File log;
+	private int fileCount = 0;
 	private PrintWriter writer;
 	public static Queue<String> queuedMessages = new ConcurrentLinkedQueue<String>();
 
@@ -83,7 +84,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		
 		try {
-			log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + ".txt");
+			log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + "_"+fileCount + ".txt");
+			fileCount++;
 		}
 		catch(RuntimeException e) {
 			log = null;
@@ -153,65 +155,69 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("----LEFT----", "left_baseline");
 		subMenuLL.addObject("left_baseline", "left_baseline");
 		subMenuLL.addObject("left_switch_side", "left_switch_side");
-		subMenuLL.addObject("left_scale_side", "left_switch_side");
+		subMenuLL.addObject("left_scale_side", "left_scale_side");
 		subMenuLL.addObject("----CENTER----", "center_baseline");
 		subMenuLL.addObject("center_baseline", "center_baseline");
 		subMenuLL.addObject("center_left_switch_straight", "center_left_switch_straight");
 		subMenuLL.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuLL.addObject("----RIGHT----", "left_baseline");
+		subMenuLL.addObject("----RIGHT----", "right_baseline");
 		subMenuLL.addObject("right_baseline", "right_baseline");
 		subMenuLL.addObject("right_switch_side", "right_switch_side");
 		subMenuLL.addObject("right_switch_straight", "right_switch_straight");
+		subMenuLL.addObject("right_scale_side", "right_scale_side");
 
 		subMenuRR.addDefault("RR (KEY ONLY)", "left_baseline");
 		subMenuRR.addObject("----LEFT----", "left_baseline");
 		subMenuRR.addObject("left_baseline", "left_baseline");
 		subMenuRR.addObject("left_switch_side", "left_switch_side");
-		subMenuRR.addObject("left_scale_side", "left_switch_side");
+		subMenuRR.addObject("left_scale_side", "left_scale_side");
 		subMenuRR.addObject("----CENTER----", "center_baseline");
 		subMenuRR.addObject("center_baseline", "center_baseline");
 		subMenuRR.addObject("center_left_switch_straight", "center_left_switch_straight");
 		subMenuRR.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuRR.addObject("----RIGHT----", "left_baseline");
+		subMenuRR.addObject("----RIGHT----", "right_baseline");
 		subMenuRR.addObject("right_baseline", "right_baseline");
 		subMenuRR.addObject("right_switch_side", "right_switch_side");
 		subMenuRR.addObject("right_switch_straight", "right_switch_straight");
+		subMenuRR.addObject("right_scale_side", "right_scale_side");
 
 		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
 		subMenuLR.addObject("----LEFT----", "left_baseline");
 		subMenuLR.addObject("left_baseline", "left_baseline");
 		subMenuLR.addObject("left_switch_side", "left_switch_side");
-		subMenuLR.addObject("left_scale_side", "left_switch_side");
+		subMenuLR.addObject("left_scale_side", "left_scale_side");
 		subMenuLR.addObject("----CENTER----", "center_baseline");
 		subMenuLR.addObject("center_baseline", "center_baseline");
 		subMenuLR.addObject("center_left_switch_straight", "center_left_switch_straight");
 		subMenuLR.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuLR.addObject("----RIGHT----", "left_baseline");
+		subMenuLR.addObject("----RIGHT----", "right_baseline");
 		subMenuLR.addObject("right_baseline", "right_baseline");
 		subMenuLR.addObject("right_switch_side", "right_switch_side");
 		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
-
+		subMenuLR.addObject("right_scale_side", "right_scale_side");
+		
 		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
 		subMenuRL.addObject("----LEFT----", "left_baseline");
 		subMenuRL.addObject("left_baseline", "left_baseline");
 		subMenuRL.addObject("left_switch_side", "left_switch_side");
-		subMenuRL.addObject("left_scale_side", "left_switch_side");
+		subMenuRL.addObject("left_scale_side", "left_scale_side");
 		subMenuRL.addObject("----CENTER----", "center_baseline");
 		subMenuRL.addObject("center_baseline", "center_baseline");
 		subMenuRL.addObject("center_left_switch_straight", "center_left_switch_straight");
 		subMenuRL.addObject("center_right_switch_straight", "center_right_switch_straight");
-		subMenuRL.addObject("----RIGHT----", "left_baseline");
+		subMenuRL.addObject("----RIGHT----", "right_baseline");
 		subMenuRL.addObject("right_baseline", "right_baseline");
 		subMenuRL.addObject("right_switch_side", "right_switch_side");
 		subMenuRL.addObject("right_switch_straight", "right_switch_straight");
-
+		subMenuRL.addObject("right_scale_side", "right_scale_side");
+		
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
 		SmartDashboard.putData("LL", subMenuLL);
 		SmartDashboard.putData("RR", subMenuRR);
 		SmartDashboard.putData("LR", subMenuLR);
 		SmartDashboard.putData("RL", subMenuRL);
 	}
-
+	
 	public Command parseCommand(String str) {		
 		switch(str.toLowerCase()){
 		case "left_baseline":
@@ -230,7 +236,7 @@ public class Robot extends TimedRobot {
 			return new center_left_switch_straight();
 		case "center_right_switch_straight":
 			return new center_right_switch_straight();
-		case "center_right_swtich_side":
+		case "center_right_switch_side":
 			return new center_right_switch_side();
 		case "right_baseline":
 			return new right_baseline();
@@ -372,7 +378,7 @@ public class Robot extends TimedRobot {
 		//Deploy the intake
 		combined.addParallel(new Deploy(true));
 
-		//Add whateer time delay the driver selected
+		//Add whatever time delay the driver selected
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 
 		combined.addParallel(new SpinIntake(-0.15, 10));
@@ -380,7 +386,16 @@ public class Robot extends TimedRobot {
 		//Add the primary command sequence taken from the smartdashboard
 		if(primaryCommand != null)
 			combined.addSequential(primaryCommand);
+		
+		queuedMessages.add("{Game Data: " + data + "}\n");
+		queuedMessages.add("{Command STR: " + cmd + "}\n");
+		queuedMessages.add("{Command Ran: " + primaryCommand.getName() + "}\n");
 
+		SmartDashboard.putString("Command STR", cmd);
+		SmartDashboard.putString("Command Ran", primaryCommand.getName());
+		SmartDashboard.putString("Game Data", data);
+		System.out.println(cmd);
+		
 		//If veering was fixed--------------------------------------------
 		//		if(selectedCube!=-1.0 && isL != null)
 		//			combined.addSequential(new AutoCube(isL, (int)selectedCube));

@@ -10,6 +10,7 @@ package org.usfirst.frc.team670.robot;
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
@@ -69,6 +70,8 @@ public class OI {
 	
 	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
 	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
+
+	private Button runIntake = new JoystickButton(arcadeStick, 7);
 	//private Button Encoders_Calibration = new JoystickButton(operatorStick, 7);
 
 	
@@ -93,6 +96,8 @@ public class OI {
 		
 		CancelCommand.whenPressed(new CancelCommand());
 		
+		runIntake.whenPressed(new SpinIntake(30, -0.5));
+		runIntake.whenReleased(new SpinIntake(0,0));
 		//Encoders_Calibration.whenPressed(new Encoders_Calibration());
 	}
 

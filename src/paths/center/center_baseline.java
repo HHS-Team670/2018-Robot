@@ -2,6 +2,7 @@ package paths.center;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
+import org.usfirst.frc.team670.robot.commands.drive.Time_Drive;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
@@ -17,7 +18,8 @@ public class center_baseline extends CommandGroup {
 	 */
     public center_baseline() {
     	addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
-		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 6));
+		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 12));
+    	addSequential(new Time_Drive(1.5, 0.35));
     }
 }
 

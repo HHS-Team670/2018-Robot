@@ -26,7 +26,8 @@ public class right_switch_straight extends CommandGroup {
 	 */
 	public right_switch_straight() {
 		addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
-		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 6));
+		addSequential(new Drive(Field.DS_TO_SWITCH - Robot.length - 12));
+    	addSequential(new Time_Drive(1.5, 0.3));
 		addSequential(new DropCube());
     	addSequential(new Drive(-Robot.length/2));
 	}

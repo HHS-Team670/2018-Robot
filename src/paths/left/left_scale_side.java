@@ -25,7 +25,7 @@ public class left_scale_side extends CommandGroup {
     	addParallel(new Drive(-24));
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
     	addParallel(new Hold_Elevator(true));
-    	addSequential(new Drive(13));
+    	addSequential(new Drive(18));
     	addSequential(new DropCube());
     	addSequential(new Drive(-24));
     	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));

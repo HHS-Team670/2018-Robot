@@ -91,15 +91,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		
-		try {
-			String fileName = "Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + "_"+ (int)(Math.random()*1000) + ".txt";
-			log = new File("/home/lvuser/" + fileName);
-		}
-		catch(RuntimeException e) {
-			log = null;
-			e.printStackTrace();
-		}
-		
 		oi = new OI();
 		sensors = new Aggregator();
 		queuedMessages = new ConcurrentLinkedQueue();
@@ -110,57 +101,25 @@ public class Robot extends TimedRobot {
 			DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 			navXMicro = null;
 		}
-
-		try {
-			writer = new PrintWriter(new BufferedWriter(new FileWriter(log)), false);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		if(writer != null && log != null) {
-			new Thread(new Runnable(){
-
-				@Override
-				public void run() {
-					Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-					while(!Thread.interrupted()) {
-						String msg;
-						try {
-							do {
-								msg = queuedMessages.poll();
-								if (msg != null) {
-									writer.write(msg);
-								}
-							} while (msg != null);
-							writer.flush();
-							Thread.sleep(1000);
-						}
-						catch(RuntimeException e){
-							e.printStackTrace();
-						}
-						catch(InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}).start();
-		}
 		
 		m_visionThread = new Thread(() -> {
-			CameraServer.getInstance().startAutomaticCapture("intake", 0);
-			CameraServer.getInstance().startAutomaticCapture("fisheye", 1);
+			UsbCamera intake = CameraServer.getInstance().startAutomaticCapture("intake", 0);
+			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture("fisheye", 1);
+			
+			intake.setFPS(25);
+			intake.setResolution((int)(1.25*320), (int)(1.25*240));
+			intake.setExposureManual(30);
+			
+			fisheye.setFPS(25);
+			fisheye.setResolution((int)(1.25*320), (int)(1.25*240));
 			
 			CvSink cvSinkIntake = CameraServer.getInstance().getVideo("intake");
 			CvSink cvSinkFisheye = CameraServer.getInstance().getVideo("fisheye");
 			
 			CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
-
-			// Mats are very memory expensive. Lets reuse this Mat.
+			
 			Mat mat = new Mat();
-		
-			// This cannot be 'true'. The program will never exit if it is. This
-			// lets the robot stop this thread when restarting robot code or
-			// deploying.
+			
 			while (!Thread.interrupted()) {
 				// Tell the CvSink to grab a frame from the camera and put it
 				// in the source mat.  If there is an error notify the output.
@@ -463,6 +422,55 @@ public class Robot extends TimedRobot {
 		//			}
 		//		}
 
+		try {
+			String fileName = "Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + "_" + (int)(1000*Math.random()) + ".txt";
+			log = new File("/home/lvuser/" + fileName);
+		}
+		catch(RuntimeException e) {
+			log = null;
+			e.printStackTrace();
+		}
+		
+		try {
+			writer = new PrintWriter(new BufferedWriter(new FileWriter(log)), false);
+		} catch (IOException e) {
+			writer = null;
+			e.printStackTrace();
+		}
+		catch(RuntimeException e) {
+			writer = null;
+			e.printStackTrace();
+		}
+		
+		if(writer != null && log != null) {
+			new Thread(new Runnable(){
+
+				@Override
+				public void run() {
+					Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+					while(!Thread.interrupted()) {
+						String msg;
+						try {
+							do {
+								msg = queuedMessages.poll();
+								if (msg != null) {
+									writer.write(msg);
+								}
+							} while (msg != null);
+							writer.flush();
+							Thread.sleep(1000);
+						}
+						catch(RuntimeException e){
+							e.printStackTrace();
+						}
+						catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}).start();
+		}
+		
 		//Start running the command sequence----------------------------
 		if (combined != null)
 			combined.start();

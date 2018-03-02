@@ -37,6 +37,10 @@ public class Elevator extends Subsystem {
 		toggleSoftLimits(true);
 	}
 
+	public boolean getSoftLimits() {
+		return toggle;
+	}
+	
 	public void toggleSoftLimits(boolean b) {
 		this.toggle = b;
 	}

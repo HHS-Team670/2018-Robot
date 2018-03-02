@@ -58,7 +58,7 @@ public class Encoders_Drive extends LoggingCommand {
 		}
 		startYaw = Robot.sensors.getYaw();
 		
-		leftEncoder.setQuadraturePosition(0, 0);
+		leftEncoder.setQuadraturePosition(0, 0); //THIS IS NOT ACTUALLY WORKING PROPERLY, DOES NOT RESET
 		rightEncoder.setQuadraturePosition(0, 0);
 		logInitialize(new HashMap<String, Object>() {{
 		    put("TicksToTravel", ticksToTravel);
@@ -101,7 +101,7 @@ public class Encoders_Drive extends LoggingCommand {
 		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
 				&& Math.abs(
 						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
-				&& reachedMinSpeed && isWithinLimit)
+				&& reachedMinSpeed)
 			numTimesMotorOutput++;
 		return (numTimesMotorOutput >= 2);
 	}

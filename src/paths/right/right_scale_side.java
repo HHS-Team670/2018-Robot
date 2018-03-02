@@ -21,11 +21,11 @@ public class right_scale_side extends CommandGroup {
 	public right_scale_side() {
 		addParallel(new Deploy(true));
     	addSequential(new Drive(Field.DS_TO_SCALE - Robot.length/2 + Field.SCALE_WIDTH/2 - 42));
-    	addSequential(new Pivot(-45));
+    	addSequential(new Pivot(-55));
     	addParallel(new Drive(-24));
     	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
     	addParallel(new Hold_Elevator(true));
-    	addSequential(new Drive(18));
+    	addSequential(new Drive(30));
     	addSequential(new DropCube());
     	addSequential(new Drive(-24));
     	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));

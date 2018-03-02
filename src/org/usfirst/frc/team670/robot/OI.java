@@ -15,6 +15,7 @@ import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.Hold_Elevator;
+import org.usfirst.frc.team670.robot.commands.elevator.ToggleElevatorLimits;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
@@ -74,7 +75,7 @@ public class OI {
 
 	private Button switchCameras = new JoystickButton(leftDriveStick, 2);
 	
-//	private Button runIntake = new JoystickButton(arcadeStick, 7);
+	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
 	
 	//private Button Encoders_Calibration = new JoystickButton(operatorStick, 7);
 
@@ -102,8 +103,7 @@ public class OI {
 		
 		switchCameras.whenPressed(new SwitchCams());
 		
-//		runIntake.whenPressed(new SpinIntake(30, -0.3));
-//		runIntake.whenReleased(new SpinIntake(0,0));
+		toggleElevatorLimits.whenPressed(new ToggleElevatorLimits());
 		
 		//Encoders_Calibration.whenPressed(new Encoders_Calibration());
 	}

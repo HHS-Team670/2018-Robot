@@ -7,6 +7,10 @@
 
 package org.usfirst.frc.team670.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -39,8 +43,11 @@ import java.io.PrintWriter;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
-import org.usfirst.frc.team670.robot.commands.auto_specific.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
@@ -64,12 +71,13 @@ public class Robot extends TimedRobot {
 	public static final Climber climber = new Climber();
 	//public static PowerDistributionPanel pdp = new PowerDistributionPanel(RobotMap.pdp);
 
+	public static Thread m_visionThread;
 	public static Aggregator sensors;
 	public static OI oi;
 	private static AHRS navXMicro;
+	private static boolean cam = true; //true for intake, false for fisheye
 
-	public static File log;
-	private int fileCount = 0;
+	public static File log;	
 	private PrintWriter writer;
 	public static Queue<String> queuedMessages = new ConcurrentLinkedQueue<String>();
 
@@ -84,8 +92,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		
 		try {
-			log = new File("/home/lvuser/Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + "_"+fileCount + ".txt");
-			fileCount++;
+			String fileName = "Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + "_"+ (int)(Math.random()*1000) + ".txt";
+			log = new File("/home/lvuser/" + fileName);
 		}
 		catch(RuntimeException e) {
 			log = null;
@@ -137,6 +145,48 @@ public class Robot extends TimedRobot {
 				}
 			}).start();
 		}
+		
+		m_visionThread = new Thread(() -> {
+			CameraServer.getInstance().startAutomaticCapture("intake", 0);
+			CameraServer.getInstance().startAutomaticCapture("fisheye", 1);
+			
+			CvSink cvSinkIntake = CameraServer.getInstance().getVideo("intake");
+			CvSink cvSinkFisheye = CameraServer.getInstance().getVideo("fisheye");
+			
+			CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
+
+			// Mats are very memory expensive. Lets reuse this Mat.
+			Mat mat = new Mat();
+		
+			// This cannot be 'true'. The program will never exit if it is. This
+			// lets the robot stop this thread when restarting robot code or
+			// deploying.
+			while (!Thread.interrupted()) {
+				// Tell the CvSink to grab a frame from the camera and put it
+				// in the source mat.  If there is an error notify the output.
+				if(cam)
+				{
+					if (cvSinkIntake.grabFrame(mat) == 0) {
+						// Send the output the error.
+						outputStream.notifyError(cvSinkIntake.getError());
+						// skip the rest of the current iteration
+						continue;
+					}
+				}
+				else
+				{
+					if (cvSinkFisheye.grabFrame(mat) == 0) {
+						// Send the output the error.
+						outputStream.notifyError(cvSinkFisheye.getError());
+						// skip the rest of the current iteration
+						continue;
+					}
+				}
+				outputStream.putFrame(mat);
+	}
+		});
+		m_visionThread.setDaemon(true);
+		m_visionThread.start();
 
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();
@@ -381,7 +431,7 @@ public class Robot extends TimedRobot {
 		//Add whatever time delay the driver selected
 		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 
-		combined.addParallel(new SpinIntake(-0.15, 10));
+		combined.addParallel(new org.usfirst.frc.team670.robot.commands.intake.SpinIntake(-0.15, 10));
 		
 		//Add the primary command sequence taken from the smartdashboard
 		if(primaryCommand != null)
@@ -390,11 +440,6 @@ public class Robot extends TimedRobot {
 		queuedMessages.add("{Game Data: " + data + "}\n");
 		queuedMessages.add("{Command STR: " + cmd + "}\n");
 		queuedMessages.add("{Command Ran: " + primaryCommand.getName() + "}\n");
-
-		SmartDashboard.putString("Command STR", cmd);
-		SmartDashboard.putString("Command Ran", primaryCommand.getName());
-		SmartDashboard.putString("Game Data", data);
-		System.out.println(cmd);
 		
 		//If veering was fixed--------------------------------------------
 		//		if(selectedCube!=-1.0 && isL != null)
@@ -471,5 +516,9 @@ public class Robot extends TimedRobot {
 		if(navXMicro != null)
 			return navXMicro.isConnected();
 		return false;
+	}
+
+	public static void switchCameras() {
+		cam = !cam;
 	}
 }

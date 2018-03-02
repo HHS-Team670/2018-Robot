@@ -28,7 +28,7 @@ public class Elevator extends Subsystem {
 	public Elevator() {
 		elevator = new TalonSRX(RobotMap.elevatorMotor);
 		encoder = new SensorCollection(elevator);
-		encoder.setPulseWidthPosition(0, 0);
+		encoder.setQuadraturePosition(0, 0);
 		elevator.setNeutralMode(NeutralMode.Brake);
 		elevator.configOpenloopRamp(0.25, 0);
 		elevator.configForwardSoftLimitEnable(false, 0);

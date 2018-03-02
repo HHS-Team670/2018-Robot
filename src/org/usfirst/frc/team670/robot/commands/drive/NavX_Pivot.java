@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class NavX_Pivot extends LoggingCommand {
 
 	private double finalAngle, startAngle, angle;
-	protected double endingSpeed = 0.3;
+	protected double endingSpeed = 0.2;
 	private double percentComplete;
 	private int numTimesIsFinished;
 
@@ -53,11 +53,11 @@ public class NavX_Pivot extends LoggingCommand {
 //			speed = -2.3 * 2.3 * (percentComplete * percentComplete) + 0.8;
 			speed = 0.9 - percentComplete;
 		} 
-		else if(Math.abs(1.0-percentComplete) < 0.15){
+		else if(Math.abs(1.0-percentComplete) < 0.25){
 			speed = endingSpeed;
 		}
 		else {
-			speed = 0.3;
+			speed = 0.2;
 		}
 		
 		if(1.0 < percentComplete)

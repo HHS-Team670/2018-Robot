@@ -10,7 +10,6 @@ package org.usfirst.frc.team670.robot;
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
-import org.usfirst.frc.team670.robot.commands.auto_specific.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
@@ -19,8 +18,10 @@ import org.usfirst.frc.team670.robot.commands.elevator.Hold_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
+import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
+import org.usfirst.frc.team670.robot.commands.state_change.SwitchCams;
 import org.usfirst.frc.team670.robot.commands.state_change.enableHardGrab;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
@@ -71,7 +72,10 @@ public class OI {
 	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
 	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
 
-	private Button runIntake = new JoystickButton(arcadeStick, 7);
+	private Button switchCameras = new JoystickButton(leftDriveStick, 2);
+	
+//	private Button runIntake = new JoystickButton(arcadeStick, 7);
+	
 	//private Button Encoders_Calibration = new JoystickButton(operatorStick, 7);
 
 	
@@ -96,8 +100,11 @@ public class OI {
 		
 		CancelCommand.whenPressed(new CancelCommand());
 		
-		runIntake.whenPressed(new SpinIntake(30, -0.5));
-		runIntake.whenReleased(new SpinIntake(0,0));
+		switchCameras.whenPressed(new SwitchCams());
+		
+//		runIntake.whenPressed(new SpinIntake(30, -0.3));
+//		runIntake.whenReleased(new SpinIntake(0,0));
+		
 		//Encoders_Calibration.whenPressed(new Encoders_Calibration());
 	}
 

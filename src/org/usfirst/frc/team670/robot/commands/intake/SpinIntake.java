@@ -1,4 +1,4 @@
-package org.usfirst.frc.team670.robot.commands.auto_specific;
+package org.usfirst.frc.team670.robot.commands.intake;
 
 import java.util.HashMap;
 

@@ -44,7 +44,7 @@ public class Joystick_Elevator extends LoggingCommand {
 		}
 		else
 			Robot.elevator.moveElevator(0);
-
+		
 		logExecute(new HashMap<String, Object>() {{
 			put("OperatorStickPos", Robot.oi.getOperatorStick().getY());
 			put("Speed", speed);

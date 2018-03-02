@@ -20,8 +20,6 @@ public class Joystick_Drive extends LoggingCommand {
 		Robot.driveBase.initJoystickDrive();
 		left = 0;
 		right = 0;
-		logInitialize(new HashMap<String, Object>() {{
-		}});
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -64,8 +62,6 @@ public class Joystick_Drive extends LoggingCommand {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.driveBase.drive(0, 0);
-		logFinished(new HashMap<String, Object>() {{
-		}});
 	}
 
 	// Called when another command which requires one or more of the same

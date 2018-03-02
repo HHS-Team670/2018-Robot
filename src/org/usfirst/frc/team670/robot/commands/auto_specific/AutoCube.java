@@ -5,6 +5,7 @@ import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
+import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 

@@ -47,6 +47,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
@@ -103,8 +104,8 @@ public class Robot extends TimedRobot {
 		}
 		
 		m_visionThread = new Thread(() -> {
-			UsbCamera intake = CameraServer.getInstance().startAutomaticCapture("intake", 0);
-			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture("fisheye", 1);
+			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture("fisheye", 0);
+			UsbCamera intake = CameraServer.getInstance().startAutomaticCapture("intake", 1);
 			
 			intake.setFPS(25);
 			intake.setResolution((int)(1.25*320), (int)(1.25*240));
@@ -112,6 +113,7 @@ public class Robot extends TimedRobot {
 			
 			fisheye.setFPS(25);
 			fisheye.setResolution((int)(1.25*320), (int)(1.25*240));
+			fisheye.setExposureManual(3);
 			
 			CvSink cvSinkIntake = CameraServer.getInstance().getVideo("intake");
 			CvSink cvSinkFisheye = CameraServer.getInstance().getVideo("fisheye");
@@ -471,6 +473,8 @@ public class Robot extends TimedRobot {
 			}).start();
 		}
 		
+		LoggingCommand.setLoggingInterval(8);
+		
 		//Start running the command sequence----------------------------
 		if (combined != null)
 			combined.start();
@@ -489,6 +493,8 @@ public class Robot extends TimedRobot {
 		if (combined != null) {
 			combined.cancel();
 		}
+		LoggingCommand.setLoggingInterval(100);
+
 
 	}
 

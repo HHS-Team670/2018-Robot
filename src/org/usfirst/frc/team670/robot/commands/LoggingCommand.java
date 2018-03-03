@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class LoggingCommand extends Command {
 	private int executeCount = 0;
-	protected int executeLoggingInterval = 100;
+	private static int executeLoggingInterval = 8;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
 	protected void logInitialize(Map<String, Object> data) {
@@ -69,6 +69,10 @@ public abstract class LoggingCommand extends Command {
 				put("Interrupted", "interrupted");
 			}
 		});
+	}
+	
+	public static void setLoggingInterval(int interval) {
+		executeLoggingInterval = interval;
 	}
 
 }

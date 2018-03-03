@@ -98,9 +98,9 @@ public class Encoders_Drive extends LoggingCommand {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
+		if (Math.abs(Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= 5
 				&& Math.abs(
-						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= minVelocity
+						Robot.driveBase.getRight().getSensorCollection().getQuadratureVelocity()) <= 5
 				&& reachedMinSpeed)
 			numTimesMotorOutput++;
 		return (numTimesMotorOutput >= 2);

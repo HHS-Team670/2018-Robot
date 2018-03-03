@@ -16,7 +16,7 @@ public class DelayedRaise extends Encoders_Elevator {
     // Called just before this Command runs the first time
     protected void initialize() {
     	try {
-			Thread.sleep(250);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

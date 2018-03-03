@@ -103,51 +103,51 @@ public class Robot extends TimedRobot {
 			navXMicro = null;
 		}
 		
-		m_visionThread = new Thread(() -> {
+//		m_visionThread = new Thread(() -> {
 			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture("fisheye", 0);
 			UsbCamera intake = CameraServer.getInstance().startAutomaticCapture("intake", 1);
 			
 			intake.setFPS(25);
 			intake.setResolution((int)(1.25*320), (int)(1.25*240));
-			intake.setExposureManual(30);
+			intake.setExposureManual(50);
 			
 			fisheye.setFPS(25);
 			fisheye.setResolution((int)(1.25*320), (int)(1.25*240));
 			fisheye.setExposureManual(3);
 			
-			CvSink cvSinkIntake = CameraServer.getInstance().getVideo("intake");
-			CvSink cvSinkFisheye = CameraServer.getInstance().getVideo("fisheye");
+//			CvSink cvSinkIntake = CameraServer.getInstance().getVideo("intake");
+//			CvSink cvSinkFisheye = CameraServer.getInstance().getVideo("fisheye");
+//			
+//			CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
+//			
+//			Mat mat = new Mat();
 			
-			CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
-			
-			Mat mat = new Mat();
-			
-			while (!Thread.interrupted()) {
-				// Tell the CvSink to grab a frame from the camera and put it
-				// in the source mat.  If there is an error notify the output.
-				if(cam)
-				{
-					if (cvSinkIntake.grabFrame(mat) == 0) {
-						// Send the output the error.
-						outputStream.notifyError(cvSinkIntake.getError());
-						// skip the rest of the current iteration
-						continue;
-					}
-				}
-				else
-				{
-					if (cvSinkFisheye.grabFrame(mat) == 0) {
-						// Send the output the error.
-						outputStream.notifyError(cvSinkFisheye.getError());
-						// skip the rest of the current iteration
-						continue;
-					}
-				}
-				outputStream.putFrame(mat);
-	}
-		});
-		m_visionThread.setDaemon(true);
-		m_visionThread.start();
+//			while (!Thread.interrupted()) {
+//				// Tell the CvSink to grab a frame from the camera and put it
+//				// in the source mat.  If there is an error notify the output.
+//				if(cam)
+//				{
+//					if (cvSinkIntake.grabFrame(mat) == 0) {
+//						// Send the output the error.
+//						outputStream.notifyError(cvSinkIntake.getError());
+//						// skip the rest of the current iteration
+//						continue;
+//					}
+//				}
+//				else
+//				{
+//					if (cvSinkFisheye.grabFrame(mat) == 0) {
+//						// Send the output the error.
+//						outputStream.notifyError(cvSinkFisheye.getError());
+//						// skip the rest of the current iteration
+//						continue;
+//					}
+//				}
+//				outputStream.putFrame(mat);
+//	}
+//		});
+//		m_visionThread.setDaemon(true);
+//		m_visionThread.start();
 
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();
@@ -525,7 +525,7 @@ public class Robot extends TimedRobot {
 		else
 			return -1;
 	}
-
+	
 	public static boolean isNavXConnected() {
 		if(navXMicro != null)
 			return navXMicro.isConnected();

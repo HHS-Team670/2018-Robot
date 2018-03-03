@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
 			navXMicro = null;
 		}
 		
-//		m_visionThread = new Thread(() -> {
+		m_visionThread = new Thread(() -> {
 			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture("fisheye", 0);
 			UsbCamera intake = CameraServer.getInstance().startAutomaticCapture("intake", 1);
 			
@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
 //			CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
 //			
 //			Mat mat = new Mat();
-			
+//			
 //			while (!Thread.interrupted()) {
 //				// Tell the CvSink to grab a frame from the camera and put it
 //				// in the source mat.  If there is an error notify the output.
@@ -145,9 +145,9 @@ public class Robot extends TimedRobot {
 //				}
 //				outputStream.putFrame(mat);
 //	}
-//		});
-//		m_visionThread.setDaemon(true);
-//		m_visionThread.start();
+		});
+		m_visionThread.setDaemon(true);
+		m_visionThread.start();
 
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();

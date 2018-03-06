@@ -19,15 +19,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class left_scale_side extends CommandGroup {
 
     public left_scale_side() {
-		addParallel(new Deploy(true));
-    	addSequential(new Drive(Field.DS_TO_SCALE - Robot.length/2 + Field.SCALE_WIDTH/2 - 42));
-    	addSequential(new Pivot(+55));
-    	addParallel(new Drive(-24));
-    	addSequential(new Encoders_Elevator(ElevatorState.HIGHSCALE));//Raise Elevator
-    	addParallel(new Hold_Elevator(true));
-    	addSequential(new Drive(30));
+    	addSequential((new Drive(Field.DS_TO_SCALE - 28.26/(Math.sin(Math.toRadians(45))) - Robot.length)));
+    	addParallel(new Encoders_Elevator(ElevatorState.HIGHSCALE));
+    	addSequential(new Pivot(45));
+    	addSequential(new Drive(28.26/Math.sin(Math.toRadians(45)) + RoboConstants.FRONT_TO_ELEVATOR + Field.TOLERANCE/2));
     	addSequential(new DropCube());
-    	addSequential(new Drive(-24));
-    	addSequential(new Encoders_Elevator(ElevatorState.EXCHANGE));
+    	addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
+    	addSequential(new Drive(-(RoboConstants.FRONT_TO_ELEVATOR + 28.26/(Math.sin(Math.toRadians(45))))));
+    	addSequential(new Pivot(90));
     }
 }

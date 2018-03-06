@@ -22,7 +22,6 @@ import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
-import org.usfirst.frc.team670.robot.commands.state_change.SwitchCams;
 import org.usfirst.frc.team670.robot.commands.state_change.enableHardGrab;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
@@ -72,8 +71,6 @@ public class OI {
 	
 	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
 	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
-
-	private Button switchCameras = new JoystickButton(leftDriveStick, 2);
 	
 	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
 	
@@ -100,9 +97,7 @@ public class OI {
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
 		
 		CancelCommand.whenPressed(new CancelCommand());
-		
-		switchCameras.whenPressed(new SwitchCams());
-		
+				
 		toggleElevatorLimits.whenPressed(new ToggleElevatorLimits());
 		
 		//Encoders_Calibration.whenPressed(new Encoders_Calibration());

@@ -104,47 +104,11 @@ public class Robot extends TimedRobot {
 		}
 		
 		m_visionThread = new Thread(() -> {
-			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture("fisheye", 0);
-			UsbCamera intake = CameraServer.getInstance().startAutomaticCapture("intake", 1);
-			
-			intake.setFPS(25);
-			intake.setResolution((int)(1.25*320), (int)(1.25*240));
-			intake.setExposureManual(50);
+			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture();
 			
 			fisheye.setFPS(25);
-			fisheye.setResolution((int)(1.25*320), (int)(1.25*240));
+			fisheye.setResolution((int)(320), (int)(240));
 			fisheye.setExposureManual(3);
-			
-//			CvSink cvSinkIntake = CameraServer.getInstance().getVideo("intake");
-//			CvSink cvSinkFisheye = CameraServer.getInstance().getVideo("fisheye");
-//			
-//			CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
-//			
-//			Mat mat = new Mat();
-//			
-//			while (!Thread.interrupted()) {
-//				// Tell the CvSink to grab a frame from the camera and put it
-//				// in the source mat.  If there is an error notify the output.
-//				if(cam)
-//				{
-//					if (cvSinkIntake.grabFrame(mat) == 0) {
-//						// Send the output the error.
-//						outputStream.notifyError(cvSinkIntake.getError());
-//						// skip the rest of the current iteration
-//						continue;
-//					}
-//				}
-//				else
-//				{
-//					if (cvSinkFisheye.grabFrame(mat) == 0) {
-//						// Send the output the error.
-//						outputStream.notifyError(cvSinkFisheye.getError());
-//						// skip the rest of the current iteration
-//						continue;
-//					}
-//				}
-//				outputStream.putFrame(mat);
-//	}
 		});
 		m_visionThread.setDaemon(true);
 		m_visionThread.start();
@@ -174,7 +138,6 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("----RIGHT----", "right_baseline");
 		subMenuLL.addObject("right_baseline", "right_baseline");
 		subMenuLL.addObject("right_switch_side", "right_switch_side");
-		subMenuLL.addObject("right_switch_straight", "right_switch_straight");
 		subMenuLL.addObject("right_scale_side", "right_scale_side");
 
 		subMenuRR.addDefault("RR (KEY ONLY)", "left_baseline");
@@ -189,7 +152,6 @@ public class Robot extends TimedRobot {
 		subMenuRR.addObject("----RIGHT----", "right_baseline");
 		subMenuRR.addObject("right_baseline", "right_baseline");
 		subMenuRR.addObject("right_switch_side", "right_switch_side");
-		subMenuRR.addObject("right_switch_straight", "right_switch_straight");
 		subMenuRR.addObject("right_scale_side", "right_scale_side");
 
 		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
@@ -204,7 +166,6 @@ public class Robot extends TimedRobot {
 		subMenuLR.addObject("----RIGHT----", "right_baseline");
 		subMenuLR.addObject("right_baseline", "right_baseline");
 		subMenuLR.addObject("right_switch_side", "right_switch_side");
-		subMenuLR.addObject("right_switch_straight", "right_switch_straight");
 		subMenuLR.addObject("right_scale_side", "right_scale_side");
 		
 		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
@@ -219,7 +180,6 @@ public class Robot extends TimedRobot {
 		subMenuRL.addObject("----RIGHT----", "right_baseline");
 		subMenuRL.addObject("right_baseline", "right_baseline");
 		subMenuRL.addObject("right_switch_side", "right_switch_side");
-		subMenuRL.addObject("right_switch_straight", "right_switch_straight");
 		subMenuRL.addObject("right_scale_side", "right_scale_side");
 		
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
@@ -401,28 +361,6 @@ public class Robot extends TimedRobot {
 		queuedMessages.add("{Game Data: " + data + "}\n");
 		queuedMessages.add("{Command STR: " + cmd + "}\n");
 		queuedMessages.add("{Command Ran: " + primaryCommand.getName() + "}\n");
-		
-		//If veering was fixed--------------------------------------------
-		//		if(selectedCube!=-1.0 && isL != null)
-		//			combined.addSequential(new AutoCube(isL, (int)selectedCube));
-		//		
-		//		//Check if you picked up cube from side of switch on your side
-		//		if((int)selectedCube == 1 || (int)selectedCube == 2)
-		//		{
-		//			if(data.charAt(0) == 'L')
-		//			{
-		//				//Drop cube into the switch right in front of you (add it to sequential)
-		//				combined.addSequential(new AutoDropSwitchStraight());
-		//			}
-		//		}
-		//		else if((int)selectedCube == 5 || (int)selectedCube == 6)
-		//		{
-		//			if(data.charAt(0) == 'R')
-		//			{
-		//				//Drop cube into the switch right in front of you (add it to sequential)
-		//				combined.addSequential(new AutoDropSwitchStraight());
-		//			}
-		//		}
 
 		try {
 			String fileName = "Log_" + DriverStation.getInstance().getEventName() +"_" + DriverStation.getInstance().getMatchNumber() + "_" + (int)(1000*Math.random()) + ".txt";
@@ -503,6 +441,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putNumber("Angle", sensors.getAngleToCube());
+		SmartDashboard.putBoolean("IsCubeInIntake", sensors.isCubeInIntake());
 		Scheduler.getInstance().run();
 	}
 

@@ -5,7 +5,9 @@ import org.usfirst.frc.team670.robot.constants.RobotMap;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -27,16 +29,41 @@ public class Aggregator extends Thread{
 	
 	// Sensors
 	//private AHRS navXMicro;
-	private NetworkTable driverstation;
+	private NetworkTable raspberryPi;
 	private AnalogInput aio;
 	
 	//Booleans
-	private boolean isNavXConnected, encodersConnected, elevatorEncoders;
-	private boolean sendDataToDS;
+	private boolean isNavXConnected, isCubeInIntake, encodersConnected, elevatorEncoders, collectVisionData;
+	
+	private double powerCubeAngle = 0, cubeWidth = 0, frameWidth, tolerance = 10;
 	
 	public Aggregator(){
-		sendDataToDS = true;	    
+		raspberryPi = NetworkTable.getTable("raspberryPi");
+		collectVisionData = true;
 	    aio = new AnalogInput(0);
+		isCubeInIntake = false;
+	    
+		new Thread(() -> {
+			while(true)
+			{
+				if(collectVisionData)
+				{
+					powerCubeAngle = raspberryPi.getNumber("angleToPowerCube", 0);
+					cubeWidth = raspberryPi.getNumber("cubeWidth", 0);
+					frameWidth = raspberryPi.getNumber("frameWidth", 0);
+					
+					if(Math.abs(cubeWidth - frameWidth) <= tolerance)
+						isCubeInIntake = true;
+					else
+						isCubeInIntake = false;
+				}
+			}
+		}).start();
+	}
+	
+	public double getAngleToCube()
+	{
+		return powerCubeAngle;
 	}
 	
 	public double getDistanceIntakeInches()
@@ -62,6 +89,10 @@ public class Aggregator extends Thread{
 
 	public void areElevatorEncodersWorking(boolean b) {
 		elevatorEncoders = b;
+	}
+
+	public boolean isCubeInIntake() {
+		return isCubeInIntake;
 	}
 }
 

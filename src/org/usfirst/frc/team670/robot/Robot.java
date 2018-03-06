@@ -117,8 +117,8 @@ public class Robot extends TimedRobot {
 			outputStream.setResolution(320, 240);
 			
 			Scalar lineScalar = new Scalar(0,0,0);
-			Point[] p = new Point[]{new Point(0,0), new Point(0,0)};
         	Point center = new Point((int)(src.width()/10), (int)(src.height()/8));
+			Point[] p = getLine(sensors.getAngleToCube(), (int)(src.width()/10), center);
 			
 			while (true) {
 				if (cvSink.grabFrame(src) == 0) {
@@ -131,7 +131,8 @@ public class Robot extends TimedRobot {
 	        	else
 	        		lineScalar = new Scalar(0,255,0);
 	        	        	
-	        	p = getLine(sensors.getAngleToCube(), (int)(src.width()/10), center);
+				if(System.currentTimeMillis()%1000 < 1)
+					p = getLine(sensors.getAngleToCube(), (int)(src.width()/10), center);
 				
 				Imgproc.cvtColor(src, out, Imgproc.COLOR_RGB2GRAY);
 				Imgproc.circle(src, center, (int)(src.width()/10), new Scalar(255,0,0), 2);

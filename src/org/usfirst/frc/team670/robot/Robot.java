@@ -10,6 +10,7 @@ package org.usfirst.frc.team670.robot;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -76,8 +77,7 @@ public class Robot extends TimedRobot {
 	public static Aggregator sensors;
 	public static OI oi;
 	private static AHRS navXMicro;
-	private static boolean cam = true; //true for intake, false for fisheye
-
+	
 	public static File log;	
 	private PrintWriter writer;
 	public static Queue<String> queuedMessages = new ConcurrentLinkedQueue<String>();
@@ -104,11 +104,40 @@ public class Robot extends TimedRobot {
 		}
 		
 		m_visionThread = new Thread(() -> {
-			UsbCamera fisheye = CameraServer.getInstance().startAutomaticCapture();
+			CameraServer.getInstance().startAutomaticCapture();
 			
-			fisheye.setFPS(25);
-			fisheye.setResolution((int)(320), (int)(240));
-			fisheye.setExposureManual(3);
+			CvSink cvSink = CameraServer.getInstance().getVideo();
+			
+			CvSource outputStream = CameraServer.getInstance().putVideo("Fishcam", 640, 480);
+
+			Mat src = new Mat(), out = new Mat();
+			
+			outputStream.setFPS(20);
+			outputStream.setPixelFormat(PixelFormat.kMJPEG);
+			outputStream.setResolution(320, 240);
+			
+			Scalar lineScalar = new Scalar(0,0,0);
+			Point[] p = new Point[]{new Point(0,0), new Point(0,0)};
+        	Point center = new Point((int)(src.width()/10), (int)(src.height()/8));
+			
+			while (true) {
+				if (cvSink.grabFrame(src) == 0) {
+					outputStream.notifyError(cvSink.getError());
+					continue;
+				}
+				
+				if(Math.abs(sensors.getAngleToCube()) > 7.5)
+	        		lineScalar = new Scalar(0,0,255);
+	        	else
+	        		lineScalar = new Scalar(0,255,0);
+	        	        	
+	        	p = getLine(sensors.getAngleToCube(), (int)(src.width()/10), center);
+				
+				Imgproc.cvtColor(src, out, Imgproc.COLOR_RGB2GRAY);
+				Imgproc.circle(src, center, (int)(src.width()/10), new Scalar(255,0,0), 2);
+            	Imgproc.line(src, p[0], p[1], lineScalar, 3);
+				outputStream.putFrame(out);
+			}
 		});
 		m_visionThread.setDaemon(true);
 		m_visionThread.start();
@@ -250,6 +279,18 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 	}
 
+	public static Point[] getLine(double angle, double distance, Point startingPoint)
+    {
+    	angle = (Math.toRadians(180-angle));
+    	Point[] p = new Point[2];
+    	double endX = startingPoint.x + distance * Math.sin(angle);
+    	double endY = startingPoint.y + distance * Math.cos(angle);
+    	Point endPoint = new Point(endX, endY);
+    	p[0] = startingPoint;
+    	p[1] = endPoint;
+    	return p;
+    }
+	
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable chooser
@@ -466,13 +507,17 @@ public class Robot extends TimedRobot {
 			return -1;
 	}
 	
+	public static double getTilt()
+	{
+		if(navXMicro != null)
+			return navXMicro.getAngle();
+		else
+			return 0;
+	}
+	
 	public static boolean isNavXConnected() {
 		if(navXMicro != null)
 			return navXMicro.isConnected();
 		return false;
-	}
-
-	public static void switchCameras() {
-		cam = !cam;
 	}
 }

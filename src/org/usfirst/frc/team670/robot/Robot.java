@@ -47,6 +47,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
@@ -111,32 +112,21 @@ public class Robot extends TimedRobot {
 			CvSource outputStream = CameraServer.getInstance().putVideo("Fishcam", 640, 480);
 
 			Mat src = new Mat(), out = new Mat();
+			Size kSize = new Size(160,120);
 			
-			outputStream.setFPS(20);
+			outputStream.setFPS(25);
 			outputStream.setPixelFormat(PixelFormat.kMJPEG);
-			outputStream.setResolution(320, 240);
+			outputStream.setResolution((int)(kSize.width), (int)(kSize.height));
 			
-			Scalar lineScalar = new Scalar(0,0,0);
-        	Point center = new Point((int)(src.width()/10), (int)(src.height()/8));
-			Point[] p = getLine(sensors.getAngleToCube(), (int)(src.width()/10), center);
-			
-			while (true) {
-				if (cvSink.grabFrame(src) == 0) {
+			while (true) 
+			{
+				if (cvSink.grabFrame(src) == 0) 
+				{
 					outputStream.notifyError(cvSink.getError());
 					continue;
 				}
-				
-				if(Math.abs(sensors.getAngleToCube()) > 7.5)
-	        		lineScalar = new Scalar(0,0,255);
-	        	else
-	        		lineScalar = new Scalar(0,255,0);
-	        	        	
-				if(System.currentTimeMillis()%1000 < 1)
-					p = getLine(sensors.getAngleToCube(), (int)(src.width()/10), center);
-				
 				Imgproc.cvtColor(src, out, Imgproc.COLOR_RGB2GRAY);
-				Imgproc.circle(src, center, (int)(src.width()/10), new Scalar(255,0,0), 2);
-            	Imgproc.line(src, p[0], p[1], lineScalar, 3);
+				Imgproc.resize(out, out, kSize);
 				outputStream.putFrame(out);
 			}
 		});
@@ -279,18 +269,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 	}
-
-	public static Point[] getLine(double angle, double distance, Point startingPoint)
-    {
-    	angle = (Math.toRadians(180-angle));
-    	Point[] p = new Point[2];
-    	double endX = startingPoint.x + distance * Math.sin(angle);
-    	double endY = startingPoint.y + distance * Math.cos(angle);
-    	Point endPoint = new Point(endX, endY);
-    	p[0] = startingPoint;
-    	p[1] = endPoint;
-    	return p;
-    }
 	
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select

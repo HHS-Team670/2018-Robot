@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoCubePickup extends CommandGroup {
+public class VisionCubePickup extends CommandGroup {
 
-    public AutoCubePickup() {
+    public VisionCubePickup() {
     	addSequential(new Pivot(Robot.sensors.getAngleToCube()));
     	addSequential(new LocatePowerCube());
     }

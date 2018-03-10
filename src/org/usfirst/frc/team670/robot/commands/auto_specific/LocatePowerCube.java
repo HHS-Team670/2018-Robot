@@ -44,10 +44,10 @@ public class LocatePowerCube extends Command {
     		rspeed = speed;
     	}
     	
-		Robot.intake.deployGrabber(false);
+//		Robot.intake.deployGrabber(false);
 		
     	//Open and close the intake to ensure the cube is in correct every few seconds
-    	if(((System.currentTimeMillis() - startTime)/1000.0)%2.0 < 0.5)
+//    	if(((System.currentTimeMillis() - startTime)/1000.0)%2.0 < 0.5)
     		Robot.intake.deployGrabber(true);
     	
     	Robot.intake.driveIntake(-speed * 1.25);

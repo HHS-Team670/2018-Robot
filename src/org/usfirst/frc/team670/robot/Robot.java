@@ -72,8 +72,8 @@ public class Robot extends TimedRobot {
 	public static final DriveBase driveBase = new DriveBase();
 	public static final Intake intake = new Intake();
 	public static final Climber climber = new Climber();
-	//public static PowerDistributionPanel pdp = new PowerDistributionPanel(RobotMap.pdp);
-
+	public static Mat intakePic;
+	
 	public static Thread m_visionThread;
 	public static Aggregator sensors;
 	public static OI oi;
@@ -105,16 +105,17 @@ public class Robot extends TimedRobot {
 		}
 		
 		m_visionThread = new Thread(() -> {
-			CameraServer.getInstance().startAutomaticCapture();
-			
-			CvSink cvSink = CameraServer.getInstance().getVideo();
-			
-			CvSource outputStream = CameraServer.getInstance().putVideo("Fishcam", 640, 480);
+			intakePic = new Mat();
+			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+			//CvSource outputStream = CameraServer.getInstance().putVideo("Fishcam", 640, 480);
 
-			Mat src = new Mat(), out = new Mat();
-			Size kSize = new Size(160,120);
+			//Mat src = new Mat(), out = new Mat();
+			//Size kSize = new Size(640,480);
 			
-			outputStream.setFPS(25);
+			camera.setExposureAuto();
+			camera.setFPS(25);
+			camera.setResolution((int)(640/2), (int)(480/2));
+			/*outputStream.setFPS(20);
 			outputStream.setPixelFormat(PixelFormat.kMJPEG);
 			outputStream.setResolution((int)(kSize.width), (int)(kSize.height));
 			
@@ -125,10 +126,10 @@ public class Robot extends TimedRobot {
 					outputStream.notifyError(cvSink.getError());
 					continue;
 				}
-				Imgproc.cvtColor(src, out, Imgproc.COLOR_RGB2GRAY);
-				Imgproc.resize(out, out, kSize);
-				outputStream.putFrame(out);
-			}
+				out = src;
+				//Imgproc.cvtColor(src, out, Imgproc.COLOR_RGB2GRAY);
+				outputStream.putFrame(out);*/
+			//}
 		});
 		m_visionThread.setDaemon(true);
 		m_visionThread.start();

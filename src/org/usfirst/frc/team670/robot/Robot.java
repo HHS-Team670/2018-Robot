@@ -371,7 +371,8 @@ public class Robot extends TimedRobot {
 		combined.addParallel(new Deploy(true));
 
 		//Add whatever time delay the driver selected
-		combined.addSequential(new Delay(autonomousDelay.getSelected())); 
+		if(autonomousDelay.getSelected() > 0.01)
+			combined.addSequential(new Delay(autonomousDelay.getSelected())); 
 
 		combined.addParallel(new org.usfirst.frc.team670.robot.commands.intake.SpinIntake(-0.15, 10));
 		

@@ -10,6 +10,7 @@ package org.usfirst.frc.team670.robot;
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.VisionCubePickup;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
@@ -74,7 +75,7 @@ public class OI {
 	
 	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
 	
-	//private Button Encoders_Calibration = new JoystickButton(operatorStick, 7);
+	private Button vision_Pivot = new JoystickButton(operatorStick, 7);
 
 	
 	public OI() {
@@ -100,7 +101,7 @@ public class OI {
 				
 		toggleElevatorLimits.whenPressed(new ToggleElevatorLimits());
 		
-		//Encoders_Calibration.whenPressed(new Encoders_Calibration());
+		vision_Pivot.whenPressed(new VisionCubePickup());
 	}
 
 	public Joystick getLeftStick() {

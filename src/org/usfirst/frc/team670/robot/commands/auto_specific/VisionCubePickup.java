@@ -12,6 +12,5 @@ public class VisionCubePickup extends CommandGroup {
 
     public VisionCubePickup() {
     	addSequential(new Pivot(Robot.sensors.getAngleToCube()));
-    	addSequential(new LocatePowerCube());
     }
 }

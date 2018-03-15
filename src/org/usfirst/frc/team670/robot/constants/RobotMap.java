@@ -54,4 +54,7 @@ public class RobotMap {
     public final static int rightDriveStick = 1;
     public final static int operatorStick = 2;
     public final static int arcadeStick = 3;
+    
+    //Limit switch for intake on DIO
+	public final static int intakeLimit = 0;
 }

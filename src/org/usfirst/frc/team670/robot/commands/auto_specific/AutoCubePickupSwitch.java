@@ -35,6 +35,7 @@ public class AutoCubePickupSwitch extends CommandGroup {
     	addParallel(new Time_Drive(1.5, 0.5));
     	addSequential(new PickupCube());
     	addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
+    	addSequential(new Time_Drive(0.5, 0.3));
     	addSequential(new DropCube());
     }
 }

@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class VisionCubePickup extends CommandGroup {
 
     public VisionCubePickup() {
+    	if(Math.abs(Robot.sensors.getAngleToCube() - 8000) > 0.01) {
+    		this.cancel();
+    	}
     	addParallel(new OpenIntake(true));
     	addSequential(new Pivot(Robot.sensors.getAngleToCube()));
     	addSequential(new Vision_Drive());

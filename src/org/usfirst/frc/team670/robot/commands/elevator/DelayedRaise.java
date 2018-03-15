@@ -1,6 +1,5 @@
-package org.usfirst.frc.team670.robot.commands;
+package org.usfirst.frc.team670.robot.commands.elevator;
 
-import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 
 

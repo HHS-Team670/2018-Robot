@@ -15,7 +15,7 @@ public class OpenIntake extends LoggingCommand {
 	private boolean isDeploy;
 	
 	/*
-	 * @param isDeploy true if it is the deploy, false if it is to pick up
+	 * @param isDeploy true if it is to open, false if it is to close
 	 */
     public OpenIntake(boolean isDeploy) {
     	this.isDeploy = isDeploy;

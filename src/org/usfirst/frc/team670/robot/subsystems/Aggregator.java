@@ -35,10 +35,12 @@ public class Aggregator extends Thread{
 	//Booleans
 	private boolean isNavXConnected, isCubeInIntake, encodersConnected, elevatorEncoders, collectVisionData;
 	
+	private boolean isCubeIn;
 	private double powerCubeAngle = 0, cubeWidth = 0, frameWidth, tolerance = 10;
 	
 	public Aggregator(){
 		raspberryPi = NetworkTable.getTable("raspberryPi");
+		raspberryPi.setUpdateRate(0.03);
 		collectVisionData = true;
 	    aio = new AnalogInput(0);
 		isCubeInIntake = false;
@@ -51,6 +53,9 @@ public class Aggregator extends Thread{
 					powerCubeAngle = raspberryPi.getNumber("angleToPowerCube", 0);
 					cubeWidth = raspberryPi.getNumber("cubeWidth", 0);
 					frameWidth = raspberryPi.getNumber("frameWidth", 0);
+					
+					//MAKE SURE THIS EXISTS ON THE RASPI @VIKRAM
+					isCubeIn = raspberryPi.getBoolean("isCubeIn", false);
 					
 					if(Math.abs(cubeWidth - frameWidth) <= tolerance)
 						isCubeInIntake = true;

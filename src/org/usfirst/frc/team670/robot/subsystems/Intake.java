@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 	
+    private DigitalInput limitSwitch;
 	private Compressor comp;
 	private Solenoid deployer, claw, clawMode;
 	private TalonSRX leftIntake, rightIntake;
@@ -26,6 +28,7 @@ public class Intake extends Subsystem {
 
 	public Intake()
 	{
+		limitSwitch = new DigitalInput(RobotMap.intakeLimitSwitch);
 		comp = new Compressor(RobotMap.PCModule);
 		comp.setClosedLoopControl(true);
 		leftIntake = new TalonSRX(RobotMap.intakeLeftTalon);
@@ -82,6 +85,10 @@ public class Intake extends Subsystem {
 		return clawMode.get();
 	}
 
+	public DigitalInput getLimit() {
+		return limitSwitch;
+	}
+	
 	public boolean isIntakeDeployed() {
 		return deployer.get();
 		//return false;

@@ -12,6 +12,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -78,6 +79,8 @@ public class Robot extends TimedRobot {
 	public static Aggregator sensors;
 	public static OI oi;
 	private static AHRS navXMicro;
+	private static DigitalInput dio = new DigitalInput(1);
+	private static DigitalInput dio1 = new DigitalInput(2);
 	
 	public static File log;	
 	private PrintWriter writer;
@@ -463,7 +466,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Angle", sensors.getAngleToCube());
 		SmartDashboard.putBoolean("IsCubeInIntake", sensors.isCubeInIntake());
 		Scheduler.getInstance().run();
 	}
@@ -501,4 +503,9 @@ public class Robot extends TimedRobot {
 			return navXMicro.isConnected();
 		return false;
 	}
+
+	public static boolean getIntakeLimit() {
+		if(dio == null && dio1 == null)
+			return false;
+		return !dio.get() || !dio.get();	}
 }

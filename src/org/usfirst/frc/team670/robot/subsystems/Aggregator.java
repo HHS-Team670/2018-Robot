@@ -97,7 +97,7 @@ public class Aggregator extends Thread{
 	}
 
 	public boolean isCubeInIntake() {
-		return isCubeInIntake;
+		return Robot.getIntakeLimit();
 	}
 }
 

@@ -26,7 +26,6 @@ public class right_switch_side extends CommandGroup {
 		addSequential(new Pivot(-90));
 		addSequential(new Drive(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH));
     	addSequential(new DropCube());
-    	addSequential(new Drive(-(Field.SIDE_TO_SWITCH - Robot.width - Field.SIDE_TRIANGLE_WIDTH)));
     	addSequential(new AutoCubePickupSwitch(true));
 	}
 }

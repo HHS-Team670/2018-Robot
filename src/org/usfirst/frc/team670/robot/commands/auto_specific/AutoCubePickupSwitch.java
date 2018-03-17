@@ -32,7 +32,7 @@ public class AutoCubePickupSwitch extends CommandGroup {
     	else
     		addSequential(new Pivot(135));
     	
-    	addParallel(new Time_Drive(1.5, 0.4));
+    	addParallel(new Time_Drive(1.5, 0.4)); //We can change this to Vision_Drive to rely on vision for cube pickup
     	addSequential(new PickupCube());
     	addSequential(new Encoders_Elevator(ElevatorState.SWITCH));
     	addSequential(new Time_Drive(0.5, 0.3));

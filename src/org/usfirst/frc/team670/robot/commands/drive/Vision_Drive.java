@@ -14,7 +14,7 @@ public class Vision_Drive extends Command {
 	public Vision_Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		speed = 0.3;
+		speed = 0.25;
 		requires(Robot.driveBase);
 	}
 

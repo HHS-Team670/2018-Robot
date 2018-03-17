@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 	
-    private DigitalInput limitSwitch;
 	private Compressor comp;
 	private Solenoid deployer, claw, clawMode;
 	private TalonSRX leftIntake, rightIntake;
@@ -28,7 +27,6 @@ public class Intake extends Subsystem {
 
 	public Intake()
 	{
-		limitSwitch = new DigitalInput(RobotMap.intakeLimitSwitch);
 		comp = new Compressor(RobotMap.PCModule);
 		comp.setClosedLoopControl(true);
 		leftIntake = new TalonSRX(RobotMap.intakeLeftTalon);
@@ -83,10 +81,6 @@ public class Intake extends Subsystem {
 	public boolean isHard()
 	{
 		return clawMode.get();
-	}
-
-	public DigitalInput getLimit() {
-		return limitSwitch;
 	}
 	
 	public boolean isIntakeDeployed() {

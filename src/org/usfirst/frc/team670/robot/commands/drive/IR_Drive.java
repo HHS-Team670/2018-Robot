@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Vision_Drive extends Command {
+public class IR_Drive extends Command {
 
 	private final double speed;
 
-	public Vision_Drive() {
+	public IR_Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		speed = 0.25;
@@ -20,12 +20,13 @@ public class Vision_Drive extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
+		Robot.intake.deployGrabber(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.driveBase.drive(speed, speed);
+		Robot.intake.driveIntake(-0.5);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

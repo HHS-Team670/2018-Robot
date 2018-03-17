@@ -2,7 +2,7 @@ package org.usfirst.frc.team670.robot.commands.auto_specific;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
-import org.usfirst.frc.team670.robot.commands.drive.Vision_Drive;
+import org.usfirst.frc.team670.robot.commands.drive.IR_Drive;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -20,7 +20,7 @@ public class VisionCubePickup extends CommandGroup {
 			}
 			addParallel(new OpenIntake(true));
 			addSequential(new Pivot(angle));
-			addSequential(new Vision_Drive());
+			addSequential(new IR_Drive());
 			addSequential(new PickupCube());
 	}
 }

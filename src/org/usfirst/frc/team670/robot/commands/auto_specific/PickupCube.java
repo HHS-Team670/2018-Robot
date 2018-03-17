@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class PickupCube extends LoggingCommand {
 	
-	private double intakeSpeed = -0.5, speed = 0.2;
-	private double startTime;
+	private double intakeSpeed = -0.5;
 	
 	public PickupCube() {
 		requires(Robot.driveBase);
@@ -24,10 +23,10 @@ public class PickupCube extends LoggingCommand {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		startTime = 0;
+		Robot.intake.deployGrabber(false);
 		logInitialize(new HashMap<String, Object>() {{
 		}});
-		setTimeout(0.3);
+		setTimeout(0.25);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -35,12 +34,7 @@ public class PickupCube extends LoggingCommand {
 
 		Robot.intake.driveIntake(intakeSpeed);
 		
-		if(this.timeSinceInitialized() - startTime > 0.25) {
-			Robot.intake.deployGrabber(false);
-		}
-		
 		logExecute(new HashMap<String, Object>() {{
-        		put("StartTime", startTime);
 		}});	    	
 	}
 

@@ -90,7 +90,7 @@ public class Encoders_Drive extends LoggingCommand {
 		    put("IsWithinLimit", isWithinLimit);
 		    put("CurrentYaw", currentYaw);
 		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
-		    put("RightEncoderVelocity", leftEncoder.getQuadratureVelocity());
+		    put("RightEncoderVelocity", rightEncoder.getQuadratureVelocity());
 		    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
 		    put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
 		}});

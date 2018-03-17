@@ -16,10 +16,8 @@ public class PickupCube extends LoggingCommand {
 	
 	private double intakeSpeed = -0.5, speed = 0.2;
 	private double startTime;
-	private int closedTime;
 	
 	public PickupCube() {
-		closedTime = -1;
 		requires(Robot.driveBase);
 		requires(Robot.intake);
 	}
@@ -33,25 +31,14 @@ public class PickupCube extends LoggingCommand {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(closedTime >= 0) {
-			closedTime++;
-		}
 
 		Robot.intake.driveIntake(intakeSpeed);
 		
 		if(this.timeSinceInitialized() - startTime > 0.3) {
-			closedTime = 0;
 			Robot.intake.deployGrabber(false);
 		}
 		
-		if(closedTime > 25) {
-			Robot.intake.deployGrabber(true);
-			startTime = this.timeSinceInitialized();
-			closedTime = -1;
-		}
-		
 		logExecute(new HashMap<String, Object>() {{
-    			put("ClosedTime", closedTime);
         		put("StartTime", startTime);
 		}});	    	
 	}

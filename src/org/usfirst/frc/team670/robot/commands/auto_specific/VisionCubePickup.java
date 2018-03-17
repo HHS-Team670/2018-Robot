@@ -17,10 +17,10 @@ public class VisionCubePickup extends CommandGroup {
 			if(Robot.sensors != null)
 			{
 				angle = Robot.sensors.getAngleToCube();
+				addParallel(new OpenIntake(true));
+				addSequential(new Pivot(angle));
+				addSequential(new IR_Drive());
+				addSequential(new PickupCube());
 			}
-			addParallel(new OpenIntake(true));
-			addSequential(new Pivot(angle));
-			addSequential(new IR_Drive());
-			addSequential(new PickupCube());
 	}
 }

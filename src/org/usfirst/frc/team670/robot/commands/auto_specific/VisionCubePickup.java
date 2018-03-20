@@ -20,7 +20,6 @@ public class VisionCubePickup extends CommandGroup {
 				addParallel(new OpenIntake(true));
 				addSequential(new Pivot(angle));
 				addSequential(new IR_Drive());
-				addSequential(new PickupCube());
 			}
 	}
 }

@@ -53,9 +53,6 @@ public class DriveBase extends Subsystem {
 		right2.setSensorPhase(false);
 
 		// Set follower control on back talons.
-		left2.set(ControlMode.Follower, RobotMap.leftMotor1);
-		right2.set(ControlMode.Follower, RobotMap.rightMotor1);
-
 		// Set up feedback sensors
 		// Using CTRE_MagEncoder_Relative allows for relative ticks when encoder
 		// is zeroed out.

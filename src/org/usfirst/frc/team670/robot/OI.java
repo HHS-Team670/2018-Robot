@@ -55,7 +55,7 @@ public class OI {
 	private Joystick rightDriveStick = new Joystick(RobotMap.rightDriveStick);
 	private Joystick operatorStick = new Joystick(RobotMap.operatorStick);
 	private Joystick arcadeStick = new Joystick(RobotMap.arcadeStick);
-
+	
 	// Operator Controls
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
 	private Button toggleIntake = new JoystickButton(operatorStick, 1);
@@ -75,7 +75,6 @@ public class OI {
 	
 	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
 	private Button vision_Pivot = new JoystickButton(operatorStick, 7);
-
 	
 	public OI() {
 		// Operator buttons

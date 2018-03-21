@@ -42,16 +42,6 @@ public class DriveBase extends Subsystem {
 		right1 = new TalonSRX(RobotMap.rightMotor1);
 		right2 = new TalonSRX(RobotMap.rightMotor2);
 
-		left1.setInverted(true);
-		left2.setInverted(true);
-		right1.setInverted(false);
-		right2.setInverted(false);
-
-		left1.setSensorPhase(true);
-		left2.setSensorPhase(true);
-		right1.setSensorPhase(false);
-		right2.setSensorPhase(false);
-
 		// Set follower control on back talons.
 		// Set up feedback sensors
 		// Using CTRE_MagEncoder_Relative allows for relative ticks when encoder
@@ -94,6 +84,7 @@ public class DriveBase extends Subsystem {
 	}
 
 	public void drive(double left, double right) {
+		initJoystickDrive();
 		left1.set(ControlMode.PercentOutput, left);
 		right1.set(ControlMode.PercentOutput, right);
 	}

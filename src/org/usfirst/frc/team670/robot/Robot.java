@@ -466,7 +466,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putBoolean("IsCubeInIntake", sensors.isCubeInIntake());
+		SmartDashboard.putBoolean("dio", !dio.get());
+		SmartDashboard.putBoolean("dio1", !dio1.get());
+		SmartDashboard.putString("Raspberry Pi Angle Read", sensors.getAngleToCube()+"");
 		Scheduler.getInstance().run();
 	}
 
@@ -505,7 +507,13 @@ public class Robot extends TimedRobot {
 	}
 
 	public static boolean getIntakeLimit() {
-		if(dio == null && dio1 == null)
-			return false;
-		return !dio.get() || !dio.get();	}
+		return !dio.get();
+	}
+
+	public static double getAngleToCube() {
+		if(sensors != null)
+			return sensors.getAngleToCube();
+		else 
+			return -1;
+	}
 }

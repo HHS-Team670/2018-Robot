@@ -31,6 +31,7 @@ import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Calibration;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Pivot;
+import org.usfirst.frc.team670.robot.commands.drive.IR_Drive;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -70,11 +71,11 @@ public class OI {
 	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
 	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
 	
-	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
+	private Button CancelCommand = new JoystickButton(leftDriveStick, 3);
 	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
 	
 	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
-	private Button vision_Pivot = new JoystickButton(operatorStick, 7);
+	private Button vision_Pivot = new JoystickButton(leftDriveStick, 2);
 	
 	public OI() {
 		// Operator buttons

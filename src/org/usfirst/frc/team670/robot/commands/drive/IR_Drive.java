@@ -14,7 +14,7 @@ public class IR_Drive extends Command {
 	public IR_Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		speed = 0.25;
+		speed = -0.2;
 		requires(Robot.driveBase);
 	}
 

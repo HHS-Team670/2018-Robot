@@ -466,7 +466,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putBoolean("IsCubeInIntake", sensors.isCubeInIntake());
 		Scheduler.getInstance().run();
 	}
 

@@ -11,3 +11,5 @@ build/org/usfirst/frc/team670/robot/utilities/DriverState.class
 *.jar
 build/jars/WPILib.jar
 *.jar
+src/org/usfirst/frc/team670/robot/subsystems/DriveBase.java
+*.java

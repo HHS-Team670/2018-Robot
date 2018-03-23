@@ -87,6 +87,9 @@ public class DriveBase extends Subsystem {
 		initJoystickDrive();
 		left1.set(ControlMode.PercentOutput, left);
 		right1.set(ControlMode.PercentOutput, right);
+
+		left2.set(ControlMode.PercentOutput, left);
+		right2.set(ControlMode.PercentOutput, -right);
 	}
 
 	public TalonSRX getLeft() {

@@ -1,6 +1,9 @@
 package org.usfirst.frc.team670.robot.commands.auto_specific;
 
+import java.util.HashMap;
+
 import org.usfirst.frc.team670.robot.Robot;
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.commands.drive.IR_Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
@@ -12,7 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class VisionCubePickup extends Command {
+public class VisionCubePickup extends LoggingCommand {
 
 	private CommandGroup com;
 	
@@ -23,6 +26,8 @@ public class VisionCubePickup extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	com = new CommandGroup();
+    	logInitialize(new HashMap<String, Object>() {{
+		}});
     	double angle = Robot.sensors.getAngleToCube();
     	com.addParallel(new SpinIntake(-0.5, 10));
     	com.addParallel(new OpenIntake(true));
@@ -43,6 +48,8 @@ public class VisionCubePickup extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	logFinished(new HashMap<String, Object>() {{
+		}});
     }
 
     // Called when another command which requires one or more of the same

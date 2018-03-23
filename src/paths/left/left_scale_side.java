@@ -25,7 +25,7 @@ public class left_scale_side extends CommandGroup {
     	addSequential(new Drive(28.26/Math.sin(Math.toRadians(45)) + RoboConstants.FRONT_TO_ELEVATOR + Field.TOLERANCE/2));
     	addSequential(new ShootCube());
     	addSequential(new Drive(-(RoboConstants.FRONT_TO_ELEVATOR + 28.26/(Math.sin(Math.toRadians(45))))));
-    	addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
+    	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Pivot(90));
     }
 }

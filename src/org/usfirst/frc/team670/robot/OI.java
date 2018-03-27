@@ -75,7 +75,7 @@ public class OI {
 	
 	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
 	
-	private Button vision_Pivot = new JoystickButton(operatorStick, 7);
+	private Button vision_Pivot = new JoystickButton(arcadeStick, 7);
 
 	
 	public OI() {

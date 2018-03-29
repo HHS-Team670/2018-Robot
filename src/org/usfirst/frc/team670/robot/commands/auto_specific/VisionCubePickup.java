@@ -31,10 +31,10 @@ public class VisionCubePickup extends LoggingCommand {
     	double angle = Robot.sensors.getAngleToCube();
     	com.addParallel(new SpinIntake(-0.5, 10));
     	com.addParallel(new OpenIntake(true));
-		com.addSequential(new Pivot(angle));
-		com.addSequential(new IR_Drive());
+    	com.addSequential(new Pivot(angle));
+    	com.addSequential(new IR_Drive());
     	com.addSequential(new OpenIntake(false));
-		com.start();
+    	com.start();
     }
 
     // Called repeatedly when this Command is scheduled to run

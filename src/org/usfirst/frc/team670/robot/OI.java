@@ -8,37 +8,22 @@
 package org.usfirst.frc.team670.robot;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
-import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
-import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.VisionCubePickup;
-import org.usfirst.frc.team670.robot.commands.drive.Drive;
-import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
-import org.usfirst.frc.team670.robot.commands.drive.Pivot;
+import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive_Simple;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
-import org.usfirst.frc.team670.robot.commands.elevator.Hold_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ToggleElevatorLimits;
-import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
-import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
-import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
-import org.usfirst.frc.team670.robot.commands.state_change.enableHardGrab;
-import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
 import org.usfirst.frc.team670.robot.constants.enums.DriverState;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
-import org.usfirst.frc.team670.robot.commands.drive.Encoders_Calibration;
-import org.usfirst.frc.team670.robot.commands.drive.Encoders_Pivot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import paths.right.right_baseline;
-import paths.right.right_scale_side;
-import paths.right.right_switch_side;
-import paths.right.right_switch_straight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -68,10 +53,10 @@ public class OI {
 	private Button release = new JoystickButton(arcadeStick, 9);
 	
 	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
-	private Button elevatorSwitch = new JoystickButton(arcadeStick, 8);
+	private Button elevatorDrive = new JoystickButton(arcadeStick, 8);
 	
 	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
-	private Button elevatorScale = new JoystickButton(arcadeStick, 4);
+	private Button simpleDrive = new JoystickButton(arcadeStick, 4);
 	
 	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
 	
@@ -93,8 +78,8 @@ public class OI {
 		deploy.whenPressed(new Deploy(false));
 		retract.whenPressed(new Deploy(true));
 		
-		elevatorSwitch.whenPressed(new Encoders_Elevator(ElevatorState.SWITCH));
-		elevatorScale.whenPressed(new Encoders_Elevator(ElevatorState.HIGHSCALE));
+		elevatorDrive.whenPressed(new Encoders_Drive(8*12));
+		simpleDrive.whenPressed(new Encoders_Drive_Simple(8*12));
 		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
 		
 		CancelCommand.whenPressed(new CancelCommand());

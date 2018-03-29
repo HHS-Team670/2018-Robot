@@ -104,7 +104,7 @@ public class Encoders_Drive_Simple extends LoggingCommand {
 			put("IsWithinLimit", isWithinLimit);
 			put("FinalYaw", Robot.sensors.getYaw());
 			put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
-			put("RightEncoderVelocity", leftEncoder.getQuadratureVelocity());
+			put("RightEncoderVelocity", rightEncoder.getQuadratureVelocity());
 			put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
 			put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
 		}});

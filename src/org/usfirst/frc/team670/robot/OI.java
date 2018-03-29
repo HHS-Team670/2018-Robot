@@ -10,8 +10,8 @@ package org.usfirst.frc.team670.robot;
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.VisionCubePickup;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive_PeakOutput;
 import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive_Simple;
-import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.ToggleElevatorLimits;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
@@ -52,7 +52,7 @@ public class OI {
 	private Button grab = new JoystickButton(arcadeStick, 2);
 	private Button release = new JoystickButton(arcadeStick, 9);
 	
-	private Button elevatorExchange = new JoystickButton(arcadeStick, 3);
+	private Button peakOutputDrive = new JoystickButton(arcadeStick, 3);
 	private Button elevatorDrive = new JoystickButton(arcadeStick, 8);
 	
 	private Button CancelCommand = new JoystickButton(arcadeStick, 5);
@@ -80,7 +80,7 @@ public class OI {
 		
 		elevatorDrive.whenPressed(new Encoders_Drive(8*12));
 		simpleDrive.whenPressed(new Encoders_Drive_Simple(8*12));
-		elevatorExchange.whenPressed(new Encoders_Elevator(ElevatorState.EXCHANGE));
+		peakOutputDrive.whenPressed(new Encoders_Drive_PeakOutput(8*12));
 		
 		CancelCommand.whenPressed(new CancelCommand());
 				

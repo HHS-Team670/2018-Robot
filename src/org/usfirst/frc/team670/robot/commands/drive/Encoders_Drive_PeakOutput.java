@@ -8,29 +8,24 @@ import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
- * 
- * Uses a PID control loop plus the navX getDisplacement to move a given
- * distance in feet
- * 
- * @author vsharma8363AZ
  *
  */
-public class Encoders_Drive extends LoggingCommand {
+public class Encoders_Drive_PeakOutput extends LoggingCommand {
 
 	private double ticksToTravel, minVelocity = 100, inches;
 	private int numTimesMotorOutput;
 	private boolean reachedMinSpeed, isWithinLimit;
 	private double tolerance = 0.3;
 	private double startYaw;
+	private final double peakOutput = 0.99;
 	private SensorCollection leftEncoder;
 	private SensorCollection rightEncoder;
 	private double currentYaw = 0;
 
-	public Encoders_Drive(double inches) {
+	public Encoders_Drive_PeakOutput(double inches) {
 
 		this.inches = inches;
 		this.ticksToTravel = ((inches) / (Math.PI * RoboConstants.DRIVEBASE_WHEEL_DIAMETER))
@@ -39,7 +34,6 @@ public class Encoders_Drive extends LoggingCommand {
 		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
 		rightEncoder = Robot.driveBase.getRight().getSensorCollection();
 		reachedMinSpeed = false;
-
 	}
 
 	// Called just before this Command runs the first time
@@ -74,10 +68,15 @@ public class Encoders_Drive extends LoggingCommand {
 		currentYaw = Robot.sensors.getYaw();
 		double yawDiff = startYaw - currentYaw;
 		if(Math.abs(yawDiff) > tolerance) {
-			if(currentYaw > startYaw)
-				Robot.driveBase.getRight().configClosedloopRamp(0.8, 0);
-			else
-				Robot.driveBase.getLeft().configClosedloopRamp(0.8, 0);
+			TalonSRX motor = null;
+			if(currentYaw > startYaw) {
+				motor = Robot.driveBase.getLeft();
+			}
+			else {
+				motor = Robot.driveBase.getRight();
+			}
+			motor.configPeakOutputForward(peakOutput, 0);
+			motor.configPeakOutputReverse(-peakOutput, 0);
 		}
 		
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
@@ -108,8 +107,8 @@ public class Encoders_Drive extends LoggingCommand {
 	
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.driveBase.getRight().configClosedloopRamp(1, 0);
-		Robot.driveBase.getLeft().configClosedloopRamp(1, 0);
+		Robot.driveBase.getLeft().configPeakOutputForward(1, 0);
+		Robot.driveBase.getRight().configPeakOutputForward(1, 0);
 		logFinished(new HashMap<String, Object>() {{
 		    put("ReachedMinSpeed", reachedMinSpeed);
 		    put("IsWithinLimit", isWithinLimit);

@@ -31,6 +31,7 @@ public class NavX_Pivot extends LoggingCommand {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		setTimeout(2); //WATCH OUT FOR THIS
 		this.startAngle = getYaw();
 		this.finalAngle = startAngle + angle;
 		this.numTimesIsFinished = 0;
@@ -80,7 +81,7 @@ public class NavX_Pivot extends LoggingCommand {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (Math.abs(1.0 - percentComplete) <= 0.015 && Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) <= 100) 
+		if ((Math.abs(1.0 - percentComplete) <= 0.015 && Math.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) <= 100) || isTimedOut()) 
 			return true;
 		else
 			return false;

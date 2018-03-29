@@ -4,7 +4,6 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team670.robot;
 
 import edu.wpi.cscore.CvSink;
@@ -107,35 +106,7 @@ public class Robot extends TimedRobot {
 			navXMicro = null;
 		}
 		
-		m_visionThread = new Thread(() -> {
-			intakePic = new Mat();
-			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-			//CvSource outputStream = CameraServer.getInstance().putVideo("Fishcam", 640, 480);
-
-			//Mat src = new Mat(), out = new Mat();
-			//Size kSize = new Size(640,480);
-			
-			camera.setExposureAuto();
-			camera.setFPS(25);
-			camera.setResolution((int)(640/3), (int)(480/3));
-			/*outputStream.setFPS(20);
-			outputStream.setPixelFormat(PixelFormat.kMJPEG);
-			outputStream.setResolution((int)(kSize.width), (int)(kSize.height));
-			
-			while (true) 
-			{
-				if (cvSink.grabFrame(src) == 0) 
-				{
-					outputStream.notifyError(cvSink.getError());
-					continue;
-				}
-				out = src;
-				//Imgproc.cvtColor(src, out, Imgproc.COLOR_RGB2GRAY);
-				outputStream.putFrame(out);*/
-			//}
-		});
-		m_visionThread.setDaemon(true);
-		m_visionThread.start();
+		CameraServer.getInstance().startAutomaticCapture();			
 
 		subMenuRR = new SendableChooser<String>();
 		subMenuLL = new SendableChooser<String>();
@@ -155,6 +126,7 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("left_baseline", "left_baseline");
 		subMenuLL.addObject("left_switch_side", "left_switch_side");
 		subMenuLL.addObject("left_scale_side", "left_scale_side");
+		subMenuLL.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuLL.addObject("----CENTER----", "center_baseline");
 		subMenuLL.addObject("center_baseline", "center_baseline");
 		subMenuLL.addObject("center_left_switch_straight", "center_left_switch_straight");
@@ -163,12 +135,14 @@ public class Robot extends TimedRobot {
 		subMenuLL.addObject("right_baseline", "right_baseline");
 		subMenuLL.addObject("right_switch_side", "right_switch_side");
 		subMenuLL.addObject("right_scale_side", "right_scale_side");
+		subMenuLL.addObject("right_scale_opposite", "right_scale_opposite");
 
 		subMenuRR.addDefault("RR (KEY ONLY)", "left_baseline");
 		subMenuRR.addObject("----LEFT----", "left_baseline");
 		subMenuRR.addObject("left_baseline", "left_baseline");
 		subMenuRR.addObject("left_switch_side", "left_switch_side");
 		subMenuRR.addObject("left_scale_side", "left_scale_side");
+		subMenuRR.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuRR.addObject("----CENTER----", "center_baseline");
 		subMenuRR.addObject("center_baseline", "center_baseline");
 		subMenuRR.addObject("center_left_switch_straight", "center_left_switch_straight");
@@ -177,12 +151,14 @@ public class Robot extends TimedRobot {
 		subMenuRR.addObject("right_baseline", "right_baseline");
 		subMenuRR.addObject("right_switch_side", "right_switch_side");
 		subMenuRR.addObject("right_scale_side", "right_scale_side");
+		subMenuRR.addObject("right_scale_opposite", "right_scale_opposite");
 
 		subMenuLR.addDefault("LR (KEY ONLY)", "left_baseline");
 		subMenuLR.addObject("----LEFT----", "left_baseline");
 		subMenuLR.addObject("left_baseline", "left_baseline");
 		subMenuLR.addObject("left_switch_side", "left_switch_side");
 		subMenuLR.addObject("left_scale_side", "left_scale_side");
+		subMenuLR.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuLR.addObject("----CENTER----", "center_baseline");
 		subMenuLR.addObject("center_baseline", "center_baseline");
 		subMenuLR.addObject("center_left_switch_straight", "center_left_switch_straight");
@@ -191,12 +167,15 @@ public class Robot extends TimedRobot {
 		subMenuLR.addObject("right_baseline", "right_baseline");
 		subMenuLR.addObject("right_switch_side", "right_switch_side");
 		subMenuLR.addObject("right_scale_side", "right_scale_side");
+		subMenuLR.addObject("right_scale_opposite", "right_scale_opposite");
+
 		
 		subMenuRL.addDefault("RL (KEY ONLY)", "left_baseline");
 		subMenuRL.addObject("----LEFT----", "left_baseline");
 		subMenuRL.addObject("left_baseline", "left_baseline");
 		subMenuRL.addObject("left_switch_side", "left_switch_side");
 		subMenuRL.addObject("left_scale_side", "left_scale_side");
+		subMenuRL.addObject("left_scale_opposite", "left_scale_opposite");
 		subMenuRL.addObject("----CENTER----", "center_baseline");
 		subMenuRL.addObject("center_baseline", "center_baseline");
 		subMenuRL.addObject("center_left_switch_straight", "center_left_switch_straight");
@@ -205,6 +184,7 @@ public class Robot extends TimedRobot {
 		subMenuRL.addObject("right_baseline", "right_baseline");
 		subMenuRL.addObject("right_switch_side", "right_switch_side");
 		subMenuRL.addObject("right_scale_side", "right_scale_side");
+		subMenuRL.addObject("right_scale_opposite", "right_scale_opposite");
 		
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
 		SmartDashboard.putData("LL", subMenuLL);
@@ -320,7 +300,8 @@ public class Robot extends TimedRobot {
 			return false;
 		default: 
 			return null;		
-		}	}
+		}
+	}
 
 
 	@Override
@@ -466,6 +447,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putBoolean("IR Sensors", getIntakeLimit());
+		SmartDashboard.putBoolean("NavX Connected", isNavXConnected());
 		Scheduler.getInstance().run();
 	}
 
@@ -504,7 +487,6 @@ public class Robot extends TimedRobot {
 	}
 
 	public static boolean getIntakeLimit() {
-		if(dio == null && dio1 == null)
-			return false;
-		return !dio.get() || !dio.get();	}
+		return !(dio.get() || dio.get());	
+	}
 }

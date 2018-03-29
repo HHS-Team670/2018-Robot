@@ -45,7 +45,7 @@ public class Encoders_Pivot extends LoggingCommand {
 		Robot.driveBase.initPIDPivoting(Robot.driveBase.getRight());
 		logInitialize(new HashMap<String, Object>() {{
 		    put("TicksToTravel", ticksToTravel);
-		    put("DegreesToTravel", ticksToTravel * TICKS_PER_DEGREE);
+		    put("DegreesToTravel", ticksToTravel / TICKS_PER_DEGREE);
 		    put("LeftEncoderTicks", Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition());
 		    put("RightEncoderTicks", Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
 		}});
@@ -60,7 +60,7 @@ public class Encoders_Pivot extends LoggingCommand {
 					.abs(Robot.driveBase.getLeft().getSensorCollection().getQuadratureVelocity()) > minVelocity;
 		/* 50 rotations in either direction */
 		logExecute(new HashMap<String, Object>() {{
-		    put("DegreesToTravel", ticksToTravel * TICKS_PER_DEGREE);
+		    put("TicksToTravel", ticksToTravel);
 		    put("ReachedMinSpeed", reachedMinSpeed);
 		    put("LeftEncoderTicks", Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition());
 		    put("RightEncoderTicks", Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());
@@ -83,7 +83,7 @@ public class Encoders_Pivot extends LoggingCommand {
 	protected void end() {
 		Robot.driveBase.drive(0, 0);
 		logExecute(new HashMap<String, Object>() {{
-		    put("DegreesToTravel", ticksToTravel * TICKS_PER_DEGREE);
+		    put("DegreesToTravel", ticksToTravel);
 		    put("ReachedMinSpeed", reachedMinSpeed);
 		    put("LeftEncoderTicks", Robot.driveBase.getLeft().getSensorCollection().getQuadraturePosition());
 		    put("RightEncoderTicks", Robot.driveBase.getRight().getSensorCollection().getQuadraturePosition());

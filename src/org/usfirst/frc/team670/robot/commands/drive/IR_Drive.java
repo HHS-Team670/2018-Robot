@@ -19,7 +19,7 @@ public class IR_Drive extends LoggingCommand {
 	public IR_Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		speed = 0.15;
+		speed = -0.25;
 		requires(Robot.driveBase);
 		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
 		rightEncoder = Robot.driveBase.getLeft().getSensorCollection();

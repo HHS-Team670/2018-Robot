@@ -72,13 +72,13 @@ public class Encoders_Drive extends LoggingCommand {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {		
 		currentYaw = Robot.sensors.getYaw();
-		double yawDiff = startYaw - currentYaw;
-		if(Math.abs(yawDiff) > tolerance) {
-			if(currentYaw > startYaw)
-				Robot.driveBase.getRight().configClosedloopRamp(0.8, 0);
-			else
-				Robot.driveBase.getLeft().configClosedloopRamp(0.8, 0);
-		}
+//		double yawDiff = startYaw - currentYaw;
+//		if(Math.abs(yawDiff) > tolerance) {
+//			if(currentYaw > startYaw)
+//				Robot.driveBase.getRight().configClosedloopRamp(0.8, 0);
+//			else
+//				Robot.driveBase.getLeft().configClosedloopRamp(0.8, 0);
+//		}
 		
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
 		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel);

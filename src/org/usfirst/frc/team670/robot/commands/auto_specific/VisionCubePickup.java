@@ -9,7 +9,6 @@ import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -28,12 +27,18 @@ public class VisionCubePickup extends LoggingCommand {
     		com = new CommandGroup();
     		logInitialize(new HashMap<String, Object>() {{
 		}});
+    		com.addSequential(new OpenIntake(true));
+    		com.addSequential(new Delay(0.25));
     		double angle = Robot.sensors.getAngleToCube();
     		com.addParallel(new SpinIntake(-0.5, 10));
-    		com.addParallel(new OpenIntake(true));
-    		com.addSequential(new Pivot(angle));
-    		com.addSequential(new IR_Drive());
-    		com.addSequential(new OpenIntake(false));
+    		if(Math.abs(angle) < 30) {
+    			if(Math.abs(angle) > 2) {
+    				com.addSequential(new Pivot(angle));
+    			}
+    			com.addSequential(new IR_Drive());
+    			com.addSequential(new OpenIntake(false));
+    			com.addSequential(new SpinIntake(0, 0));
+    		}
     		com.start();
     }
 

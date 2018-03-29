@@ -35,7 +35,6 @@ public class Climber extends Subsystem {
 			climbMotor.set(ControlMode.PercentOutput, speed);
 		else
 			climbMotor.set(ControlMode.PercentOutput, 0);
-		SmartDashboard.putNumber("Climb Current", climbMotor.getOutputCurrent());
 	}
 	
 	public TalonSRX getTalon()

@@ -25,16 +25,16 @@ public class VisionCubePickup extends LoggingCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	com = new CommandGroup();
-    	logInitialize(new HashMap<String, Object>() {{
+    		com = new CommandGroup();
+    		logInitialize(new HashMap<String, Object>() {{
 		}});
-    	double angle = Robot.sensors.getAngleToCube();
-    	com.addParallel(new SpinIntake(-0.5, 10));
-    	com.addParallel(new OpenIntake(true));
-		com.addSequential(new Pivot(angle));
-		com.addSequential(new IR_Drive());
-    	com.addSequential(new OpenIntake(false));
-		com.start();
+    		double angle = Robot.sensors.getAngleToCube();
+    		com.addParallel(new SpinIntake(-0.5, 10));
+    		com.addParallel(new OpenIntake(true));
+    		com.addSequential(new Pivot(angle));
+    		com.addSequential(new IR_Drive());
+    		com.addSequential(new OpenIntake(false));
+    		com.start();
     }
 
     // Called repeatedly when this Command is scheduled to run

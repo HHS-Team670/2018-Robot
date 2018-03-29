@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 
-import edu.wpi.first.wpilibj.command.Command;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
 
 /**
  *
@@ -13,18 +13,26 @@ import edu.wpi.first.wpilibj.command.Command;
 public class IR_Drive extends LoggingCommand {
 
 	private final double speed;
+	private SensorCollection leftEncoder, rightEncoder;
 
+	
 	public IR_Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		speed = 0.25;
 		requires(Robot.driveBase);
+		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
+		rightEncoder = Robot.driveBase.getLeft().getSensorCollection();
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.intake.deployGrabber(true);
 		logInitialize(new HashMap<String, Object>() {{
+			 put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
+			    put("RightEncoderVelocity", rightEncoder.getQuadratureVelocity());
+			    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
+			    put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
 		}});
 	}
 
@@ -34,6 +42,10 @@ public class IR_Drive extends LoggingCommand {
 		Robot.intake.driveIntake(-0.5);
 		logExecute(new HashMap<String, Object>() {{
 			put("Speed", speed);
+		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
+		    put("RightEncoderVelocity", rightEncoder.getQuadratureVelocity());
+		    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
+		    put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
 		}});
 	}
 
@@ -46,6 +58,10 @@ public class IR_Drive extends LoggingCommand {
 	protected void end() {
 		Robot.driveBase.drive(0, 0);
 		logFinished(new HashMap<String, Object>() {{
+		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
+		    put("RightEncoderVelocity", rightEncoder.getQuadratureVelocity());
+		    put("LeftEncoderTicks", leftEncoder.getQuadraturePosition());
+		    put("RightEncoderTicks", rightEncoder.getQuadraturePosition());
 		}});
 	}
 

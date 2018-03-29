@@ -108,6 +108,8 @@ public class Encoders_Drive extends LoggingCommand {
 	
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.driveBase.getRight().configClosedloopRamp(1, 0);
+		Robot.driveBase.getLeft().configClosedloopRamp(1, 0);
 		logFinished(new HashMap<String, Object>() {{
 		    put("ReachedMinSpeed", reachedMinSpeed);
 		    put("IsWithinLimit", isWithinLimit);

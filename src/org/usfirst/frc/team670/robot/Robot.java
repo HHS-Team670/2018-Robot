@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
 			
 			camera.setExposureAuto();
 			camera.setFPS(25);
-			camera.setResolution((int)(640/2), (int)(480/2));
+			camera.setResolution((int)(640/3), (int)(480/3));
 			/*outputStream.setFPS(20);
 			outputStream.setPixelFormat(PixelFormat.kMJPEG);
 			outputStream.setResolution((int)(kSize.width), (int)(kSize.height));

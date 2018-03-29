@@ -61,6 +61,8 @@ public class Aggregator extends Thread{
 						isCubeInIntake = true;
 					else
 						isCubeInIntake = false;
+					
+					SmartDashboard.putNumber("RPI Angle:", powerCubeAngle);
 				}
 			}
 		}).start();

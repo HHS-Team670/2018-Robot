@@ -16,7 +16,7 @@ import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.Hold_Elevator;
-import org.usfirst.frc.team670.robot.commands.elevator.ToggleElevatorLimits;
+import org.usfirst.frc.team670.robot.commands.elevator.DisableSoftLimits;
 import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
@@ -99,7 +99,7 @@ public class OI {
 		
 		CancelCommand.whenPressed(new CancelCommand());
 				
-		toggleElevatorLimits.whenPressed(new ToggleElevatorLimits());
+		toggleElevatorLimits.whenPressed(new DisableSoftLimits());
 		
 		vision_Pivot.whenPressed(new VisionCubePickup());
 	}

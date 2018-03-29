@@ -8,6 +8,7 @@ import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Encoders_Drive extends LoggingCommand {
 
+	private double peakOutput = 0.98;
 	private double ticksToTravel, minVelocity = 100, inches;
 	private int numTimesMotorOutput;
 	private boolean reachedMinSpeed, isWithinLimit;
@@ -71,7 +73,7 @@ public class Encoders_Drive extends LoggingCommand {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {		
-		currentYaw = Robot.sensors.getYaw();
+//		currentYaw = Robot.sensors.getYaw();
 //		double yawDiff = startYaw - currentYaw;
 //		if(Math.abs(yawDiff) > tolerance) {
 //			if(currentYaw > startYaw)
@@ -79,6 +81,20 @@ public class Encoders_Drive extends LoggingCommand {
 //			else
 //				Robot.driveBase.getLeft().configClosedloopRamp(0.8, 0);
 //		}
+		
+		currentYaw = Robot.sensors.getYaw();
+		double yawDiff = startYaw - currentYaw;
+		if(Math.abs(yawDiff) > tolerance) {
+			TalonSRX motor = null;
+			if(currentYaw > startYaw) {
+				motor = Robot.driveBase.getLeft();
+			}
+			else {
+				motor = Robot.driveBase.getRight();
+			}
+			motor.configPeakOutputForward(peakOutput, 0);
+			motor.configPeakOutputReverse(-peakOutput, 0);
+		}
 		
 		Robot.driveBase.getLeft().set(ControlMode.Position, -ticksToTravel);
 		Robot.driveBase.getRight().set(ControlMode.Position, -ticksToTravel);
@@ -110,6 +126,10 @@ public class Encoders_Drive extends LoggingCommand {
 	protected void end() {
 		Robot.driveBase.getRight().configClosedloopRamp(1, 0);
 		Robot.driveBase.getLeft().configClosedloopRamp(1, 0);
+		Robot.driveBase.getLeft().configPeakOutputForward(peakOutput, 0);
+		Robot.driveBase.getLeft().configPeakOutputReverse(-peakOutput, 0);
+		Robot.driveBase.getRight().configPeakOutputForward(peakOutput, 0);
+		Robot.driveBase.getRight().configPeakOutputReverse(-peakOutput, 0);
 		logFinished(new HashMap<String, Object>() {{
 		    put("ReachedMinSpeed", reachedMinSpeed);
 		    put("IsWithinLimit", isWithinLimit);

@@ -40,6 +40,7 @@ public class Encoders_Pivot extends LoggingCommand {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		setTimeout(2);
 		numTimesMotorOutput = 0;
 		Robot.driveBase.initPIDPivoting(Robot.driveBase.getLeft());
 		Robot.driveBase.initPIDPivoting(Robot.driveBase.getRight());

@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  *
  */
-public class ToggleElevatorLimits extends InstantCommand {
+public class DisableSoftLimits extends InstantCommand {
 
-    public ToggleElevatorLimits() {
+    public DisableSoftLimits() {
         super();
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.elevator.toggleSoftLimits(!Robot.elevator.getSoftLimits());
+    	Robot.elevator.toggleSoftLimits(false);
     }
 
 }

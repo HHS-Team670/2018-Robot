@@ -116,21 +116,32 @@ public class NavX_Pivot extends LoggingCommand {
 
 	private double yawRemaining() {
 		double yaw = getYaw();
-		if (angle > 0 && yaw < (startAngle - 10/* Margin of Error Value */)) { // IF
-																				// WE
-																				// WANT
-																				// TO
-																				// TURN
-																				// 360
-																				// THIS
-																				// WON't
-																				// WORK
-			return finalAngle - yaw - 360;
-		} else if (angle < 0
-				&& yaw > (startAngle + 10/* Margin of Error Value */)) {
-			return finalAngle - yaw + 360;
+//		if (angle > 0 && yaw < (startAngle - 10/* Margin of Error Value */)) { // IF
+//																				// WE
+//																				// WANT
+//																				// TO
+//																				// TURN
+//																				// 360
+//																				// THIS
+//																				// WON't
+//																				// WORK
+//			return finalAngle - yaw - 360;
+//		} else if (angle < 0
+//				&& yaw > (startAngle + 10/* Margin of Error Value */)) {
+//			return finalAngle - yaw + 360;
+//		}
+		
+		
+		double remaining = finalAngle - yaw;
+		
+		if(angle < 0 && remaining < angle) {
+			return angle;
 		}
-		return finalAngle - yaw;
+		else if(angle > 0 && remaining > angle) {
+			return angle; 
+		}
+			
+		return remaining;
 	}
 
 }

@@ -72,7 +72,6 @@ public class Robot extends TimedRobot {
 	public static final DriveBase driveBase = new DriveBase();
 	public static final Intake intake = new Intake();
 	public static final Climber climber = new Climber();
-	public static Mat intakePic;
 	
 	public static Thread m_visionThread;
 	public static Aggregator sensors;

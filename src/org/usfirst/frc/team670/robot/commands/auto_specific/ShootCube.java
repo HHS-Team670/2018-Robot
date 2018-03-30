@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ShootCube extends CommandGroup {
 
 	public ShootCube() {
-		setTimeout(0.25);
+		setTimeout(0.25);  
 
 		addParallel(new OpenIntake(false));
 		addParallel(new SpinIntake(0.50, 10)); //Check how this works in practice matche

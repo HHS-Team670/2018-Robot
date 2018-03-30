@@ -48,7 +48,8 @@ public class NavX_Pivot extends LoggingCommand {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double speed = 0;
-		percentComplete = Math.abs((angle - yawRemaining()) / (angle));
+		double yawRemaining = yawRemaining();
+		percentComplete = Math.abs((angle - yawRemaining) / (angle));
 
 		if (percentComplete <= 0.6) {
 //			speed = -2.3 * 2.3 * (percentComplete * percentComplete) + 0.8;
@@ -72,7 +73,7 @@ public class NavX_Pivot extends LoggingCommand {
 		}
 		
 		logExecute(new HashMap<String, Object>() {{
-		    put("DegreesToTravel", yawRemaining());
+		    put("DegreesToTravel", yawRemaining);
 		    put("CurrentAngle", getNormalizedYaw());
 		    put("PercentComplete", percentComplete);
 		}});

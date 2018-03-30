@@ -34,7 +34,7 @@ public class Elevator extends Subsystem {
 		elevator.configForwardSoftLimitEnable(false, 0);
 		elevator.configReverseSoftLimitEnable(false, 0);
 		toggle = true;
-		toggleSoftLimits(true);
+//		toggleSoftLimits(true);
 	}
 
 	public boolean getSoftLimits() {
@@ -99,6 +99,9 @@ public class Elevator extends Subsystem {
 	 * @return
 	 */
 	public double calculateSpeed(double currentTicks, double maxSpeed, boolean goingUp) {
+		
+		if(!toggle)
+			return maxSpeed;
 		
 		double RATIO_TICKS_COVERED_TO_VELOCITY_UP = 220.0/136.0;
 		double RATIO_TICKS_COVERED_TO_VELOCITY_DOWN = 540.0/350.0;

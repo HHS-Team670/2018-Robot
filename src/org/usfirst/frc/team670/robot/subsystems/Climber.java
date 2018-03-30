@@ -26,15 +26,15 @@ public class Climber extends Subsystem {
 	
 	/**
 	 * 
-	 * @param speed ADD A CURRENT LIMIT TO THE CODE SO THAT YOU DO NOT DESTORY THE CLIMBER???
+	 * @param speed ADD A CURRENT LIMIT TO THE CODE SO THAT YOU DO NOT DESTORY THE CLIMBER???. naw.
 	 */
 	public void climb(double speed)
 	{
 		//System.out.print(" | Voltage:" + climbMotor.getMotorOutputVoltage());
-		if(climbMotor.getOutputCurrent() <= currentLimit)
+//		if(climbMotor.getOutputCurrent() <= currentLimit)
 			climbMotor.set(ControlMode.PercentOutput, speed);
-		else
-			climbMotor.set(ControlMode.PercentOutput, 0);
+//		else
+//			climbMotor.set(ControlMode.PercentOutput, 0);
 	}
 	
 	public TalonSRX getTalon()

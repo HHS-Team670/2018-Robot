@@ -2,7 +2,12 @@ package paths.center;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.ShootCube;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
+import org.usfirst.frc.team670.robot.commands.drive.Encoders_Drive;
+import org.usfirst.frc.team670.robot.commands.drive.IR_Drive;
+import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.drive.Time_Drive;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
@@ -25,5 +30,18 @@ public class center_left_switch_straight extends CommandGroup {
     	addSequential(new Drive(Field.DS_TO_BASELINE - Robot.length - 6));
 //    	addSequential(new Time_Drive(1.5, 0.45));
     	addSequential(new DropCube());
+    	//Pick up cube
+//    	addSequential(new Time_Drive(0.15, -0.3));
+//		addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
+//		addSequential(new NavX_Pivot(90));
+//		addParallel(new SpinIntake(-0.5, 7));
+//		addSequential(new IR_Drive());
+//		addSequential(new PickupCube());
+		//Place Cube
+//		addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
+//		addSequential(new Encoders_Drive(-Field.SWITCH_LENGTH/2));
+//		addSequential(new NavX_Pivot(-90));
+//		addSequential(new Time_Drive(0.15, 0.7));
+//		addSequential(new ShootCube(0.5));
     }
 }

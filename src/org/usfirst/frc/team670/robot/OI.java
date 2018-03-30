@@ -76,6 +76,13 @@ public class OI {
 	private Button toggleElevatorLimits = new JoystickButton(arcadeStick, 6);
 	
 	private Button vision_Pivot = new JoystickButton(arcadeStick, 7);
+	
+//	private Button left45 = new JoystickButton(rightDriveStick, 4);
+//	private Button left90 = new JoystickButton(rightDriveStick, 2);
+//	private Button left135 = new JoystickButton(rightDriveStick, 7);
+//	private Button right45 = new JoystickButton(rightDriveStick, 5);
+//	private Button right90 = new JoystickButton(rightDriveStick, 3);
+//	private Button right135 = new JoystickButton(rightDriveStick, 10);
 
 	
 	public OI() {
@@ -102,6 +109,14 @@ public class OI {
 		toggleElevatorLimits.whenPressed(new DisableSoftLimits());
 		
 		vision_Pivot.whenPressed(new VisionCubePickup());
+		
+		//COMMENT THESE OUT FOR MATCH, MEANT FOR TESTING PIVOTING
+//		left45.whenPressed(new Pivot(-45));
+//		left90.whenPressed(new NavX_Pivot(-90));
+//		left135.whenPressed(new NavX_Pivot(-135));
+//		right45.whenPressed(new NavX_Pivot(45));
+//		right90.whenPressed(new NavX_Pivot(90));
+//		right135.whenPressed(new NavX_Pivot(135));
 	}
 
 	public Joystick getLeftStick() {

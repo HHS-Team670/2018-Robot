@@ -29,7 +29,7 @@ public class Joystick_Climber extends LoggingCommand {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if(Robot.oi.getOS().equals(OperatorState.CLIMBER))
-			Robot.climber.climb(Robot.oi.getOperatorStick().getY()); // removed math.abs
+			Robot.climber.climb(-Math.abs(Robot.oi.getOperatorStick().getY())); // removed math.abs
 		else
 			Robot.climber.climb(0);
 		

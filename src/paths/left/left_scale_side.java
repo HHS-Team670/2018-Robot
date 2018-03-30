@@ -2,6 +2,7 @@ package paths.left;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.auto_specific.ShootCube;
+import org.usfirst.frc.team670.robot.commands.auto_specific.VisionCubePickup;
 import org.usfirst.frc.team670.robot.commands.drive.Drive;
 import org.usfirst.frc.team670.robot.commands.drive.Pivot;
 import org.usfirst.frc.team670.robot.commands.elevator.DelayedRaise;
@@ -23,9 +24,10 @@ public class left_scale_side extends CommandGroup {
     	addParallel(new Encoders_Elevator(ElevatorState.HIGHSCALE));
     	addSequential(new Pivot(45));
     	addSequential(new Drive(28.26/Math.sin(Math.toRadians(45)) + RoboConstants.FRONT_TO_ELEVATOR + Field.TOLERANCE/2));
-    	addSequential(new ShootCube());
+    	addSequential(new ShootCube(0.7));
     	addSequential(new Drive(-(RoboConstants.FRONT_TO_ELEVATOR + 28.26/(Math.sin(Math.toRadians(45))))));
     	addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
     	addSequential(new Pivot(90));
+    	addSequential(new VisionCubePickup());
     }
 }

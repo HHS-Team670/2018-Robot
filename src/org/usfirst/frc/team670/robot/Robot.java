@@ -446,8 +446,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		SmartDashboard.putBoolean("IR Sensors", getIntakeLimit());
-		SmartDashboard.putBoolean("NavX Connected", isNavXConnected());
+//		SmartDashboard.putBoolean("IR Sensors", getIntakeLimit());
+//		SmartDashboard.putBoolean("IR Sensor0", dio.get());
+//		SmartDashboard.putBoolean("IR Sensor1",dio1.get());
+		SmartDashboard.putBoolean("Soft Limits", elevator.getSoftLimits());
+//		SmartDashboard.putBoolean("NavX Connected", isNavXConnected());
 		Scheduler.getInstance().run();
 	}
 
@@ -486,6 +489,6 @@ public class Robot extends TimedRobot {
 	}
 
 	public static boolean getIntakeLimit() {
-		return !(dio.get() || dio.get());	
+		return (!dio.get() || !dio1.get());	
 	}
 }

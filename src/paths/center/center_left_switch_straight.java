@@ -28,8 +28,19 @@ public class center_left_switch_straight extends CommandGroup {
     	addSequential(new Pivot(90));
     	addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
     	addSequential(new Drive(Field.DS_TO_BASELINE - Robot.length - 6));
-//    	addSequential(new Time_Drive(1.5, 0.45));
     	addSequential(new DropCube());
+    	//Pick up next cube
+		addSequential(new Encoders_Drive(-(Field.CUBEPILE_LENGTH + 12)));
+		addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
+		addSequential(new NavX_Pivot(45));
+		addSequential(new IR_Drive());
+		addSequential(new PickupCube());
+		addSequential(new Encoders_Drive(-30));
+		addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
+		addSequential(new NavX_Pivot(-55));
+		addSequential(new Encoders_Drive(Field.CUBEPILE_LENGTH + 18));
+		addSequential(new SpinIntake(0.8, 2));
+
     	//Pick up cube
 //    	addSequential(new Time_Drive(0.15, -0.3));
 //		addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));

@@ -245,7 +245,7 @@ public class Robot extends TimedRobot {
 			writer.flush();
 		}
 		catch(RuntimeException e){
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 

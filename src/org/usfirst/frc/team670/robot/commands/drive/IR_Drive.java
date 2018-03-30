@@ -15,12 +15,11 @@ public class IR_Drive extends LoggingCommand {
 	private final double speed;
 	private SensorCollection leftEncoder, rightEncoder;
 
-	
 	public IR_Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		speed = -0.45;
-		setTimeout(2.5);
+		speed = -0.55;
+		setTimeout(2.8);
 		requires(Robot.driveBase);
 		requires(Robot.intake);
 		leftEncoder = Robot.driveBase.getLeft().getSensorCollection();
@@ -41,7 +40,7 @@ public class IR_Drive extends LoggingCommand {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.driveBase.drive(speed, speed);
-		Robot.intake.driveIntake(-0.7);
+		Robot.intake.driveIntake(-0.9);
 		logExecute(new HashMap<String, Object>() {{
 			put("Speed", speed);
 		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());

@@ -18,7 +18,7 @@ public class IR_Drive extends LoggingCommand {
 	public IR_Drive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		speed = -0.55;
+		speed = -0.47;
 		setTimeout(2.8);
 		requires(Robot.driveBase);
 		requires(Robot.intake);

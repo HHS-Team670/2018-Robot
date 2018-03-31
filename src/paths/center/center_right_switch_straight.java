@@ -24,12 +24,12 @@ public class center_right_switch_straight extends CommandGroup {
 		//Alternate to plowing cube pile
 		addSequential(new Encoders_Drive(-(Field.CUBEPILE_LENGTH + 12)));
 		addParallel(new Encoders_Elevator(ElevatorState.EXCHANGE));
-		addSequential(new NavX_Pivot(-45));
+		addSequential(new NavX_Pivot(-35));
 		addSequential(new IR_Drive());
 		addSequential(new PickupCube());
 		addSequential(new Encoders_Drive(-30));
 		addParallel(new Encoders_Elevator(ElevatorState.SWITCH));
-		addSequential(new NavX_Pivot(55));
+		addSequential(new NavX_Pivot(45));
 		addSequential(new Encoders_Drive(Field.CUBEPILE_LENGTH + 18));
 		addSequential(new SpinIntake(0.8, 2));
 		

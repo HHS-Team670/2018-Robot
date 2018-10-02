@@ -82,7 +82,7 @@ public class Encoders_Pivot extends LoggingCommand {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.driveBase.driveByInput(0, 0);
+		Robot.driveBase.driveMotors(0, 0);
 		logExecute(new HashMap<String, Object>() {{
 		    put("DegreesToTravel", ticksToTravel);
 		    put("ReachedMinSpeed", reachedMinSpeed);

@@ -61,7 +61,7 @@ public class Joystick_Drive extends LoggingCommand {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.driveBase.driveByInput(0, 0);
+		Robot.driveBase.stop();
 	}
 
 	// Called when another command which requires one or more of the same

@@ -66,10 +66,10 @@ public class NavX_Pivot extends LoggingCommand {
 			speed = -speed;
 		
 		if (angle > 0){
-			Robot.driveBase.driveByInput(-speed, speed);
+			Robot.driveBase.driveMotors(-speed, speed);
 		}
 		else{
-			Robot.driveBase.driveByInput(speed, -speed);
+			Robot.driveBase.driveMotors(speed, -speed);
 		}
 		
 		logExecute(new HashMap<String, Object>() {{
@@ -97,7 +97,7 @@ public class NavX_Pivot extends LoggingCommand {
 	protected void end() {
 		Robot.driveBase.getLeft().configOpenloopRamp(0.0, 0);
 		Robot.driveBase.getRight().configOpenloopRamp(0.0, 0);
-		Robot.driveBase.driveByInput(0, 0);
+		Robot.driveBase.driveMotors(0, 0);
 		logFinished(new HashMap<String, Object>() {{
 		    put("DegreesToTravel", yawRemaining());
 		    put("CurrentAngle", getNormalizedYaw());
@@ -108,7 +108,7 @@ public class NavX_Pivot extends LoggingCommand {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.driveBase.driveByInput(0, 0);
+		Robot.driveBase.driveMotors(0, 0);
 	}
 
 	//Gets yaw accounting for discontinuity at 180/-180 for NavX yaw result

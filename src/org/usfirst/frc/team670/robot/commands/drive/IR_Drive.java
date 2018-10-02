@@ -39,7 +39,7 @@ public class IR_Drive extends LoggingCommand {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.driveBase.driveByInput(speed, speed);
+		Robot.driveBase.driveMotors(speed, speed);
 		Robot.intake.driveIntake(-0.9);
 		logExecute(new HashMap<String, Object>() {{
 			put("Speed", speed);
@@ -57,7 +57,7 @@ public class IR_Drive extends LoggingCommand {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.driveBase.driveByInput(0, 0);
+		Robot.driveBase.stop();
 		logFinished(new HashMap<String, Object>() {{
 		    put("LeftEncoderVelocity", leftEncoder.getQuadratureVelocity());
 		    put("RightEncoderVelocity", rightEncoder.getQuadratureVelocity());

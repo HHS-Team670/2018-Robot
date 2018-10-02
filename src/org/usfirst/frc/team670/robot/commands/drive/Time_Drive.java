@@ -29,7 +29,7 @@ public class Time_Drive extends LoggingCommand {
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
 	    	//Drive seven feet to baseline
-	    	Robot.driveBase.driveByInput(speed, speed);
+	    	Robot.driveBase.driveMotors(speed, speed);
 	    	logExecute(new HashMap<String, Object>() {{
 			    put("Speed", speed);
 			    put("Seconds", seconds);
@@ -43,7 +43,7 @@ public class Time_Drive extends LoggingCommand {
 
 	    // Called once after isFinished returns true
 	    protected void end() {
-	    	Robot.driveBase.driveByInput(0, 0);
+	    	Robot.driveBase.driveMotors(0, 0);
 	    	logFinished(new HashMap<String, Object>() {{
 			    put("Speed", speed);
 			    put("Seconds", seconds);
@@ -53,6 +53,6 @@ public class Time_Drive extends LoggingCommand {
 	    // Called when another command which requires one or more of the same
 	    // subsystems is scheduled to run
 	    protected void interrupted() {
-	    	Robot.driveBase.driveByInput(0, 0);
+	    	Robot.driveBase.driveMotors(0, 0);
 	    }
 	}

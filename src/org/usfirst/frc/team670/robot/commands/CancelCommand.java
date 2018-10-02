@@ -25,7 +25,7 @@ public class CancelCommand extends LoggingCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveBase.driveByInput(0, 0);
+    	Robot.driveBase.stop();
     	Robot.intake.driveIntake(0);
     	Robot.elevator.moveElevator(0);
     	logExecute(new HashMap<String, Object>() {{
@@ -39,7 +39,7 @@ public class CancelCommand extends LoggingCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveBase.driveByInput(0, 0);
+    	Robot.driveBase.stop();
     	Robot.intake.driveIntake(0);
     	Robot.elevator.moveElevator(0);
     	logFinished(new HashMap<String, Object>() {{

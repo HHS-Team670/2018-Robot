@@ -27,7 +27,7 @@ public class DriveBase extends Subsystem {
 	private TalonSRX left1, right1, left2, right2;
 	private DriverState driveState;
 	private DifferentialDrive m_drive;
-	private boolean isQuickTurn;
+	private boolean isQuickTurn, isReversed;
 	
 	// PID VALUES
 	/**
@@ -49,6 +49,9 @@ public class DriveBase extends Subsystem {
 		right1 = new TalonSRX(RobotMap.rightMotor1);
 		right2 = new TalonSRX(RobotMap.rightMotor2);
 
+		isQuickTurn = false;
+		isReversed = false;
+		
 		left1.setInverted(true);
 		left2.setInverted(true);
 		right1.setInverted(false);
@@ -111,16 +114,28 @@ public class DriveBase extends Subsystem {
 	
 	public void driveByInput(Joystick left, Joystick right) {
 		if(driveState.equals(DriverState.TANK)) {
-			driveMotors(left.getY(), right.getY());
+			if(isReversed)
+				driveMotors(-left.getY(), -right.getY());
+			else
+				driveMotors(left.getY(), right.getY());
 		} else if(driveState.equals(DriverState.STEERING_WHEEL)) {
 			//LEFT might have to change based on what the wheel actually outputs
-			steeringWheelDrive(right.getY(), left.getX());
+			if(isReversed)
+				steeringWheelDrive(-right.getY(), -left.getX());
+			else
+				steeringWheelDrive(right.getY(), left.getX());
 		} else if(driveState.equals(DriverState.ARCADE)) {
-			arcadeDrive(left.getY(), left.getTwist());
+			if(isReversed)
+				arcadeDrive(-left.getY(), -left.getTwist());
+			else
+				arcadeDrive(left.getY(), left.getTwist());
 		} else if(driveState.equals(DriverState.FIELD_CENTRIC)) {
 			fieldDrive(left, false);
 		} else {
-			driveMotors(left.getY(), right.getY());
+			if(isReversed)
+				driveMotors(-left.getY(), -right.getY());
+			else
+				driveMotors(left.getY(), right.getY());
 		}
 	}
 
@@ -345,6 +360,14 @@ public class DriveBase extends Subsystem {
 
 	public void setDriveState(DriverState driveState) {
 		this.driveState = driveState;
+	}
+	
+	public void setIsReversed(boolean isReversed) {
+		this.isReversed = isReversed;
+	}
+	
+	public boolean isReversed() {
+		return isReversed;
 	}
 
 }

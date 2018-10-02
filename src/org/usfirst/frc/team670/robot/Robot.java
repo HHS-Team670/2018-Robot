@@ -448,6 +448,9 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.putBoolean("IR Sensor0", dio.get());
 //		SmartDashboard.putBoolean("IR Sensor1",dio1.get());
 		SmartDashboard.putBoolean("Soft Limits", elevator.getSoftLimits());
+		SmartDashboard.putData("Drive State", driverState);
+		String isReversed = (driveBase.isReversed()) ? "Reversed" : "Forward";
+		SmartDashboard.putString("Drive Direction", isReversed);
 //		SmartDashboard.putBoolean("NavX Connected", isNavXConnected());
 		Scheduler.getInstance().run();
 	}

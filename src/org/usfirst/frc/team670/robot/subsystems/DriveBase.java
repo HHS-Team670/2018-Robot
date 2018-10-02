@@ -112,8 +112,6 @@ public class DriveBase extends Subsystem {
 	public void driveByInput(Joystick left, Joystick right) {
 		if(driveState.equals(DriverState.TANK)) {
 			driveMotors(left.getY(), right.getY());
-		} else if(driveState.equals(DriverState.TANK)) {
-			driveMotors(-left.getY(), -right.getY());
 		} else if(driveState.equals(DriverState.STEERING_WHEEL)) {
 			//LEFT might have to change based on what the wheel actually outputs
 			steeringWheelDrive(right.getY(), left.getX());

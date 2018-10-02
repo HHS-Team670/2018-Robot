@@ -113,7 +113,6 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("5 Second", 5.0);
 		
 		driverState.addObject("Tank", DriverState.TANK);
-		driverState.addObject("Reverse Tank", DriverState.TANKREVERSE);
 		driverState.addObject("Steering Wheel", DriverState.STEERING_WHEEL);
 		driverState.addObject("Arcade Drive", DriverState.ARCADE);
 		driverState.addObject("Field Centric", DriverState.FIELD_CENTRIC);

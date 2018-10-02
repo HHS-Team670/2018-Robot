@@ -63,7 +63,7 @@ public class DriveBase extends Subsystem {
 		left2.set(ControlMode.Follower, RobotMap.leftMotor1);
 		right2.set(ControlMode.Follower, RobotMap.rightMotor1);
 		
-		m_drive = new DifferentialDrive(new WPI_TalonSRX(left1.getBaseID()), new WPI_TalonSRX(right1.getBaseID()));
+		m_drive = new DifferentialDrive(new WPI_TalonSRX(RobotMap.leftMotor1), new WPI_TalonSRX(RobotMap.rightMotor1));
 
 		// Set up feedback sensors
 		// Using CTRE_MagEncoder_Relative allows for relative ticks when encoder

@@ -431,6 +431,9 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		
+		driveBase.setDriveState(driverState.getSelected());
+		
 		if (combined != null) {
 			combined.cancel();
 		}

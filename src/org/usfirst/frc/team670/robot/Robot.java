@@ -6,14 +6,30 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team670.robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode.PixelFormat;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.usfirst.frc.team670.robot.commands.LoggingCommand;
+import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
+import org.usfirst.frc.team670.robot.commands.intake.Deploy;
+import org.usfirst.frc.team670.robot.constants.RobotMap;
+import org.usfirst.frc.team670.robot.constants.enums.DriverState;
+import org.usfirst.frc.team670.robot.subsystems.Aggregator;
+import org.usfirst.frc.team670.robot.subsystems.Climber;
+import org.usfirst.frc.team670.robot.subsystems.DriveBase;
+import org.usfirst.frc.team670.robot.subsystems.Elevator;
+import org.usfirst.frc.team670.robot.subsystems.Intake;
+
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -34,33 +50,6 @@ import paths.right.right_scale_opposite;
 import paths.right.right_scale_side;
 import paths.right.right_switch_side;
 import paths.right.right_switch_straight;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team670.robot.commands.LoggingCommand;
-import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
-import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
-import org.usfirst.frc.team670.robot.commands.intake.Deploy;
-import org.usfirst.frc.team670.robot.constants.RobotMap;
-import org.usfirst.frc.team670.robot.subsystems.Aggregator;
-import org.usfirst.frc.team670.robot.subsystems.Climber;
-import org.usfirst.frc.team670.robot.subsystems.DriveBase;
-import org.usfirst.frc.team670.robot.subsystems.Elevator;
-import org.usfirst.frc.team670.robot.subsystems.Intake;
-
-import com.kauailabs.navx.frc.AHRS;
 
 /**
  * @author vsharma
@@ -87,6 +76,8 @@ public class Robot extends TimedRobot {
 	CommandGroup combined;
 	private SendableChooser<Double> autonomousDelay;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
+	private SendableChooser<DriverState> driverState;
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -112,6 +103,7 @@ public class Robot extends TimedRobot {
 		subMenuRL = new SendableChooser<String>();
 		subMenuLR = new SendableChooser<String>();
 		autonomousDelay = new SendableChooser<Double>();
+		driverState = new SendableChooser<DriverState>();
 
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
@@ -119,6 +111,12 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("3 Second", 3.0);
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
+		
+		driverState.addObject("Tank", DriverState.TANK);
+		driverState.addObject("Reverse Tank", DriverState.TANKREVERSE);
+		driverState.addObject("Steering Wheel", DriverState.STEERING_WHEEL);
+		driverState.addObject("Arcade Drive", DriverState.ARCADE);
+		driverState.addObject("Field Centric", DriverState.FIELD_CENTRIC);
 
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----LEFT----", "left_baseline");
@@ -186,6 +184,7 @@ public class Robot extends TimedRobot {
 		subMenuRL.addObject("right_scale_opposite", "right_scale_opposite");
 		
 		SmartDashboard.putData("Auton Delay", autonomousDelay);
+		SmartDashboard.putData("Drive State", driverState);
 		SmartDashboard.putData("LL", subMenuLL);
 		SmartDashboard.putData("RR", subMenuRR);
 		SmartDashboard.putData("LR", subMenuLR);

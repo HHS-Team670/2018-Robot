@@ -6,10 +6,11 @@ import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 public class Joystick_Drive extends LoggingCommand {
 
 	private double opL, opR, d = 0.05;	
-	private double left, right;
 
 	public Joystick_Drive() {
 		requires(Robot.driveBase);
@@ -18,14 +19,13 @@ public class Joystick_Drive extends LoggingCommand {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.driveBase.initJoystickDrive();
-		left = 0;
-		right = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		left = Robot.oi.getLeftStick().getY();
-		right = Robot.oi.getRightStick().getY();
+		Joystick left, right;
+		left = Robot.oi.getLeftStick();
+		right = Robot.oi.getRightStick();
 		
 		//Elevator limiting code---------------------------------------------------------
 		/*if(currentPosition < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - 500)
@@ -38,13 +38,13 @@ public class Joystick_Drive extends LoggingCommand {
 		
 		double currentPosition = Robot.elevator.getCurrentPosition();
 		
-		if(currentPosition < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - 500)
-		{
-			left*=0.5;
-			right*=0.5;
-		}
+//		if(currentPosition < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - 500)
+//		{
+//			left*=0.5;
+//			right*=0.5;
+//		}
 		
-		Robot.driveBase.drive(left, right);
+		Robot.driveBase.driveByInput(left, right);
 
 		logExecute(new HashMap<String, Object>() {{
 			put("LeftStickPos", Robot.oi.getLeftStick().getY());
@@ -61,7 +61,7 @@ public class Joystick_Drive extends LoggingCommand {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.driveBase.drive(0, 0);
+		Robot.driveBase.driveByInput(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same

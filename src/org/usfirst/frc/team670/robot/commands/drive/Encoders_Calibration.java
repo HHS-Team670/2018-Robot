@@ -21,7 +21,7 @@ public class Encoders_Calibration extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveBase.drive(0, 0);
+    	Robot.driveBase.driveByInput(0, 0);
     	Robot.climber.climb(0);
     	Robot.intake.driveIntake(0);
     	Robot.elevator.moveElevator(0);

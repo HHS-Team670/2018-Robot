@@ -23,6 +23,7 @@ import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
 import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
+import org.usfirst.frc.team670.robot.commands.state_change.Set_QuickTurn;
 import org.usfirst.frc.team670.robot.commands.state_change.enableHardGrab;
 import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
@@ -49,12 +50,16 @@ import paths.right.right_switch_straight;
 public class OI {
 
 	private OperatorState os = OperatorState.NONE;
-	private DriverState ds = DriverState.TANK;
 		
 	private Joystick leftDriveStick = new Joystick(RobotMap.leftDriveStick);
 	private Joystick rightDriveStick = new Joystick(RobotMap.rightDriveStick);
 	private Joystick operatorStick = new Joystick(RobotMap.operatorStick);
 	private Joystick arcadeStick = new Joystick(RobotMap.arcadeStick);
+	
+	
+	//Joystick Buttons
+	//If doing curvature drive uses quickTurn -- Set this JoyStick
+	private Button quickTurn = new JoystickButton(leftDriveStick, 1);
 
 	// Operator Controls
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
@@ -93,6 +98,9 @@ public class OI {
 		toggleElevator.whenReleased(new Set_OperatorControl(OperatorState.NONE));
 		toggleIntake.whenPressed(new Set_OperatorControl(OperatorState.INTAKE));
 		toggleIntake.whenReleased(new Set_OperatorControl(OperatorState.NONE));
+		
+		quickTurn.whenPressed(new Set_QuickTurn(true));
+		quickTurn.whenReleased(new Set_QuickTurn(false));
 		
 		grab.whenPressed(new OpenIntake(false));
 		release.whenPressed(new OpenIntake(true));
@@ -139,11 +147,4 @@ public class OI {
 		this.os = os;
 	}
 
-	public DriverState getDS() {
-		return ds;
-	}
-
-	public void setDriverState(DriverState ds) {
-		this.ds = ds;
-	}
 }

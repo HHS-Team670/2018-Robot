@@ -141,7 +141,7 @@ public class Encoders_Drive extends LoggingCommand {
 		}});
 		Robot.driveBase.getLeft().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
 		Robot.driveBase.getRight().config_kF(RoboConstants.kPIDLoopIdx, 0, RoboConstants.kTimeoutMs);
-		Robot.driveBase.drive(0, 0);
+		Robot.driveBase.driveByInput(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same

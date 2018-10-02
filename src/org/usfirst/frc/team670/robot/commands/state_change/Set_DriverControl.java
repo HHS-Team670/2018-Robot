@@ -19,7 +19,7 @@ public class Set_DriverControl extends LoggingCommand {
     public Set_DriverControl(DriverState ds) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	this.ds = ds;
+    		this.ds = ds;
     }
 
     // Called just before this Command runs the first time
@@ -31,7 +31,7 @@ public class Set_DriverControl extends LoggingCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.oi.setDriverState(ds);
+    	Robot.driveBase.setDriveState(ds);;
     	logExecute(new HashMap<String, Object>() {{
     		put("NewDriverState", ds.toString());
 		}});

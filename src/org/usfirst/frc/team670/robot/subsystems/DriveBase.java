@@ -11,18 +11,24 @@ import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.joystick_control.Joystick_Drive;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
+import org.usfirst.frc.team670.robot.constants.enums.DriverState;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveBase extends Subsystem {
 	private TalonSRX left1, right1, left2, right2;
-
+	private DriverState driveState;
+	private DifferentialDrive m_drive;
+	private boolean isQuickTurn;
+	
 	// PID VALUES
 	/**
 	 * Creates the drivetrain, assuming that there are four talons.
@@ -37,6 +43,7 @@ public class DriveBase extends Subsystem {
 	 *            Back-right Talon ID
 	 */
 	public DriveBase() {
+		setDriveState(DriverState.TANK);
 		left1 = new TalonSRX(RobotMap.leftMotor1);
 		left2 = new TalonSRX(RobotMap.leftMotor2);
 		right1 = new TalonSRX(RobotMap.rightMotor1);
@@ -55,6 +62,8 @@ public class DriveBase extends Subsystem {
 		// Set follower control on back talons.
 		left2.set(ControlMode.Follower, RobotMap.leftMotor1);
 		right2.set(ControlMode.Follower, RobotMap.rightMotor1);
+		
+	   m_drive = new DifferentialDrive(new WPI_TalonSRX(left1.getBaseID()), new WPI_TalonSRX(right1.getBaseID()));
 
 		// Set up feedback sensors
 		// Using CTRE_MagEncoder_Relative allows for relative ticks when encoder
@@ -96,9 +105,25 @@ public class DriveBase extends Subsystem {
 		right2.setNeutralMode(NeutralMode.Coast);
 	}
 
-	public void drive(double left, double right) {
-		left1.set(ControlMode.PercentOutput, left);
-		right1.set(ControlMode.PercentOutput, right);
+	private void driveMotors(double leftOutput, double rightOutput) {
+		m_drive.tankDrive(leftOutput, rightOutput);
+	}
+	
+	public void driveByInput(Joystick left, Joystick right) {
+		if(driveState.equals(DriverState.TANK)) {
+			driveMotors(left.getY(), right.getY());
+		} else if(driveState.equals(DriverState.TANK)) {
+			driveMotors(-left.getY(), -right.getY());
+		} else if(driveState.equals(DriverState.STEERING_WHEEL)) {
+			//LEFT might have to change based on what the wheel actually outputs
+			steeringWheelDrive(right.getY(), left.getX());
+		} else if(driveState.equals(DriverState.ARCADE)) {
+			arcadeDrive(left.getY(), left.getTwist());
+		} else if(driveState.equals(DriverState.FIELD_CENTRIC)) {
+			fieldDrive(left, false);
+		} else {
+			driveMotors(left.getY(), right.getY());
+		}
 	}
 
 	public TalonSRX getLeft() {
@@ -236,7 +261,7 @@ public class DriveBase extends Subsystem {
 		lSpeed = -joy.getX() + joy.getY();
 		lSpeed = 0.5 * Math.pow(lSpeed, 3) + (1 - 0.5) * lSpeed;
 		rSpeed = 0.5 * Math.pow(rSpeed, 3) + (1 - 0.5) * rSpeed;
-		drive(lSpeed, rSpeed);
+		driveMotors(lSpeed, rSpeed);
 	}
 
 	public void fieldDrive(Joystick left, boolean reversed) {
@@ -258,6 +283,15 @@ public class DriveBase extends Subsystem {
 		singleStickDrive(strafe, forwrd);
 	}
 
+	public void steeringWheelDrive(double throttle, double rotation) {
+		m_drive.curvatureDrive(throttle, rotation, isQuickTurn);
+	}
+	
+	public void arcadeDrive(double speed, double rotation) {
+		m_drive.arcadeDrive(speed, rotation, true);
+	}
+	
+	
 	public void singleStickDrive(double x, double y) {
 		double rSpeed = 0;
 		double lSpeed = 0;
@@ -266,7 +300,7 @@ public class DriveBase extends Subsystem {
 		lSpeed = -x + y;
 		lSpeed = 0.5 * Math.pow(lSpeed, 3) + (1 - 0.5) * lSpeed;
 		rSpeed = 0.5 * Math.pow(rSpeed, 3) + (1 - 0.5) * rSpeed;
-		Robot.driveBase.drive(lSpeed, rSpeed);
+		driveMotors(lSpeed, rSpeed);
 	}
 
 	public void singleDrive(Joystick joy) {
@@ -275,7 +309,7 @@ public class DriveBase extends Subsystem {
 		lSpeed = -joy.getX() + joy.getY();
 		lSpeed = 0.5 * Math.pow(lSpeed, 3) + (1 - 0.5) * lSpeed;
 		rSpeed = 0.5 * Math.pow(rSpeed, 3) + (1 - 0.5) * rSpeed;
-		drive(lSpeed, rSpeed);
+		driveMotors(lSpeed, rSpeed);
 	}
 
 	public void singleStickEther(Joystick joy) {
@@ -299,8 +333,20 @@ public class DriveBase extends Subsystem {
 			rSpeed /= max;
 		}
 
-		drive(lSpeed, rSpeed);
+		driveMotors(lSpeed, rSpeed);
 
+	}
+	
+	public void setQuickTurn(boolean quickTurn) {
+		this.isQuickTurn = quickTurn;
+	}
+
+	public DriverState getDriveState() {
+		return driveState;
+	}
+
+	public void setDriveState(DriverState driveState) {
+		this.driveState = driveState;
 	}
 
 }

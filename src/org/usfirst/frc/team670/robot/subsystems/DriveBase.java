@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -44,10 +45,10 @@ public class DriveBase extends Subsystem {
 	 */
 	public DriveBase() {
 		setDriveState(DriveMode.TANK);
-		left1 = new TalonSRX(RobotMap.leftMotor1);
-		left2 = new TalonSRX(RobotMap.leftMotor2);
-		right1 = new TalonSRX(RobotMap.rightMotor1);
-		right2 = new TalonSRX(RobotMap.rightMotor2);
+//		left1 = new TalonSRX(RobotMap.leftMotor1);
+//		left2 = new TalonSRX(RobotMap.leftMotor2);
+//		right1 = new TalonSRX(RobotMap.rightMotor1);
+//		right2 = new TalonSRX(RobotMap.rightMotor2);
 
 		isQuickTurn = false;
 		isReversed = false;
@@ -66,7 +67,13 @@ public class DriveBase extends Subsystem {
 		left2.set(ControlMode.Follower, RobotMap.leftMotor1);
 		right2.set(ControlMode.Follower, RobotMap.rightMotor1);
 		
-		m_drive = new DifferentialDrive(new WPI_TalonSRX(RobotMap.leftMotor1), new WPI_TalonSRX(RobotMap.rightMotor1));
+		
+		SpeedControllerGroup leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.leftMotor1), new WPI_TalonSRX(RobotMap.leftMotor2));
+		SpeedControllerGroup rightMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.rightMotor1), new WPI_TalonSRX(RobotMap.rightMotor2));
+
+		rightMotors.setInverted(true);
+		
+		m_drive = new DifferentialDrive(leftMotors, rightMotors);
 
 		// Set up feedback sensors
 		// Using CTRE_MagEncoder_Relative allows for relative ticks when encoder

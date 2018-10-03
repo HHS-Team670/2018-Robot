@@ -13,6 +13,7 @@ import org.usfirst.frc.team670.robot.commands.elevator.DisableSoftLimits;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
+import org.usfirst.frc.team670.robot.commands.state_change.FlipDriveReverse;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_QuickTurn;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
@@ -43,6 +44,7 @@ public class OI {
 	//Joystick Buttons
 	//If doing curvature drive uses quickTurn -- Set this JoyStick
 	private Button quickTurn = new JoystickButton(leftDriveStick, 1);
+	private Button reverse = new JoystickButton(leftDriveStick, 2);
 
 	// Operator Controls
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
@@ -84,6 +86,9 @@ public class OI {
 		
 		quickTurn.whenPressed(new Set_QuickTurn(true));
 		quickTurn.whenReleased(new Set_QuickTurn(false));
+		
+		reverse.whenPressed(new FlipDriveReverse());
+
 		
 		grab.whenPressed(new OpenIntake(false));
 		release.whenPressed(new OpenIntake(true));

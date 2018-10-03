@@ -11,7 +11,7 @@ import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.joystick_control.Joystick_Drive;
 import org.usfirst.frc.team670.robot.constants.RoboConstants;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
-import org.usfirst.frc.team670.robot.constants.enums.DriverState;
+import org.usfirst.frc.team670.robot.constants.enums.DriveMode;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveBase extends Subsystem {
 	private TalonSRX left1, right1, left2, right2;
-	private DriverState driveState;
+	private DriveMode driveState;
 	private DifferentialDrive m_drive;
 	private boolean isQuickTurn, isReversed;
 	
@@ -43,7 +43,7 @@ public class DriveBase extends Subsystem {
 	 *            Back-right Talon ID
 	 */
 	public DriveBase() {
-		setDriveState(DriverState.TANK);
+		setDriveState(DriveMode.TANK);
 		left1 = new TalonSRX(RobotMap.leftMotor1);
 		left2 = new TalonSRX(RobotMap.leftMotor2);
 		right1 = new TalonSRX(RobotMap.rightMotor1);
@@ -113,23 +113,23 @@ public class DriveBase extends Subsystem {
 	}
 	
 	public void driveByInput(Joystick left, Joystick right) {
-		if(driveState.equals(DriverState.TANK)) {
+		if(driveState.equals(DriveMode.TANK)) {
 			if(isReversed)
 				driveMotors(-left.getY(), -right.getY());
 			else
 				driveMotors(left.getY(), right.getY());
-		} else if(driveState.equals(DriverState.STEERING_WHEEL)) {
+		} else if(driveState.equals(DriveMode.STEERING_WHEEL)) {
 			//LEFT might have to change based on what the wheel actually outputs
 			if(isReversed)
 				steeringWheelDrive(-right.getY(), -left.getX());
 			else
 				steeringWheelDrive(right.getY(), left.getX());
-		} else if(driveState.equals(DriverState.ARCADE)) {
+		} else if(driveState.equals(DriveMode.ARCADE)) {
 			if(isReversed)
 				arcadeDrive(-left.getY(), -left.getTwist());
 			else
 				arcadeDrive(left.getY(), left.getTwist());
-		} else if(driveState.equals(DriverState.FIELD_CENTRIC)) {
+		} else if(driveState.equals(DriveMode.FIELD_CENTRIC)) {
 			fieldDrive(left, false);
 		} else {
 			if(isReversed)
@@ -354,11 +354,11 @@ public class DriveBase extends Subsystem {
 		this.isQuickTurn = quickTurn;
 	}
 
-	public DriverState getDriveState() {
+	public DriveMode getDriveState() {
 		return driveState;
 	}
 
-	public void setDriveState(DriverState driveState) {
+	public void setDriveState(DriveMode driveState) {
 		this.driveState = driveState;
 	}
 	

@@ -8,38 +8,20 @@
 package org.usfirst.frc.team670.robot;
 
 import org.usfirst.frc.team670.robot.commands.CancelCommand;
-import org.usfirst.frc.team670.robot.commands.auto_specific.DropCube;
-import org.usfirst.frc.team670.robot.commands.auto_specific.PickupCube;
 import org.usfirst.frc.team670.robot.commands.auto_specific.VisionCubePickup;
-import org.usfirst.frc.team670.robot.commands.drive.Drive;
-import org.usfirst.frc.team670.robot.commands.drive.NavX_Pivot;
-import org.usfirst.frc.team670.robot.commands.drive.Pivot;
-import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
-import org.usfirst.frc.team670.robot.commands.elevator.Hold_Elevator;
 import org.usfirst.frc.team670.robot.commands.elevator.DisableSoftLimits;
-import org.usfirst.frc.team670.robot.commands.elevator.ZeroElevatorEncoders;
+import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
-import org.usfirst.frc.team670.robot.commands.intake.SpinIntake;
-import org.usfirst.frc.team670.robot.commands.state_change.Set_DriverControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_QuickTurn;
-import org.usfirst.frc.team670.robot.commands.state_change.enableHardGrab;
-import org.usfirst.frc.team670.robot.constants.Field;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
-import org.usfirst.frc.team670.robot.constants.enums.DriverState;
 import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
-import org.usfirst.frc.team670.robot.commands.drive.Encoders_Calibration;
-import org.usfirst.frc.team670.robot.commands.drive.Encoders_Pivot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import paths.right.right_baseline;
-import paths.right.right_scale_side;
-import paths.right.right_switch_side;
-import paths.right.right_switch_straight;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,6 +34,7 @@ public class OI {
 	private OperatorState os = OperatorState.NONE;
 		
 	private Joystick leftDriveStick = new Joystick(RobotMap.leftDriveStick);
+		
 	private Joystick rightDriveStick = new Joystick(RobotMap.rightDriveStick);
 	private Joystick operatorStick = new Joystick(RobotMap.operatorStick);
 	private Joystick arcadeStick = new Joystick(RobotMap.arcadeStick);

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.LoggingCommand;
-import org.usfirst.frc.team670.robot.constants.enums.DriverState;
+import org.usfirst.frc.team670.robot.constants.enums.DriveMode;
 
 
 /**
@@ -14,9 +14,9 @@ import org.usfirst.frc.team670.robot.constants.enums.DriverState;
  */
 public class Set_DriverControl extends LoggingCommand {
 	
-	private DriverState ds;
+	private DriveMode ds;
 	
-    public Set_DriverControl(DriverState ds) {
+    public Set_DriverControl(DriveMode ds) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     		this.ds = ds;

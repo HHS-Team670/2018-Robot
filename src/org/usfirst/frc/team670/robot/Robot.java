@@ -18,7 +18,7 @@ import org.usfirst.frc.team670.robot.commands.LoggingCommand;
 import org.usfirst.frc.team670.robot.commands.auto_specific.Delay;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
-import org.usfirst.frc.team670.robot.constants.enums.DriverState;
+import org.usfirst.frc.team670.robot.constants.enums.DriveMode;
 import org.usfirst.frc.team670.robot.subsystems.Aggregator;
 import org.usfirst.frc.team670.robot.subsystems.Climber;
 import org.usfirst.frc.team670.robot.subsystems.DriveBase;
@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
 	CommandGroup combined;
 	private SendableChooser<Double> autonomousDelay;
 	private SendableChooser<String> subMenuRR, subMenuLL, subMenuLR, subMenuRL;
-	private SendableChooser<DriverState> driverState;
+	private SendableChooser<DriveMode> driverState;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
 		subMenuRL = new SendableChooser<String>();
 		subMenuLR = new SendableChooser<String>();
 		autonomousDelay = new SendableChooser<Double>();
-		driverState = new SendableChooser<DriverState>();
+		driverState = new SendableChooser<DriveMode>();
 
 		autonomousDelay.addDefault("0 Second", 0.0);
 		autonomousDelay.addObject("1 Second", 1.0);
@@ -112,10 +112,10 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
 		
-		driverState.addObject("Tank", DriverState.TANK);
-		driverState.addObject("Steering Wheel", DriverState.STEERING_WHEEL);
-		driverState.addObject("Arcade Drive", DriverState.ARCADE);
-		driverState.addObject("Field Centric", DriverState.FIELD_CENTRIC);
+		driverState.addDefault("Tank", DriveMode.TANK);
+		driverState.addObject("Steering Wheel", DriveMode.STEERING_WHEEL);
+		driverState.addObject("Arcade Drive", DriveMode.ARCADE);
+		driverState.addObject("Field Centric", DriveMode.FIELD_CENTRIC);
 
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----LEFT----", "left_baseline");
@@ -432,7 +432,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		
-		driveBase.setDriveState(driverState.getSelected());
+		DriveMode driveState = driverState.getSelected();
+		
+		driveBase.setDriveState(driveState);
 		
 		if (combined != null) {
 			combined.cancel();

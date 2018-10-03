@@ -21,6 +21,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -68,7 +69,10 @@ public class DriveBase extends Subsystem {
 		left2.set(ControlMode.Follower, RobotMap.leftMotor1);
 		right2.set(ControlMode.Follower, RobotMap.rightMotor1);
 		
-		m_drive = new DifferentialDrive(new WPI_TalonSRX(RobotMap.leftMotor1), new WPI_TalonSRX(RobotMap.rightMotor1));
+		SpeedControllerGroup rightMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.rightMotor1), new WPI_TalonSRX(RobotMap.rightMotor2));
+		SpeedControllerGroup leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.leftMotor1), new WPI_TalonSRX(RobotMap.leftMotor2));
+		
+		m_drive = new DifferentialDrive(leftMotors, rightMotors);
 
 		// Set up feedback sensors
 		// Using CTRE_MagEncoder_Relative allows for relative ticks when encoder
@@ -163,8 +167,7 @@ public class DriveBase extends Subsystem {
 	 * Stops the motors by zeroing the left and right Talons.
 	 */
 	public void stop() {
-		left1.set(ControlMode.Velocity, 0);
-		right1.set(ControlMode.Velocity, 0);
+		driveMotors(0, 0);
 	}
 
 	public void initDefaultCommand() {

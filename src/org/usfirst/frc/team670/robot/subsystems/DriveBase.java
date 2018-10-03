@@ -163,8 +163,7 @@ public class DriveBase extends Subsystem {
 	 * Stops the motors by zeroing the left and right Talons.
 	 */
 	public void stop() {
-		left1.set(ControlMode.Velocity, 0);
-		right1.set(ControlMode.Velocity, 0);
+		driveMotors(0, 0);
 	}
 
 	public void initDefaultCommand() {

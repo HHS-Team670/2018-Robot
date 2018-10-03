@@ -4,9 +4,8 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team670.robot.Robot;
 import org.usfirst.frc.team670.robot.commands.LoggingCommand;
-import org.usfirst.frc.team670.robot.constants.RoboConstants;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class Joystick_Drive extends LoggingCommand {
 
@@ -23,9 +22,7 @@ public class Joystick_Drive extends LoggingCommand {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Joystick left, right;
-		left = Robot.oi.getLeftStick();
-		right = Robot.oi.getRightStick();
+		XboxController xbox = Robot.oi.getController();
 		
 		//Elevator limiting code---------------------------------------------------------
 		/*if(currentPosition < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - 500)
@@ -36,7 +33,7 @@ public class Joystick_Drive extends LoggingCommand {
 		//Elevator limiting code end-----------------------------------------------------
 		
 		
-		double currentPosition = Robot.elevator.getCurrentPosition();
+//		double currentPosition = Robot.elevator.getCurrentPosition();
 		
 //		if(currentPosition < RoboConstants.ELEVATOR_PULSE_FOR_SECONDSTAGE - 500)
 //		{
@@ -44,13 +41,9 @@ public class Joystick_Drive extends LoggingCommand {
 //			right*=0.5;
 //		}
 		
-		Robot.driveBase.driveByInput(left, right);
+		Robot.driveBase.driveByInput(xbox);
 
 		logExecute(new HashMap<String, Object>() {{
-			put("LeftStickPos", Robot.oi.getLeftStick().getY());
-			put("RightStickPos", Robot.oi.getRightStick().getY());
-			put("LeftMotorInput", left);
-			put("RightMotorInput", right);
 		}});
 	}
 

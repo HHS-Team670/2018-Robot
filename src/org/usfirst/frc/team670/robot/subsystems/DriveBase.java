@@ -19,7 +19,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -112,31 +114,36 @@ public class DriveBase extends Subsystem {
 		m_drive.tankDrive(leftOutput, rightOutput);
 	}
 	
-	public void driveByInput(Joystick left, Joystick right) {
+	public void driveByInput(XboxController xbox) {
+		
 		if(driveState.equals(DriveMode.TANK)) {
-			if(isReversed)
-				driveMotors(-left.getY(), -right.getY());
-			else
-				driveMotors(left.getY(), right.getY());
-		} else if(driveState.equals(DriveMode.STEERING_WHEEL)) {
-			//LEFT might have to change based on what the wheel actually outputs
-			if(isReversed)
-				steeringWheelDrive(-right.getY(), -left.getX());
-			else
-				steeringWheelDrive(right.getY(), left.getX());
-		} else if(driveState.equals(DriveMode.ARCADE)) {
-			if(isReversed)
-				arcadeDrive(-left.getY(), -left.getTwist());
-			else
-				arcadeDrive(left.getY(), left.getTwist());
-		} else if(driveState.equals(DriveMode.FIELD_CENTRIC)) {
-			fieldDrive(left, false);
+			if(isReversed) {
+				driveMotors(-xbox.getY(Hand.kLeft), -xbox.getY(Hand.kRight));
+			} else {
+				driveMotors(xbox.getY(Hand.kLeft), xbox.getY(Hand.kRight));
+			}
 		} else {
-			if(isReversed)
-				driveMotors(-left.getY(), -right.getY());
-			else
-				driveMotors(left.getY(), right.getY());
+			
+			double rotation;			
+			double x = xbox.getX(Hand.kRight);
+			double y = xbox.getY(Hand.kRight);
+			
+			if(Math.abs(x) < 0.0001) {
+				rotation = 0;
+			}	else {
+				double angle = Math.atan(y/Math.abs(x)) + Math.PI/2;
+				rotation = angle/Math.PI;
+				if(x < 0) {
+					rotation = -rotation;
+				}
+			}
+			if(isReversed) {
+				steeringWheelDrive(-xbox.getY(Hand.kLeft), -rotation);
+			} else {
+				steeringWheelDrive(xbox.getY(Hand.kLeft), rotation);
+			}		
 		}
+		
 	}
 
 	public TalonSRX getLeft() {

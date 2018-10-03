@@ -112,10 +112,8 @@ public class Robot extends TimedRobot {
 		autonomousDelay.addObject("4 Second", 4.0);
 		autonomousDelay.addObject("5 Second", 5.0);
 		
-		driverState.addDefault("Tank", DriveMode.TANK);
-		driverState.addObject("Steering Wheel", DriveMode.STEERING_WHEEL);
-		driverState.addObject("Arcade Drive", DriveMode.ARCADE);
-		driverState.addObject("Field Centric", DriveMode.FIELD_CENTRIC);
+		driverState.addDefault("Rocket League", DriveMode.ROCKET_LEAGUE);
+		driverState.addObject("Tank", DriveMode.TANK);
 
 		subMenuLL.addDefault("LL (KEY ONLY)", "left_baseline");
 		subMenuLL.addObject("----LEFT----", "left_baseline");

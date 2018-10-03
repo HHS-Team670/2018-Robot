@@ -13,6 +13,7 @@ import org.usfirst.frc.team670.robot.commands.elevator.DisableSoftLimits;
 import org.usfirst.frc.team670.robot.commands.elevator.Encoders_Elevator;
 import org.usfirst.frc.team670.robot.commands.intake.Deploy;
 import org.usfirst.frc.team670.robot.commands.intake.OpenIntake;
+import org.usfirst.frc.team670.robot.commands.state_change.FlipDriveReverse;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_OperatorControl;
 import org.usfirst.frc.team670.robot.commands.state_change.Set_QuickTurn;
 import org.usfirst.frc.team670.robot.constants.RobotMap;
@@ -20,6 +21,7 @@ import org.usfirst.frc.team670.robot.constants.enums.ElevatorState;
 import org.usfirst.frc.team670.robot.constants.enums.OperatorState;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -33,16 +35,16 @@ public class OI {
 
 	private OperatorState os = OperatorState.NONE;
 		
-	private Joystick leftDriveStick = new Joystick(RobotMap.leftDriveStick);
+	private XboxController xbox = new XboxController(RobotMap.leftDriveStick);
 		
-	private Joystick rightDriveStick = new Joystick(RobotMap.rightDriveStick);
 	private Joystick operatorStick = new Joystick(RobotMap.operatorStick);
 	private Joystick arcadeStick = new Joystick(RobotMap.arcadeStick);
 	
 	
 	//Joystick Buttons
 	//If doing curvature drive uses quickTurn -- Set this JoyStick
-	private Button quickTurn = new JoystickButton(leftDriveStick, 1);
+	private Button quickTurn = new JoystickButton(xbox, 6);
+	private Button reverse = new JoystickButton(xbox, 5);
 
 	// Operator Controls
 	private Button toggleElevator = new JoystickButton(operatorStick, 3);
@@ -85,6 +87,8 @@ public class OI {
 		quickTurn.whenPressed(new Set_QuickTurn(true));
 		quickTurn.whenReleased(new Set_QuickTurn(false));
 		
+		reverse.whenPressed(new FlipDriveReverse());
+		
 		grab.whenPressed(new OpenIntake(false));
 		release.whenPressed(new OpenIntake(true));
 		
@@ -110,12 +114,8 @@ public class OI {
 //		right135.whenPressed(new NavX_Pivot(135));
 	}
 
-	public Joystick getLeftStick() {
-		return leftDriveStick;
-	}
-
-	public Joystick getRightStick() {
-		return rightDriveStick;
+	public XboxController getController() {
+		return xbox;
 	}
 
 	public Joystick getOperatorStick() {
